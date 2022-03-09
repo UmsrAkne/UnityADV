@@ -1,17 +1,24 @@
-﻿using UnityEngine;
-using System.IO;
+﻿using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class ImageLoader : MonoBehaviour
 {
     private SpriteRenderer sr;
+    private List<Sprite> sprites;
 
     void Start()
     {
         gameObject.AddComponent<SpriteRenderer>();
         sr = gameObject.GetComponent<SpriteRenderer>();
-        Texture2D texture = ReadTexture(Directory.GetCurrentDirectory() + @"\graphics\image001.png", 1280, 720);
-        Sprite createdSprite = Sprite.Create(texture, new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
-        sr.sprite = createdSprite;
+
+        sprites = GetImageFileLPaths(Directory.GetCurrentDirectory() + @"\scenes\sampleScn001\images").Select(path =>
+        {
+            return Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
+        }).ToList();
+
+        sr.sprite = sprites[0];
         sr.transform.position = new Vector3(-9, -5);
     }
 
@@ -22,6 +29,12 @@ public class ImageLoader : MonoBehaviour
         texture.LoadImage(bytes);
         texture.filterMode = FilterMode.Point;
         return texture;
+    }
+
+    private List<string> GetImageFileLPaths(string targetDirectoryPath)
+    {
+        var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
+        return allFilePaths.Where(f => Path.GetExtension(f) == ".png" || Path.GetExtension(f) == ".jpg").ToList();
     }
 
     void Update()
