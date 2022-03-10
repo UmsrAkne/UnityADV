@@ -11,26 +11,32 @@ public class ShowText : MonoBehaviour
     private int characterCount = 0;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         textField = GetComponent<Text>();
     }
 
     // Update is called once per frame
-    void Update() {
-        if (Input.GetKey("space")) {
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
             textField.text = "";
             characterCount = 0;
         }
 
-        if(textField.text.Length > 200) {
+        if (textField.text.Length > 200)
+        {
             return;
         }
 
-        if(frameCounter % 3 == 0) {
+        if (frameCounter % 3 == 0)
+        {
             textField.text += "a";
         }
 
-        if(frameCounter > int.MaxValue - 1) {
+        if (frameCounter > int.MaxValue - 1)
+        {
             frameCounter = 0;
         }
 
