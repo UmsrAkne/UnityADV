@@ -5,21 +5,18 @@ using UnityEngine;
 
 public class ImageLoader : MonoBehaviour
 {
-    private SpriteRenderer sr;
-    private List<Sprite> sprites;
+    public List<Sprite> Sprites { get; private set; }
 
-    void Start()
+    public void Load(string targetDirectoryPath)
     {
-        gameObject.AddComponent<SpriteRenderer>();
-        sr = gameObject.GetComponent<SpriteRenderer>();
-
-        sprites = GetImageFileLPaths(Directory.GetCurrentDirectory() + @"\scenes\sampleScn001\images").Select(path =>
+        Sprites = GetImageFileLPaths(Directory.GetCurrentDirectory() + $@"\scenes\{targetDirectoryPath}\images").Select(path =>
         {
             return Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
         }).ToList();
+    }
 
-        sr.sprite = sprites[0];
-        sr.transform.position = new Vector3(-9, -5);
+    void Start()
+    {
     }
 
     private Texture2D ReadTexture(string path, int width, int height)
