@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ImageLoader : MonoBehaviour
+public class ImageLoader
 {
     public List<Sprite> Sprites { get; private set; }
 
     public void Load(string targetDirectoryPath)
     {
-        Sprites = GetImageFileLPaths(Directory.GetCurrentDirectory() + $@"\scenes\{targetDirectoryPath}\images").Select(path =>
+        Sprites = GetImageFileLPaths(targetDirectoryPath).Select(path =>
         {
             return Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
         }).ToList();
-    }
-
-    void Start()
-    {
     }
 
     private Texture2D ReadTexture(string path, int width, int height)
@@ -32,9 +28,5 @@ public class ImageLoader : MonoBehaviour
     {
         var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
         return allFilePaths.Where(f => Path.GetExtension(f) == ".png" || Path.GetExtension(f) == ".jpg").ToList();
-    }
-
-    void Update()
-    {
     }
 }
