@@ -11,7 +11,14 @@ public class TextWriter : IScenarioSceneParts
 
     private List<Scenario> Scenarios { get; set; }
 
+    public bool NeedExecuteEveryFrame => true;
+
     public void execute()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void executeEveryFrame()
     {
         throw new System.NotImplementedException();
     }
