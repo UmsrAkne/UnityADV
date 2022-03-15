@@ -5,7 +5,13 @@ using UnityEngine.UI;
 
 public class TextWriter : IScenarioSceneParts
 {
+    private int counter;
+    private bool writing;
+    private int scenarioIndex;
+
     public Text Text { get; private set; }
+
+    public string CurrentText { get; set; } = string.Empty;
 
     private Scenario Scenario { get; set; }
 
@@ -15,12 +21,38 @@ public class TextWriter : IScenarioSceneParts
 
     public void execute()
     {
-        throw new System.NotImplementedException();
+        counter = 0;
+
+        if (writing)
+        {
+            WriteText(Scenario.Text);
+            writing = false;
+        }
+        else
+        {
+            scenarioIndex++;
+            Scenario = Scenarios[scenarioIndex];
+            writing = true;
+        }
     }
 
     public void executeEveryFrame()
     {
-        throw new System.NotImplementedException();
+        if (!writing)
+        {
+            return;
+        }
+
+        AppendText(Scenario.Text[counter]);
+
+        if (Scenario.Text.Length <= counter)
+        {
+            writing = false;
+            counter = 0;
+            return;
+        }
+
+        counter++;
     }
 
     public void setScenario(Scenario scenario)
@@ -39,5 +71,25 @@ public class TextWriter : IScenarioSceneParts
         {
             Text = text;
         }
+    }
+
+    private void AppendText(char character)
+    {
+        if (Text != null)
+        {
+            Text.text += character;
+        }
+
+        CurrentText += character;
+    }
+
+    private void WriteText(string str)
+    {
+        if (Text != null)
+        {
+            Text.text = str;
+        }
+
+        CurrentText = str;
     }
 }
