@@ -31,8 +31,9 @@ public class TextWriter : IScenarioSceneParts
         else
         {
             scenarioIndex++;
-            Scenario = Scenarios[scenarioIndex];
+            Scenario = Scenarios[scenarioIndex - 1];
             writing = true;
+            WriteText(string.Empty);
         }
     }
 
@@ -44,6 +45,7 @@ public class TextWriter : IScenarioSceneParts
         }
 
         AppendText(Scenario.Text[counter]);
+        counter++;
 
         if (Scenario.Text.Length <= counter)
         {
@@ -51,8 +53,6 @@ public class TextWriter : IScenarioSceneParts
             counter = 0;
             return;
         }
-
-        counter++;
     }
 
     public void setScenario(Scenario scenario)

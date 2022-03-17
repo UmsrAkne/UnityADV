@@ -1,0 +1,15 @@
+{
+    "name": "scripts.SceneParts",
+    "references": [
+        "GUID:78692fb31ea3d534d8841ce6eed60685"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
