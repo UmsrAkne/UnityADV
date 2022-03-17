@@ -1,9 +1,10 @@
 {
-    "name": "Tests",
+    "name": "Tests.SceneParts",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "scripts.SceneParts"
+        "scripts.SceneParts",
+        "scripts.SceneContets"
     ],
     "includePlatforms": [
         "Editor"
@@ -14,7 +15,7 @@
     "precompiledReferences": [
         "nunit.framework.dll"
     ],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS"
     ],
