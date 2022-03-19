@@ -19,7 +19,7 @@ public class TextWriter : IScenarioSceneParts
 
     public bool NeedExecuteEveryFrame => true;
 
-    public void execute()
+    public void Execute()
     {
         counter = 0;
 
@@ -37,7 +37,7 @@ public class TextWriter : IScenarioSceneParts
         }
     }
 
-    public void executeEveryFrame()
+    public void ExecuteEveryFrame()
     {
         if (!writing)
         {
@@ -55,17 +55,17 @@ public class TextWriter : IScenarioSceneParts
         }
     }
 
-    public void setScenario(Scenario scenario)
+    public void SetScenario(Scenario scenario)
     {
         Scenario = scenario;
     }
 
-    public void setResource(Resource resource)
+    public void SetResource(Resource resource)
     {
         Scenarios = resource.Scenarios;
     }
 
-    public void setText(Text text)
+    public void SetText(Text text)
     {
         if (Text == null)
         {

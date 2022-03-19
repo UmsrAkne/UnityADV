@@ -22,41 +22,41 @@ namespace Tests
             var res = new Resource();
             res.Scenarios = new List<Scenario>()
             {
-                new Scenario(){Text = "abcdef" },
-                new Scenario(){Text = "ghijkl" },
-                new Scenario(){Text = "mnopqr" },
+                new Scenario() { Text = "abcdef" },
+                new Scenario() { Text = "ghijkl" },
+                new Scenario() { Text = "mnopqr" }
             };
 
             var writer = new TextWriter();
-            writer.setResource(res);
+            writer.SetResource(res);
 
             // ここからテスト
 
-            writer.execute();
+            writer.Execute();
             Assert.AreEqual(writer.CurrentText, string.Empty);
 
-            writer.executeEveryFrame();
+            writer.ExecuteEveryFrame();
             Assert.AreEqual(writer.CurrentText, "a");
 
             for (var i = 0; i < 10; i++)
             {
-                writer.executeEveryFrame();
+                writer.ExecuteEveryFrame();
             }
 
             Assert.AreEqual(writer.CurrentText, "abcdef", "11frame 経過時の状態。テキストの全てが過不足なく入力済みか");
 
-            writer.execute();
+            writer.Execute();
             Assert.AreEqual(writer.CurrentText, string.Empty);
 
-            writer.executeEveryFrame();
-            writer.executeEveryFrame();
-            writer.execute();
+            writer.ExecuteEveryFrame();
+            writer.ExecuteEveryFrame();
+            writer.Execute();
 
             Assert.AreEqual(writer.CurrentText, "ghijkl", "2フレーム経過でテキスト描画を切り上げ。テキストが全て入力されているか");
 
-            writer.executeEveryFrame();
-            writer.executeEveryFrame();
-            writer.executeEveryFrame();
+            writer.ExecuteEveryFrame();
+            writer.ExecuteEveryFrame();
+            writer.ExecuteEveryFrame();
             Assert.AreEqual(writer.CurrentText, "ghjikl", "executeEveryFrame() を余分に実行しても問題ないか？");
         }
 

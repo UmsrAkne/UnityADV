@@ -2,11 +2,11 @@
 {
     bool NeedExecuteEveryFrame { get; }
 
-    void execute();
+    void Execute();
 
-    void executeEveryFrame();
+    void ExecuteEveryFrame();
 
-    void setScenario(Scenario scenario);
+    void SetScenario(Scenario scenario);
 
-    void setResource(Resource resource);
+    void SetResource(Resource resource);
 }
