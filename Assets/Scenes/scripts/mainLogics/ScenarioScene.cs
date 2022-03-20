@@ -21,12 +21,18 @@ public class ScenarioScene : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            ScenarioSceneParts.ForEach(p =>
-            {
-                p.Execute();
-            });
+            Forward();
         }
 
         ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
+    }
+
+    public void Forward()
+    {
+        ScenarioSceneParts.ForEach(p =>
+        {
+            p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]);
+            p.Execute();
+        });
     }
 }
