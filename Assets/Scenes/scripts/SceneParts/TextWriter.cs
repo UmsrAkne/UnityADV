@@ -13,11 +13,11 @@ public class TextWriter : IScenarioSceneParts
 
     public string CurrentText { get; set; } = string.Empty;
 
+    public bool NeedExecuteEveryFrame => true;
+
     private Scenario Scenario { get; set; }
 
     private List<Scenario> Scenarios { get; set; }
-
-    public bool NeedExecuteEveryFrame => true;
 
     public void Execute()
     {

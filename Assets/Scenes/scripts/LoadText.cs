@@ -8,14 +8,14 @@ public class LoadText : MonoBehaviour
     private TextAsset t;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         t = Resources.Load("sample01/texts/testtext", typeof(TextAsset)) as TextAsset;
         Debug.Log(t.text);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
     }
 }
