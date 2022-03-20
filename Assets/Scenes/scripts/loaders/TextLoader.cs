@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class TextLoader
 {
+    public List<Scenario> Scenario { get; set; }
+
     public void Load(string targetPath)
     {
         try
@@ -25,6 +27,4 @@ public class TextLoader
             Debug.Log(e);
         }
     }
-
-    public List<Scenario> Scenario { get; set; }
 }

@@ -14,14 +14,14 @@ public class ShowText : MonoBehaviour
     public List<string> Texts { get; set; } = new List<string>() { };
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         textField = GetComponent<Text>();
         textField.text = string.Empty;
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -37,7 +37,7 @@ public class ShowText : MonoBehaviour
 
             if (characterCount >= currentText.Length)
             {
-                writingComplete();
+                WritingComplete();
             }
         }
 
@@ -56,7 +56,7 @@ public class ShowText : MonoBehaviour
         if (writing)
         {
             textField.text = currentText;
-            writingComplete();
+            WritingComplete();
         }
         else
         {
@@ -66,7 +66,7 @@ public class ShowText : MonoBehaviour
         }
     }
 
-    private void writingComplete()
+    private void WritingComplete()
     {
         position++;
         writing = false;

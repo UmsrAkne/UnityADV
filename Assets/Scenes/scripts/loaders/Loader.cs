@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class Loader : MonoBehaviour
 {
-
-    Resource resource = new Resource();
-    TextLoader textLoader = new TextLoader();
-    ImageLoader imageLoader = new ImageLoader();
+    private Resource resource = new Resource();
+    private TextLoader textLoader = new TextLoader();
+    private ImageLoader imageLoader = new ImageLoader();
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         var sceneDirectoryPath = $@"{Directory.GetCurrentDirectory()}\scenes\sampleScn001";
         textLoader.Load($@"{Directory.GetCurrentDirectory()}\scenes\sampleScn001\texts\scenario.xml");
@@ -21,7 +20,7 @@ public class Loader : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
     }
 }

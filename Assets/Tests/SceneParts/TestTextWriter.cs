@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.TestRunner;
-using UnityEditor.TestRunner;
-using NUnit.Framework;
-using UnityEngine.TestTools;
-
-namespace Tests
+﻿namespace Tests
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using NUnit.Framework;
+    using UnityEngine.TestTools;
+
     public class TestTextWriter
     {
         // A Test behaves as an ordinary method
@@ -30,7 +28,7 @@ namespace Tests
             var writer = new TextWriter();
             writer.SetResource(res);
 
-            // ここからテスト
+            /// ここからテスト
 
             writer.Execute();
             Assert.AreEqual(writer.CurrentText, string.Empty);
