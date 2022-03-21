@@ -9,4 +9,6 @@
     void SetScenario(Scenario scenario);
 
     void SetResource(Resource resource);
+
+    void SetUI();
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScenarioScene : MonoBehaviour
 {
-    public Resource Resource { private get; set; }
+    public Resource Resource { private get; set; } = new Resource();
 
     private List<IScenarioSceneParts> ScenarioSceneParts { get; } = new List<IScenarioSceneParts>();
 
@@ -14,6 +14,12 @@ public class ScenarioScene : MonoBehaviour
     public void Start()
     {
         ScenarioSceneParts.Add(TextWriter);
+
+        ScenarioSceneParts.ForEach(s =>
+        {
+            s.SetResource(Resource);
+            s.SetUI();
+        });
     }
 
     // Update is called once per frame
