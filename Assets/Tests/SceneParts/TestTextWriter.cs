@@ -55,7 +55,31 @@
             writer.ExecuteEveryFrame();
             writer.ExecuteEveryFrame();
             writer.ExecuteEveryFrame();
-            Assert.AreEqual(writer.CurrentText, "ghjikl", "executeEveryFrame() を余分に実行しても問題ないか？");
+            Assert.AreEqual(writer.CurrentText, "ghijkl", "executeEveryFrame() を余分に実行しても問題ないか？");
+        }
+
+        [Test]
+        public void シナリオのカウンターのテスト()
+        {
+            var res = new Resource();
+            res.Scenarios = new List<Scenario>()
+            {
+                new Scenario() { Text = "abcdef" },
+                new Scenario() { Text = "ghijkl" },
+                new Scenario() { Text = "mnopqr" }
+            };
+
+            var writer = new TextWriter();
+            writer.SetResource(res);
+
+            Assert.AreEqual(writer.ScenarioIndex, 0);
+            writer.Execute();
+
+            Assert.AreEqual(writer.ScenarioIndex, 1);
+            writer.Execute();
+            writer.Execute();
+
+            Assert.AreEqual(writer.ScenarioIndex, 2);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

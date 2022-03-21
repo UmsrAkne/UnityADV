@@ -7,7 +7,8 @@ public class TextWriter : IScenarioSceneParts
 {
     private int counter;
     private bool writing;
-    private int scenarioIndex;
+
+    public int ScenarioIndex { get; private set; }
 
     public Text Text { get; private set; }
 
@@ -30,8 +31,8 @@ public class TextWriter : IScenarioSceneParts
         }
         else
         {
-            scenarioIndex++;
-            Scenario = Scenarios[scenarioIndex - 1];
+            ScenarioIndex++;
+            Scenario = Scenarios[ScenarioIndex - 1];
             writing = true;
             WriteText(string.Empty);
         }
@@ -70,6 +71,16 @@ public class TextWriter : IScenarioSceneParts
         if (Text == null)
         {
             Text = text;
+        }
+    }
+
+    public void SetUI()
+    {
+        var ui = GameObject.Find("TextField").GetComponent<Text>();
+
+        if (ui != null)
+        {
+            SetText(ui);
         }
     }
 
