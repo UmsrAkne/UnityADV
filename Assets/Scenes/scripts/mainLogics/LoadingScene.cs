@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
@@ -41,6 +42,18 @@ public class LoadingScene : MonoBehaviour
                 cursorIndex--;
                 Text.text = Paths[cursorIndex];
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return) && !keyboardLock)
+        {
+            SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
+            {
+                Loader loader = new Loader();
+                loader.Load(Paths[cursorIndex]);
+                GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+            };
+
+            SceneManager.LoadScene("SampleScene");
         }
     }
 }
