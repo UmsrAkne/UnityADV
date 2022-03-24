@@ -10,13 +10,22 @@ public class ImageDrawer : IScenarioSceneParts
 
     public bool NeedExecuteEveryFrame => true;
 
-    private List<GameObject> ImageContainers { get; set; }
+    private List<GameObject> ImageContainers { get; set; } = new List<GameObject>();
 
     public void Execute()
     {
         if (scenario.ImageOrders.Count == 0)
         {
             return;
+        }
+
+        foreach (ImageOrder order in scenario.ImageOrders)
+        {
+            // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
+
+            var targetContainer = ImageContainers[order.TargetLayerIndex];
+            var emptyGameObject = new GameObject();
+            emptyGameObject.transform.SetParent(targetContainer.transform);
         }
     }
 
@@ -36,9 +45,9 @@ public class ImageDrawer : IScenarioSceneParts
 
     public void SetUI()
     {
-        ImageContainers.Add(GameObject.Find("ImageContainer-0"));
-        ImageContainers.Add(GameObject.Find("ImageContainer-1"));
-        ImageContainers.Add(GameObject.Find("ImageContainer-2"));
+        ImageContainers.Add(GameObject.Find("ImageContainer_0"));
+        ImageContainers.Add(GameObject.Find("ImageContainer_1"));
+        ImageContainers.Add(GameObject.Find("ImageContainer_2"));
 
         ImageContainers.ForEach(ic =>
         {
