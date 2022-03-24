@@ -14,6 +14,10 @@ public class ImageDrawer : IScenarioSceneParts
 
     public void Execute()
     {
+        if (scenario.ImageOrders.Count == 0)
+        {
+            return;
+        }
     }
 
     public void ExecuteEveryFrame()
