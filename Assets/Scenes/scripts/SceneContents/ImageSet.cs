@@ -55,6 +55,7 @@ public class ImageSet : MonoBehaviour
             gos.Add(gameObjects[n]);
             g.transform.SetParent(container.transform, false);
             var renderer = g.AddComponent<SpriteRenderer>();
+
             renderer.sprite = Sprites[n];
 
             if (n != 0)

@@ -13,7 +13,7 @@ public class ImageLoader
     {
         GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
         {
-            var sp = Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
+            var sp = Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0.5f, 0.5f), 72);
             Sprites.Add(sp);
             SpriteDictionary.Add(Path.GetFileName(path), sp);
             SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), sp);
