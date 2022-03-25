@@ -4,5 +4,5 @@ public class Scenario
 {
     public string Text { get; set; }
 
-    public List<ImageOrder> ImageOrders { get; set; }
+    public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
 }
