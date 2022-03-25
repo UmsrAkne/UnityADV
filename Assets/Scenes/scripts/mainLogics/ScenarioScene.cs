@@ -15,6 +15,8 @@ public class ScenarioScene : MonoBehaviour
     {
         ScenarioSceneParts.Add(TextWriter);
 
+        ScenarioSceneParts.Add(new ImageDrawer());
+
         ScenarioSceneParts.ForEach(s =>
         {
             s.SetResource(Resource);
@@ -25,7 +27,7 @@ public class ScenarioScene : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             Forward();
         }
