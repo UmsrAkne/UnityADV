@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class ImageLoader
 {
-    public List<Sprite> Sprites { get; private set; }
+    public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
+
+    public Dictionary<string, Sprite> SpriteDictionary { get; private set; } = new Dictionary<string, Sprite>();
 
     public void Load(string targetDirectoryPath)
     {
-        Sprites = GetImageFileLPaths(targetDirectoryPath).Select(path =>
+        GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
         {
-            return Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
-        }).ToList();
+            var sp = Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
+            Sprites.Add(sp);
+            SpriteDictionary.Add(Path.GetFileName(path), sp);
+            SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), sp);
+        });
     }
 
     private Texture2D ReadTexture(string path, int width, int height)

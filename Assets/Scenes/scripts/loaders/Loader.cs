@@ -16,5 +16,6 @@ public class Loader
         imageLoader.Load($@"{path}\images");
         Resource.Scenarios = textLoader.Scenario;
         Resource.Images = imageLoader.Sprites;
+        Resource.ImagesByName = imageLoader.SpriteDictionary;
     }
 }
