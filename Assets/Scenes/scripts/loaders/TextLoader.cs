@@ -9,8 +9,12 @@ public class TextLoader
 {
     public List<Scenario> Scenario { get; set; }
 
+    private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
+
     public void Load(string targetPath)
     {
+        Converters.Add(new ImageElementConverter());
+
         try
         {
             XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
@@ -19,6 +23,7 @@ public class TextLoader
             xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
             {
                 var scenario = new Scenario() { Text = x.Element("text").Attribute("str").Value };
+                Converters.ForEach(c => c.Convert(x, scenario));
                 return scenario;
             }).ToList();
         }
