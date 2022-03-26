@@ -27,13 +27,6 @@ public class ImageSet : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        //Draw(new List<string>()
-        //    {
-        //        $"sample01/images/sampleImage001",
-        //        $"sample01/images/sampleImage005",
-        //        $"sample01/images/sampleImage006",
-        //        $"sample01/images/sampleImage007"
-        //    });
     }
 
     public void Draw()
