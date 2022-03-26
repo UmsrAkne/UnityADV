@@ -14,40 +14,30 @@ public class ImageDrawer : IScenarioSceneParts
 
     public void Execute()
     {
-        // if (scenario.ImageOrders.Count == 0)
-        // {
-        //     return;
-        // }
+        if (scenario.ImageOrders.Count == 0)
+        {
+            return;
+        }
 
-        // foreach (ImageOrder order in scenario.ImageOrders)
-        // {
-        //     // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
-        //     var targetContainer = ImageContainers[order.TargetLayerIndex];
-        //     var emptyGameObject = new GameObject();
-        //     emptyGameObject.transform.SetParent(targetContainer.transform);
+        foreach (ImageOrder order in scenario.ImageOrders)
+        {
+            // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
+            var targetContainer = ImageContainers[order.TargetLayerIndex];
+            var emptyGameObject = new GameObject();
+            emptyGameObject.transform.SetParent(targetContainer.transform);
 
-        //     var imageSet = emptyGameObject.AddComponent<ImageSet>();
+            var imageSet = emptyGameObject.AddComponent<ImageSet>();
 
-        //     // 仮コード
-        //     imageSet.Sprites.Add(resource.Images[0]);
-        //     imageSet.Sprites.Add(resource.Images[1]);
+            order.Names.ForEach(name =>
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    imageSet.Sprites.Add(resource.ImagesByName[name]);
+                }
+            });
 
-        //     imageSet.Draw();
-        // }
-
-
-        // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
-        var targetContainer = ImageContainers[0];
-        var emptyGameObject = new GameObject();
-        emptyGameObject.transform.SetParent(targetContainer.transform);
-
-        var imageSet = emptyGameObject.AddComponent<ImageSet>();
-
-        // 仮コード
-        imageSet.Sprites.Add(resource.Images[0]);
-        imageSet.Sprites.Add(resource.Images[1]);
-
-        imageSet.Draw();
+            imageSet.Draw();
+        }
     }
 
     public void ExecuteEveryFrame()
