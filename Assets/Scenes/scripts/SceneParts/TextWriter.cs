@@ -74,13 +74,13 @@ public class TextWriter : IScenarioSceneParts
         }
     }
 
-    public void SetUI()
+    public void SetUI(UI ui)
     {
-        var ui = GameObject.Find("TextField").GetComponent<Text>();
+        var component = GameObject.Find("TextField").GetComponent<Text>();
 
-        if (ui != null)
+        if (component != null)
         {
-            SetText(ui);
+            SetText(component);
         }
     }
 
