@@ -10,5 +10,5 @@
 
     void SetResource(Resource resource);
 
-    void SetUI();
+    void SetUI(UI ui);
 }

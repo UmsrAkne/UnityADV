@@ -10,7 +10,7 @@ public class ImageDrawer : IScenarioSceneParts
 
     public bool NeedExecuteEveryFrame => true;
 
-    private List<GameObject> ImageContainers { get; set; } = new List<GameObject>();
+    private List<ImageContainer> ImageContainers { get; set; }
 
     public void Execute()
     {
@@ -24,7 +24,7 @@ public class ImageDrawer : IScenarioSceneParts
             // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
             var targetContainer = ImageContainers[order.TargetLayerIndex];
             var emptyGameObject = new GameObject();
-            emptyGameObject.transform.SetParent(targetContainer.transform);
+            targetContainer.AddChild(emptyGameObject);
 
             var imageSet = emptyGameObject.AddComponent<ImageSet>();
 
@@ -54,18 +54,8 @@ public class ImageDrawer : IScenarioSceneParts
         this.scenario = scenario;
     }
 
-    public void SetUI()
+    public void SetUI(UI ui)
     {
-        ImageContainers.Add(GameObject.Find("ImageContainer_0"));
-        ImageContainers.Add(GameObject.Find("ImageContainer_1"));
-        ImageContainers.Add(GameObject.Find("ImageContainer_2"));
-
-        ImageContainers.ForEach(ic =>
-        {
-            if (ic == null)
-            {
-                throw new ArgumentNullException("ImageContainers の中に null が含まれています。ゲームオブジェクトの参照要確認");
-            }
-        });
+        ImageContainers = ui.ImageContainers;
     }
 }

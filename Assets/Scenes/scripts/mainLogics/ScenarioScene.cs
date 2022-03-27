@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +11,13 @@ public class ScenarioScene : MonoBehaviour
 
     private TextWriter TextWriter { get; } = new TextWriter();
 
+    private UI UI { get; } = new UI();
+
     // Start is called before the first frame update
     public void Start()
     {
+        InjectUI(UI);
+
         ScenarioSceneParts.Add(TextWriter);
 
         ScenarioSceneParts.Add(new ImageDrawer());
@@ -20,7 +25,7 @@ public class ScenarioScene : MonoBehaviour
         ScenarioSceneParts.ForEach(s =>
         {
             s.SetResource(Resource);
-            s.SetUI();
+            s.SetUI(UI);
         });
     }
 
@@ -42,5 +47,12 @@ public class ScenarioScene : MonoBehaviour
             p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]);
             p.Execute();
         });
+    }
+
+    private void InjectUI(UI ui)
+    {
+        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0") });
+        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1") });
+        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2") });
     }
 }
