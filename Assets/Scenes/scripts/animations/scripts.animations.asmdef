@@ -1,10 +1,8 @@
 {
-    "name": "scripts.mainLogics",
+    "name": "scripts.animations",
     "references": [
-        "GUID:ff73da60f6be4644e91a4e9ba9e8ec36",
         "GUID:78692fb31ea3d534d8841ce6eed60685",
-        "GUID:7d1b0fbea6f62234ca9482ef7dd0eb9d",
-        "GUID:e88b80d42669006439ba0ee0ace2175d"
+        "GUID:ff73da60f6be4644e91a4e9ba9e8ec36"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -21,6 +21,7 @@ public class ScenarioScene : MonoBehaviour
         ScenarioSceneParts.Add(TextWriter);
 
         ScenarioSceneParts.Add(new ImageDrawer());
+        ScenarioSceneParts.Add(new AnimationsManager());
 
         ScenarioSceneParts.ForEach(s =>
         {
