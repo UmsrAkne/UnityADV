@@ -24,8 +24,6 @@ public class ImageDrawer : IScenarioSceneParts
             // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
             var targetContainer = ImageContainers[order.TargetLayerIndex];
             var emptyGameObject = new GameObject();
-            targetContainer.AddChild(emptyGameObject);
-
             var imageSet = emptyGameObject.AddComponent<ImageSet>();
 
             order.Names.ForEach(name =>
@@ -35,6 +33,8 @@ public class ImageDrawer : IScenarioSceneParts
                     imageSet.Sprites.Add(resource.ImagesByName[name]);
                 }
             });
+
+            targetContainer.AddChild(emptyGameObject);
 
             imageSet.Draw();
         }

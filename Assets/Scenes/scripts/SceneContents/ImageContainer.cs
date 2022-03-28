@@ -18,6 +18,10 @@ public class ImageContainer
         }
     }
 
+    public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
+
+    public event ImageAddedEventHandler Added = delegate { };
+
     private List<GameObject> Childs { get; } = new List<GameObject>();
 
     public GameObject FrontChild => Childs.FirstOrDefault();
@@ -26,5 +30,9 @@ public class ImageContainer
     {
         childObject.transform.SetParent(GameObject.transform);
         Childs.Add(childObject);
+
+        ImageAddedEventArgs e = new ImageAddedEventArgs();
+        e.CurrentImageSet = childObject.GetComponent<ImageSet>();
+        Added(this, e);
     }
 }
