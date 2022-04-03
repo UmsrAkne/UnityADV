@@ -2,8 +2,11 @@
 {
     private ImageSet target;
     private int targetLayerIndex;
+    private float amount = 0.005f;
 
     public bool IsWorking { get; private set; } = true;
+
+    public double Amount { set => amount = (float)value; }
 
     public ImageSet Target
     {
@@ -31,7 +34,7 @@
             return;
         }
 
-        Target.Alpha += 0.01f;
+        Target.Alpha += amount;
 
         if (Target.Alpha > 1.0f)
         {
