@@ -26,9 +26,14 @@
 
     public void Execute()
     {
-        Target.Alpha += 0.05f;
+        if (!IsWorking)
+        {
+            return;
+        }
 
-        if (Target.Alpha > 1.0)
+        Target.Alpha += 0.01f;
+
+        if (Target.Alpha > 1.0f)
         {
             IsWorking = false;
         }

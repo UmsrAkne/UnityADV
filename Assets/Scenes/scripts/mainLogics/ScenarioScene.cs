@@ -52,8 +52,8 @@ public class ScenarioScene : MonoBehaviour
 
     private void InjectUI(UI ui)
     {
-        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0") });
-        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1") });
-        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2") });
+        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0"), Index = 0 });
+        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1"), Index = 1 });
+        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2"), Index = 2 });
     }
 }
