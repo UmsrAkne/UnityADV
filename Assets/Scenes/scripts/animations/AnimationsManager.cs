@@ -8,12 +8,30 @@ public class AnimationsManager : IScenarioSceneParts
 
     private List<ImageContainer> ImageContainers { get; set; }
 
+    private List<IAnimation> Animations { get; } = new List<IAnimation>();
+
     public void Execute()
     {
     }
 
     public void ExecuteEveryFrame()
     {
+        bool deleteFlag = false;
+
+        Animations.ForEach(anime =>
+        {
+            anime.Execute();
+
+            if (!anime.IsWorking)
+            {
+                deleteFlag = true;
+            }
+        });
+
+        if (deleteFlag)
+        {
+            Animations.RemoveAll(anime => !anime.IsWorking);
+        }
     }
 
     public void SetResource(Resource resource)
@@ -27,5 +45,17 @@ public class AnimationsManager : IScenarioSceneParts
     public void SetUI(UI ui)
     {
         ImageContainers = ui.ImageContainers;
+        ImageContainers.ForEach(imgContainer => { imgContainer.Added += imageAdded; });
+    }
+
+    private void imageAdded(object sender, ImageAddedEventArgs e)
+    {
+        // 画像が挿入される時、アルファの変化を使ってアニメーションを行う。
+
+        ImageContainer dispatcher = sender as ImageContainer;
+        Animations.Add(new AlphaChanger()
+        {
+            Target = ImageContainers[dispatcher.Index].FrontChild.GetComponent<ImageSet>()
+        });
     }
 }

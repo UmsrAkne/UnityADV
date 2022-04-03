@@ -26,10 +26,12 @@ public class ImageContainer
 
     public GameObject FrontChild => Childs.FirstOrDefault();
 
+    public int Index { get; set; }
+
     public void AddChild(GameObject childObject)
     {
         childObject.transform.SetParent(GameObject.transform);
-        Childs.Add(childObject);
+        Childs.Insert(0, childObject);
 
         ImageAddedEventArgs e = new ImageAddedEventArgs();
         e.CurrentImageSet = childObject.GetComponent<ImageSet>();

@@ -61,6 +61,8 @@ public class ImageSet : MonoBehaviour
 
         Renderers[0].sortingOrder = -1;
         Renderers[0].maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+
+        Alpha = alpha;
     }
 
     // Update is called once per frame
