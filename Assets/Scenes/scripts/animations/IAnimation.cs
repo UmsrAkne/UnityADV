@@ -8,5 +8,5 @@
 
     ImageSet Target { set; }
 
-    int TargetLayerIndex { set; }
+    int TargetLayerIndex { set; get; }
 }
