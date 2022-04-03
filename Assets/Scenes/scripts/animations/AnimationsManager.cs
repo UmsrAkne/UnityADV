@@ -45,12 +45,12 @@ public class AnimationsManager : IScenarioSceneParts
     public void SetUI(UI ui)
     {
         ImageContainers = ui.ImageContainers;
-        ImageContainers.ForEach(imgContainer => { imgContainer.Added += imageAdded; });
+        ImageContainers.ForEach(imgContainer => { imgContainer.Added += ImageAddedEventHandler; });
     }
 
-    private void imageAdded(object sender, ImageAddedEventArgs e)
+    private void ImageAddedEventHandler(object sender, ImageAddedEventArgs e)
     {
-        // 画像が挿入される時、アルファの変化を使ってアニメーションを行う。
+        //// 画像が挿入される時、アルファの変化を使ってアニメーションを行う。
 
         ImageContainer dispatcher = sender as ImageContainer;
         Animations.Add(new AlphaChanger()

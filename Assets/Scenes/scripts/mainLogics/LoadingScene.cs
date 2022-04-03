@@ -15,7 +15,7 @@ public class LoadingScene : MonoBehaviour
     private string[] Paths { get; set; }
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         Text = GameObject.Find("TextWindow").GetComponent<Text>();
         Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
@@ -24,7 +24,7 @@ public class LoadingScene : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) && !keyboardLock)
         {

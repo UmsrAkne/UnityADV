@@ -6,6 +6,10 @@ public class ImageContainer
 {
     private GameObject gameObject;
 
+    public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
+
+    public event ImageAddedEventHandler Added = delegate { };
+
     public GameObject GameObject
     {
         get => gameObject;
@@ -18,15 +22,11 @@ public class ImageContainer
         }
     }
 
-    public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
-
-    public event ImageAddedEventHandler Added = delegate { };
-
-    private List<GameObject> Childs { get; } = new List<GameObject>();
-
     public GameObject FrontChild => Childs.FirstOrDefault();
 
     public int Index { get; set; }
+
+    private List<GameObject> Childs { get; } = new List<GameObject>();
 
     public void AddChild(GameObject childObject)
     {
