@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ImageSet : MonoBehaviour
 {
     private float alpha = 1.0f;
+    private float scale = 1.0f;
 
     private List<GameObject> gos = new List<GameObject>();
 
@@ -17,6 +18,15 @@ public class ImageSet : MonoBehaviour
         {
             Renderers.ForEach(r => r.color = new Color(1.0f, 1.0f, 1.0f, value));
             alpha = value;
+        }
+    }
+
+    public double Scale
+    {
+        set
+        {
+            gameObject.transform.localScale = new Vector3((float)value, (float)value, 0);
+            scale = (float)value;
         }
     }
 
@@ -63,6 +73,7 @@ public class ImageSet : MonoBehaviour
         Renderers[0].maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
 
         Alpha = alpha;
+        Scale = scale;
     }
 
     // Update is called once per frame

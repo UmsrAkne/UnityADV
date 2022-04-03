@@ -23,6 +23,14 @@ public class ImageElementConverter : IXMLElementConverter
                 order.Names.Add(imageTag.Attribute("c").Value);
                 order.Names.Add(imageTag.Attribute("d").Value);
 
+                if (imageTag.Attribute("scale") != null)
+                {
+                    if (double.TryParse(imageTag.Attribute("scale").Value, out double scale))
+                    {
+                        order.Scale = scale;
+                    }
+                }
+
                 scenario.ImageOrders.Add(order);
             }
         }

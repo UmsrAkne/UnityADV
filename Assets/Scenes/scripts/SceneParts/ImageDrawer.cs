@@ -35,6 +35,7 @@ public class ImageDrawer : IScenarioSceneParts
             });
 
             imageSet.Alpha = 0;
+            imageSet.Scale = order.Scale;
             targetContainer.AddChild(emptyGameObject);
             imageSet.Draw();
         }
