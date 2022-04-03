@@ -1,12 +1,12 @@
 ﻿public interface IAnimation
 {
-    void Execute();
-
-    void Stop();
-
     bool IsWorking { get; }
 
     ImageSet Target { set; }
 
-    int TargetLayerIndex { set; get; }
+    int TargetLayerIndex { get; set; }
+
+    void Execute();
+
+    void Stop();
 }

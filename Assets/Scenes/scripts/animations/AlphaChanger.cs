@@ -10,6 +10,7 @@
 
     public ImageSet Target
     {
+        get => target;
         set
         {
             if (target == null)
@@ -17,8 +18,6 @@
                 target = value;
             }
         }
-
-        get => target;
     }
 
     public int TargetLayerIndex
