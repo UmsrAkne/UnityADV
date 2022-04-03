@@ -31,7 +31,7 @@ public class ImageContainer
     public void AddChild(GameObject childObject)
     {
         childObject.transform.SetParent(GameObject.transform);
-        Childs.Add(childObject);
+        Childs.Insert(0, childObject);
 
         ImageAddedEventArgs e = new ImageAddedEventArgs();
         e.CurrentImageSet = childObject.GetComponent<ImageSet>();
