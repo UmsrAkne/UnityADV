@@ -8,4 +8,6 @@ public class Resource
     public List<Sprite> Images { get; set; }
 
     public Dictionary<string, Sprite> ImagesByName { get; set; }
+
+    public AudioSource BGMAudioSource { get; set; }
 }

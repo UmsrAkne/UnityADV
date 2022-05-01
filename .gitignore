@@ -72,3 +72,5 @@ crashlytics-build.properties
 
 scenes/*
 StyleCop.Cache
+
+commonResource/*
