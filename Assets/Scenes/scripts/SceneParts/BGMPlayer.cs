@@ -5,28 +5,33 @@ public class BGMPlayer : IScenarioSceneParts
 {
     public bool NeedExecuteEveryFrame => false;
 
+    private AudioSource BGM { get; set; }
+
+    private bool Playing { get; set; }
+
     public void Execute()
     {
-        throw new System.NotImplementedException();
+        if (!Playing)
+        {
+            BGM.Play();
+        }
     }
 
     public void ExecuteEveryFrame()
     {
-        throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
     }
 
     public void SetResource(Resource resource)
     {
-        throw new System.NotImplementedException();
+        BGM = resource.BGMAudioSource;
     }
 
     public void SetScenario(Scenario scenario)
     {
-        throw new System.NotImplementedException();
     }
 
     public void SetUI(UI ui)
     {
-        throw new System.NotImplementedException();
     }
 }
