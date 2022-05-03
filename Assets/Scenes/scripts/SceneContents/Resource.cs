@@ -10,4 +10,6 @@ public class Resource
     public Dictionary<string, Sprite> ImagesByName { get; set; }
 
     public AudioSource BGMAudioSource { get; set; }
+
+    public List<AudioSource> Voices { get; set; }
 }
