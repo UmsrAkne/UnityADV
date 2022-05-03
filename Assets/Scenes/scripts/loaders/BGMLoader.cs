@@ -23,7 +23,7 @@ public class BGMLoader : MonoBehaviour
     private string GetSoundFilePath(string targetDirectoryPath)
     {
         var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
-        return Path.GetFullPath( allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").FirstOrDefault());
+        return Path.GetFullPath(allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").FirstOrDefault());
     }
 
     private IEnumerator LoadAudio(string path)
