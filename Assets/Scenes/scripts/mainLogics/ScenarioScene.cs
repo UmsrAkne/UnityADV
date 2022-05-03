@@ -23,6 +23,7 @@ public class ScenarioScene : MonoBehaviour
         ScenarioSceneParts.Add(new ImageDrawer());
         ScenarioSceneParts.Add(new AnimationsManager());
         ScenarioSceneParts.Add(new BGMPlayer());
+        ScenarioSceneParts.Add(new VoicePlayer());
 
         ScenarioSceneParts.ForEach(s =>
         {
