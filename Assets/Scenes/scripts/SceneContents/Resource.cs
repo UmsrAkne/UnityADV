@@ -11,5 +11,5 @@ public class Resource
 
     public AudioSource BGMAudioSource { get; set; }
 
-    public List<AudioSource> Voices { get; set; }
+    public List<ISound> Voices { get; set; }
 }

@@ -14,7 +14,7 @@ public class VoiceLoader : MonoBehaviour
 
     private event EventHandler PartLoadCompleted;
 
-    public List<AudioSource> AudioSources { get; private set; } = new List<AudioSource>();
+    public List<ISound> AudioSources { get; private set; } = new List<ISound>();
 
     private List<AudioClip> AudioClips { get; set; }
 
@@ -33,7 +33,7 @@ public class VoiceLoader : MonoBehaviour
         for (var i = 0; i < audioPaths.Count; i++)
         {
             /// これって GameObject がメモリから消滅しても大丈夫？
-            AudioSources.Add(new GameObject().AddComponent<AudioSource>());
+            AudioSources.Add(new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() });
         }
 
         AudioClips = Enumerable.Repeat<AudioClip>(null, audioPaths.Count).ToList();
@@ -76,7 +76,7 @@ public class VoiceLoader : MonoBehaviour
                 yield break;
             }
 
-            AudioSources[index].clip = AudioClips[index];
+            AudioSources[index].AudioSource.clip = AudioClips[index];
             PartLoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }

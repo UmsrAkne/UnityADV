@@ -14,11 +14,6 @@ public class Loader
 
     public void Load(string path)
     {
-        voiceLoader.LoadCompleted += (sender, e) =>
-        {
-            Resource.Voices = (sender as VoiceLoader).AudioSources;
-        };
-
         textLoader.Load($@"{path}\texts\scenario.xml");
         imageLoader.Load($@"{path}\images");
         voiceLoader.Load($@"{path}\voices");
@@ -28,5 +23,6 @@ public class Loader
         Resource.Images = imageLoader.Sprites;
         Resource.ImagesByName = imageLoader.SpriteDictionary;
         Resource.BGMAudioSource = bgmLoader.AudioSource;
+        Resource.Voices = voiceLoader.AudioSources;
     }
 }
