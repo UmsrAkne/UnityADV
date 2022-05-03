@@ -10,7 +10,7 @@ public class VoicePlayer : IScenarioSceneParts
 
     public bool NeedExecuteEveryFrame => false;
 
-    public List<AudioSource> Voices { get; set; }
+    public List<ISound> Voices { get; set; }
 
     public void Execute()
     {
