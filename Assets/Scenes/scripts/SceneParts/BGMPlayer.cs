@@ -13,7 +13,9 @@ public class BGMPlayer : IScenarioSceneParts
     {
         if (!Playing)
         {
+            BGM.loop = true;
             BGM.Play();
+            Playing = true;
         }
     }
 
