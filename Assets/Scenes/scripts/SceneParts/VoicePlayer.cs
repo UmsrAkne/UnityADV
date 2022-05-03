@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class VoicePlayer : IScenarioSceneParts
@@ -7,6 +8,7 @@ public class VoicePlayer : IScenarioSceneParts
     private int nextPlayIndex;
     private int currentPlayIndex;
     private bool playRequire;
+    private VoiceOrder nextOrder;
 
     public bool NeedExecuteEveryFrame => false;
 
@@ -19,9 +21,10 @@ public class VoicePlayer : IScenarioSceneParts
             return;
         }
 
-        Voices[nextPlayIndex].Play();
-        currentPlayIndex = nextPlayIndex;
+        Voices[nextOrder.Index].Play();
+        currentPlayIndex = nextOrder.Index;
         nextPlayIndex = 0;
+        nextOrder = null;
     }
 
     public void ExecuteEveryFrame()
@@ -35,9 +38,16 @@ public class VoicePlayer : IScenarioSceneParts
 
     public void SetScenario(Scenario scenario)
     {
-        if (scenario.VoiceIndex != 0)
+        if (scenario.VoiceOrders.Count() == 0)
         {
-            nextPlayIndex = scenario.VoiceIndex;
+            return;
+        }
+
+        nextOrder = scenario.VoiceOrders.First();
+
+        if (nextOrder.Index != 0)
+        {
+            nextPlayIndex = nextOrder.Index;
             playRequire = true;
         }
     }

@@ -14,6 +14,7 @@ public class TextLoader
     public void Load(string targetPath)
     {
         Converters.Add(new ImageElementConverter());
+        Converters.Add(new VoiceElementConverter());
 
         try
         {
