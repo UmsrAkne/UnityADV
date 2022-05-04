@@ -8,6 +8,7 @@ public class VoicePlayer : IScenarioSceneParts
     private int nextPlayIndex;
     private int currentPlayIndex;
     private bool playRequire;
+    private ISound currentVoice;
     private VoiceOrder nextOrder;
 
     public bool NeedExecuteEveryFrame => false;
@@ -21,10 +22,17 @@ public class VoicePlayer : IScenarioSceneParts
             return;
         }
 
-        Voices[nextOrder.Index].Play();
+        if (currentVoice != null)
+        {
+            currentVoice.Stop();
+        }
+
+        currentVoice = Voices[nextOrder.Index];
+        currentVoice.Play();
         currentPlayIndex = nextOrder.Index;
         nextPlayIndex = 0;
         nextOrder = null;
+        playRequire = false;
     }
 
     public void ExecuteEveryFrame()
