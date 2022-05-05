@@ -53,7 +53,7 @@ public class VoicePlayer : IScenarioSceneParts
 
         nextOrder = scenario.VoiceOrders.First();
 
-        if (nextOrder.Index != 0)
+        if (nextOrder.Index >= 0)
         {
             nextPlayIndex = nextOrder.Index;
             playRequire = true;
