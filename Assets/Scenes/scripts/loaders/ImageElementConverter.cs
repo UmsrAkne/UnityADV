@@ -31,6 +31,21 @@ public class ImageElementConverter : IXMLElementConverter
                     }
                 }
 
+                if (imageTag.Attribute("x") != null)
+                {
+                    order.X = int.Parse(imageTag.Attribute("x").Value);
+                }
+
+                if (imageTag.Attribute("y") != null)
+                {
+                    order.Y = int.Parse(imageTag.Attribute("y").Value);
+                }
+
+                if (imageTag.Attribute("angle") != null)
+                {
+                    order.Angle = int.Parse(imageTag.Attribute("angle").Value);
+                }
+
                 scenario.ImageOrders.Add(order);
             }
         }

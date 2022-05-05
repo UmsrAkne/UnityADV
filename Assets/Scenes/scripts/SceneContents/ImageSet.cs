@@ -30,6 +30,30 @@ public class ImageSet : MonoBehaviour
         }
     }
 
+    public int X
+    {
+        set
+        {
+            gameObject.transform.localPosition = new Vector3((float)value, gameObject.transform.localPosition.y);
+        }
+    }
+
+    public int Y
+    {
+        set
+        {
+            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, (float)value);
+        }
+    }
+
+    public int Angle
+    {
+        set
+        {
+            gameObject.transform.localRotation = Quaternion.AngleAxis((float)value, Vector3.forward);
+        }
+    }
+
     public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
 
     private List<SpriteRenderer> Renderers { get; set; } = new List<SpriteRenderer>();

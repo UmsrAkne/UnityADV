@@ -36,6 +36,9 @@ public class ImageDrawer : IScenarioSceneParts
 
             imageSet.Alpha = 0;
             imageSet.Scale = order.Scale;
+            imageSet.X = order.X;
+            imageSet.Y = order.Y;
+            imageSet.Angle = order.Angle;
             targetContainer.AddChild(emptyGameObject);
             imageSet.Draw();
         }
