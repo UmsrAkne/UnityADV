@@ -15,6 +15,8 @@ public class VoicePlayer : IScenarioSceneParts
 
     public List<ISound> Voices { get; set; }
 
+    public int Channel { get; set; }
+
     public void Execute()
     {
         if (!playRequire)
