@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -7,6 +8,10 @@ using UnityEngine;
 public class VoiceElementConverter : IXMLElementConverter
 {
     public string TargetElementName => "voice";
+
+    private readonly string numberAttribute = "number";
+    private readonly string fileNameAttribute = "fileName";
+    private readonly string channelAttribute = "channel";
 
     public void Convert(XElement xmlElement, Scenario scenario)
     {
@@ -18,14 +23,24 @@ public class VoiceElementConverter : IXMLElementConverter
             {
                 var order = new VoiceOrder();
 
-                if (voiceTag.Attribute("number") != null)
+                if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
                 {
-                    order.Index = int.Parse(voiceTag.Attribute("number").Value);
+                    throw new FormatException("<voice> には fileName か number 属性のどちらかが必須です");
                 }
 
-                if (voiceTag.Attribute("fileName") != null)
+                if (voiceTag.Attribute(numberAttribute) != null)
                 {
-                    order.FileName = voiceTag.Attribute("fileName").Value;
+                    order.Index = int.Parse(voiceTag.Attribute(numberAttribute).Value);
+                }
+
+                if (voiceTag.Attribute(fileNameAttribute) != null)
+                {
+                    order.FileName = voiceTag.Attribute(fileNameAttribute).Value;
+                }
+
+                if (voiceTag.Attribute(channelAttribute) != null)
+                {
+                    order.Channel = int.Parse(voiceTag.Attribute(channelAttribute).Value);
                 }
 
                 scenario.VoiceOrders.Add(order);

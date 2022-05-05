@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class TextWriter : IScenarioSceneParts
 {
     private int counter;
     private bool writing;
+    private bool initialExecute = true;
 
     public int ScenarioIndex { get; private set; }
 
@@ -23,6 +25,14 @@ public class TextWriter : IScenarioSceneParts
     public void Execute()
     {
         counter = 0;
+        if (initialExecute)
+        {
+            initialExecute = false;
+            Scenario = Scenarios.First();
+            writing = true;
+            WriteText(string.Empty);
+            return;
+        }
 
         if (writing)
         {
@@ -32,7 +42,7 @@ public class TextWriter : IScenarioSceneParts
         else
         {
             ScenarioIndex++;
-            Scenario = Scenarios[ScenarioIndex - 1];
+            Scenario = Scenarios[ScenarioIndex];
             writing = true;
             WriteText(string.Empty);
         }

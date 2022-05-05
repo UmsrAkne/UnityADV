@@ -75,10 +75,14 @@
             Assert.AreEqual(writer.ScenarioIndex, 0);
             writer.Execute();
 
-            Assert.AreEqual(writer.ScenarioIndex, 1);
+            Assert.AreEqual(writer.ScenarioIndex, 0);
             writer.Execute();
             writer.Execute();
 
+            Assert.AreEqual(writer.ScenarioIndex, 1);
+
+            writer.Execute();
+            writer.Execute();
             Assert.AreEqual(writer.ScenarioIndex, 2);
         }
 

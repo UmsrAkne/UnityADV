@@ -8,11 +8,14 @@ public class VoicePlayer : IScenarioSceneParts
     private int nextPlayIndex;
     private int currentPlayIndex;
     private bool playRequire;
+    private ISound currentVoice;
     private VoiceOrder nextOrder;
 
     public bool NeedExecuteEveryFrame => false;
 
     public List<ISound> Voices { get; set; }
+
+    public int Channel { get; set; }
 
     public void Execute()
     {
@@ -21,10 +24,17 @@ public class VoicePlayer : IScenarioSceneParts
             return;
         }
 
-        Voices[nextOrder.Index].Play();
+        if (currentVoice != null)
+        {
+            currentVoice.Stop();
+        }
+
+        currentVoice = Voices[nextOrder.Index];
+        currentVoice.Play();
         currentPlayIndex = nextOrder.Index;
         nextPlayIndex = 0;
         nextOrder = null;
+        playRequire = false;
     }
 
     public void ExecuteEveryFrame()
@@ -45,7 +55,7 @@ public class VoicePlayer : IScenarioSceneParts
 
         nextOrder = scenario.VoiceOrders.First();
 
-        if (nextOrder.Index != 0)
+        if (nextOrder.Index >= 0)
         {
             nextPlayIndex = nextOrder.Index;
             playRequire = true;
