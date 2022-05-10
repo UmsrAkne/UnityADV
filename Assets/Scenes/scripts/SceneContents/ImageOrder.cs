@@ -15,4 +15,6 @@ public class ImageOrder
     public int Y { get; set; }
 
     public int Angle { get; set; }
+
+    public bool IsDrawOrder { get; set; }
 }
