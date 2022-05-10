@@ -2,7 +2,7 @@
 {
     private ImageSet target;
     private int targetLayerIndex;
-    private float amount = 0.005f;
+    private float amount = 0.1f;
 
     public bool IsWorking { get; private set; } = true;
 

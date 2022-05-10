@@ -30,6 +30,8 @@ public class ScenarioScene : MonoBehaviour
             s.SetResource(Resource);
             s.SetUI(UI);
         });
+
+        InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
     }
 
     // Update is called once per frame
@@ -39,8 +41,6 @@ public class ScenarioScene : MonoBehaviour
         {
             Forward();
         }
-
-        ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
     }
 
     public void Forward()
@@ -57,5 +57,10 @@ public class ScenarioScene : MonoBehaviour
         ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0"), Index = 0 });
         ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1"), Index = 1 });
         ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2"), Index = 2 });
+    }
+
+    private void ExecuteEveryFrames()
+    {
+        ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
     }
 }
