@@ -23,7 +23,7 @@ public class DrawElementConverter : IXMLElementConverter
                 order.Names.Add(imageTag.Attribute("c").Value);
                 order.Names.Add(imageTag.Attribute("d").Value);
 
-                scenario.ImageOrders.Add(order);
+                scenario.DrawOrders.Add(order);
             }
         }
     }

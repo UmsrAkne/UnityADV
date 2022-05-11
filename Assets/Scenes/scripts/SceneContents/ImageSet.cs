@@ -100,6 +100,15 @@ public class ImageSet : MonoBehaviour
         Scale = scale;
     }
 
+    public SpriteRenderer SetSprite(Sprite sp)
+    {
+        var g = new GameObject();
+        g.transform.SetParent(this.gameObject.transform, false);
+        var renderer = g.AddComponent<SpriteRenderer>();
+        renderer.sprite = sp;
+        return renderer;
+    }
+
     // Update is called once per frame
     public void Update()
     {
