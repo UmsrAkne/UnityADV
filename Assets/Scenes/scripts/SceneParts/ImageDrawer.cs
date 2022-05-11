@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ImageDrawer : IScenarioSceneParts
@@ -12,9 +13,11 @@ public class ImageDrawer : IScenarioSceneParts
 
     private List<ImageContainer> ImageContainers { get; set; }
 
+    private List<SpriteRenderer> DrawingImages { get; set; } = new List<SpriteRenderer>();
+
     public void Execute()
     {
-        if (scenario.ImageOrders.Count == 0)
+        if (scenario.ImageOrders.Count == 0 && scenario.DrawOrders.Count == 0)
         {
             return;
         }
@@ -32,6 +35,10 @@ public class ImageDrawer : IScenarioSceneParts
                 {
                     imageSet.Sprites.Add(resource.ImagesByName[name]);
                 }
+                else
+                {
+                    imageSet.Sprites.Add(null);
+                }
             });
 
             imageSet.Alpha = 0;
@@ -42,10 +49,40 @@ public class ImageDrawer : IScenarioSceneParts
             targetContainer.AddChild(emptyGameObject);
             imageSet.Draw();
         }
+
+        foreach (ImageOrder order in scenario.DrawOrders)
+        {
+            var targetContainer = ImageContainers[order.TargetLayerIndex];
+            var frontGameObject = targetContainer.FrontChild;
+            var imageSet = frontGameObject.GetComponent<ImageSet>();
+
+            for (var i = 0; i < order.Names.Count; i++)
+            {
+                var name = order.Names[i];
+                if (!string.IsNullOrEmpty(name))
+                {
+                    var r = imageSet.SetSprite(resource.ImagesByName[name]);
+                    r.color = new Color(1.0f, 1.0f, 1.0f, 0);
+                    DrawingImages.Add(r);
+                }
+            }
+        }
     }
 
     public void ExecuteEveryFrame()
     {
+        bool doDelete = false;
+
+        DrawingImages.ForEach(r =>
+        {
+            r.color = new Color(1.0f, 1.0f, 1.0f, r.color.a + 0.1f);
+            doDelete = r.color.a > 1.0f;
+        });
+
+        if (doDelete)
+        {
+            DrawingImages = DrawingImages.Where(r => r.color.a <= 1.0f).ToList();
+        }
     }
 
     public void SetResource(Resource resource)
