@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Xml.Linq;
+    using Animations;
     using SceneContents;
     using UnityEngine;
 
@@ -19,6 +20,7 @@
             Converters.Add(new ImageElementConverter());
             Converters.Add(new DrawElementConverter());
             Converters.Add(new VoiceElementConverter());
+            Converters.Add(new AnimeElementConverter());
 
             try
             {
