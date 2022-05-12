@@ -3,9 +3,9 @@
     using System.Collections;
     using System.Collections.Generic;
     using NUnit.Framework;
-    using UnityEngine.TestTools;
     using SceneContents;
     using SceneParts;
+    using UnityEngine.TestTools;
 
     public class TestTextWriter
     {
@@ -19,7 +19,6 @@
         [Test]
         public void TestExecute()
         {
-
             var res = new Resource();
             res.Scenarios = new List<Scenario>()
             {

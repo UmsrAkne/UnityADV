@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-using SceneContents;
-
-namespace Loaders
+﻿namespace Loaders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
+
     public class TextLoader
     {
         public List<Scenario> Scenario { get; set; }

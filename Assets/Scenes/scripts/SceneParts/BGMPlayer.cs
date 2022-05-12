@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.Audio;
-using SceneContents;
-
-namespace SceneParts
+﻿namespace SceneParts
 {
+    using SceneContents;
+    using UnityEngine;
+
     public class BGMPlayer : IScenarioSceneParts
     {
         public bool NeedExecuteEveryFrame => false;

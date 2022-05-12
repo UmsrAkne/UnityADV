@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using SceneContents;
-
-namespace SceneParts
+﻿namespace SceneParts
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SceneContents;
+    using UnityEngine;
+
     public class ImageDrawer : IScenarioSceneParts
     {
         private Scenario scenario;

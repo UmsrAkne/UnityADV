@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-using SceneContents;
-
-namespace Loaders
+﻿namespace Loaders
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
+
     public class VoiceElementConverter : IXMLElementConverter
     {
-        public string TargetElementName => "voice";
-
         private readonly string numberAttribute = "number";
         private readonly string fileNameAttribute = "fileName";
         private readonly string channelAttribute = "channel";
+
+        public string TargetElementName => "voice";
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {

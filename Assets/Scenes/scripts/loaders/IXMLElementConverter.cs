@@ -1,8 +1,8 @@
-﻿using System.Xml.Linq;
-using SceneContents;
-
-namespace Loaders
+﻿namespace Loaders
 {
+    using System.Xml.Linq;
+    using SceneContents;
+
     public interface IXMLElementConverter
     {
         string TargetElementName { get; }

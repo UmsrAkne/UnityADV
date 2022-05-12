@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
-using SceneContents;
-
-namespace SceneParts
+﻿namespace SceneParts
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SceneContents;
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class TextWriter : IScenarioSceneParts
     {
         private int counter;

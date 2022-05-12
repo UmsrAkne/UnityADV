@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using SceneContents;
-using SceneParts;
-
-namespace Animations
+﻿namespace Animations
 {
+    using System.Collections.Generic;
+    using SceneContents;
+    using SceneParts;
+    using UnityEngine;
+
     public class AnimationsManager : IScenarioSceneParts
     {
         public bool NeedExecuteEveryFrame => true;

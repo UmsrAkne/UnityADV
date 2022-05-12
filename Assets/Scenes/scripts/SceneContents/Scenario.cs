@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace SceneContents
+﻿namespace SceneContents
 {
+    using System.Collections.Generic;
+
     public class Scenario
     {
         public string Text { get; set; }

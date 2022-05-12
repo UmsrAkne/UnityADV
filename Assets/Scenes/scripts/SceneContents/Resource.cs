@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace SceneContents
+﻿namespace SceneContents
 {
+    using System.Collections.Generic;
+    using UnityEngine;
+
     public class Resource
     {
         public List<Scenario> Scenarios { get; set; }

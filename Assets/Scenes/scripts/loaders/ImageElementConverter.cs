@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-using SceneContents;
-
-namespace Loaders
+﻿namespace Loaders
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
+
     public class ImageElementConverter : IXMLElementConverter
     {
         public string TargetElementName => "image";

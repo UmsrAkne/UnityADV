@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using Loaders;
+using MainLogics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Loaders;
-using MainLogics;
 
 public class LoadingScene : MonoBehaviour
 {

@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
-using SceneContents;
-
-namespace Loaders
+﻿namespace Loaders
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using SceneContents;
+    using UnityEngine;
+
     public class Loader
     {
         private TextLoader textLoader = new TextLoader();

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Animations;
-using SceneParts;
-using SceneContents;
-
-namespace MainLogics
+﻿namespace MainLogics
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using Animations;
+    using SceneContents;
+    using SceneParts;
+    using UnityEngine;
+
     public class ScenarioScene : MonoBehaviour
     {
         public Resource Resource { private get; set; } = new Resource();
