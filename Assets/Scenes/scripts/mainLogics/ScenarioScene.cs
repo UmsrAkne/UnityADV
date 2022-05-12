@@ -2,65 +2,71 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using animations;
+using sceneParts;
+using SceneContents;
 
-public class ScenarioScene : MonoBehaviour
+namespace mainLogics
 {
-    public Resource Resource { private get; set; } = new Resource();
-
-    private List<IScenarioSceneParts> ScenarioSceneParts { get; } = new List<IScenarioSceneParts>();
-
-    private TextWriter TextWriter { get; } = new TextWriter();
-
-    private UI UI { get; } = new UI();
-
-    // Start is called before the first frame update
-    public void Start()
+    public class ScenarioScene : MonoBehaviour
     {
-        InjectUI(UI);
+        public Resource Resource { private get; set; } = new Resource();
 
-        ScenarioSceneParts.Add(TextWriter);
+        private List<IScenarioSceneParts> ScenarioSceneParts { get; } = new List<IScenarioSceneParts>();
 
-        ScenarioSceneParts.Add(new ImageDrawer());
-        ScenarioSceneParts.Add(new AnimationsManager());
-        ScenarioSceneParts.Add(new BGMPlayer());
-        ScenarioSceneParts.Add(new VoicePlayer());
+        private TextWriter TextWriter { get; } = new TextWriter();
 
-        ScenarioSceneParts.ForEach(s =>
+        private UI UI { get; } = new UI();
+
+        // Start is called before the first frame update
+        public void Start()
         {
-            s.SetResource(Resource);
-            s.SetUI(UI);
-        });
+            InjectUI(UI);
 
-        InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
-    }
+            ScenarioSceneParts.Add(TextWriter);
 
-    // Update is called once per frame
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            Forward();
+            ScenarioSceneParts.Add(new ImageDrawer());
+            ScenarioSceneParts.Add(new AnimationsManager());
+            ScenarioSceneParts.Add(new BGMPlayer());
+            ScenarioSceneParts.Add(new VoicePlayer());
+
+            ScenarioSceneParts.ForEach(s =>
+            {
+                s.SetResource(Resource);
+                s.SetUI(UI);
+            });
+
+            InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
         }
-    }
 
-    public void Forward()
-    {
-        ScenarioSceneParts.ForEach(p =>
+        // Update is called once per frame
+        public void Update()
         {
-            p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]);
-            p.Execute();
-        });
-    }
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Forward();
+            }
+        }
 
-    private void InjectUI(UI ui)
-    {
-        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0"), Index = 0 });
-        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1"), Index = 1 });
-        ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2"), Index = 2 });
-    }
+        public void Forward()
+        {
+            ScenarioSceneParts.ForEach(p =>
+            {
+                p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]);
+                p.Execute();
+            });
+        }
 
-    private void ExecuteEveryFrames()
-    {
-        ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
+        private void InjectUI(UI ui)
+        {
+            ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0"), Index = 0 });
+            ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1"), Index = 1 });
+            ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2"), Index = 2 });
+        }
+
+        private void ExecuteEveryFrames()
+        {
+            ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
+        }
     }
 }

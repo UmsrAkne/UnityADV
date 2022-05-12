@@ -2,67 +2,71 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using SceneContents;
 
-public class VoicePlayer : IScenarioSceneParts
+namespace sceneParts
 {
-    private int nextPlayIndex;
-    private int currentPlayIndex;
-    private bool playRequire;
-    private ISound currentVoice;
-    private VoiceOrder nextOrder;
-
-    public bool NeedExecuteEveryFrame => false;
-
-    public List<ISound> Voices { get; set; }
-
-    public int Channel { get; set; }
-
-    public void Execute()
+    public class VoicePlayer : IScenarioSceneParts
     {
-        if (!playRequire)
+        private int nextPlayIndex;
+        private int currentPlayIndex;
+        private bool playRequire;
+        private ISound currentVoice;
+        private VoiceOrder nextOrder;
+
+        public bool NeedExecuteEveryFrame => false;
+
+        public List<ISound> Voices { get; set; }
+
+        public int Channel { get; set; }
+
+        public void Execute()
         {
-            return;
+            if (!playRequire)
+            {
+                return;
+            }
+
+            if (currentVoice != null)
+            {
+                currentVoice.Stop();
+            }
+
+            currentVoice = Voices[nextOrder.Index];
+            currentVoice.Play();
+            currentPlayIndex = nextOrder.Index;
+            nextPlayIndex = 0;
+            nextOrder = null;
+            playRequire = false;
         }
 
-        if (currentVoice != null)
+        public void ExecuteEveryFrame()
         {
-            currentVoice.Stop();
         }
 
-        currentVoice = Voices[nextOrder.Index];
-        currentVoice.Play();
-        currentPlayIndex = nextOrder.Index;
-        nextPlayIndex = 0;
-        nextOrder = null;
-        playRequire = false;
-    }
-
-    public void ExecuteEveryFrame()
-    {
-    }
-
-    public void SetResource(Resource resource)
-    {
-        Voices = resource.Voices;
-    }
-
-    public void SetScenario(Scenario scenario)
-    {
-        if (scenario.VoiceOrders.Count() == 0)
+        public void SetResource(Resource resource)
         {
-            return;
+            Voices = resource.Voices;
         }
 
-        nextOrder = scenario.VoiceOrders.First();
-
-        if (nextOrder.Index >= 0)
+        public void SetScenario(Scenario scenario)
         {
-            nextPlayIndex = nextOrder.Index;
-            playRequire = true;
-        }
-    }
+            if (scenario.VoiceOrders.Count() == 0)
+            {
+                return;
+            }
 
-    public void SetUI(UI ui)
-    {
+            nextOrder = scenario.VoiceOrders.First();
+
+            if (nextOrder.Index >= 0)
+            {
+                nextPlayIndex = nextOrder.Index;
+                playRequire = true;
+            }
+        }
+
+        public void SetUI(UI ui)
+        {
+        }
     }
 }
