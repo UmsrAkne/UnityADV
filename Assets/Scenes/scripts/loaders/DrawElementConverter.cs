@@ -1,29 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-
-public class DrawElementConverter : IXMLElementConverter
+﻿namespace Loaders
 {
-    public string TargetElementName => "draw";
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
 
-    public void Convert(XElement xmlElement, Scenario scenario)
+    public class DrawElementConverter : IXMLElementConverter
     {
-        var tags = xmlElement.Elements(TargetElementName);
+        public string TargetElementName => "draw";
 
-        if (tags.Count() != 0)
+        public void Convert(XElement xmlElement, Scenario scenario)
         {
-            foreach (XElement imageTag in tags)
+            var tags = xmlElement.Elements(TargetElementName);
+
+            if (tags.Count() != 0)
             {
-                var order = new ImageOrder() { IsDrawOrder = true };
+                foreach (XElement imageTag in tags)
+                {
+                    var order = new ImageOrder() { IsDrawOrder = true };
 
-                order.Names.Add(imageTag.Attribute("a").Value);
-                order.Names.Add(imageTag.Attribute("b").Value);
-                order.Names.Add(imageTag.Attribute("c").Value);
-                order.Names.Add(imageTag.Attribute("d").Value);
+                    order.Names.Add(imageTag.Attribute("a").Value);
+                    order.Names.Add(imageTag.Attribute("b").Value);
+                    order.Names.Add(imageTag.Attribute("c").Value);
+                    order.Names.Add(imageTag.Attribute("d").Value);
 
-                scenario.DrawOrders.Add(order);
+                    scenario.DrawOrders.Add(order);
+                }
             }
         }
     }

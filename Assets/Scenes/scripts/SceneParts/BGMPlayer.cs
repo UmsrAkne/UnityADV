@@ -1,39 +1,42 @@
-﻿using UnityEngine;
-using UnityEngine.Audio;
-
-public class BGMPlayer : IScenarioSceneParts
+﻿namespace SceneParts
 {
-    public bool NeedExecuteEveryFrame => false;
+    using SceneContents;
+    using UnityEngine;
 
-    private AudioSource BGM { get; set; }
-
-    private bool Playing { get; set; }
-
-    public void Execute()
+    public class BGMPlayer : IScenarioSceneParts
     {
-        if (!Playing)
+        public bool NeedExecuteEveryFrame => false;
+
+        private AudioSource BGM { get; set; }
+
+        private bool Playing { get; set; }
+
+        public void Execute()
         {
-            BGM.loop = true;
-            BGM.Play();
-            Playing = true;
+            if (!Playing)
+            {
+                BGM.loop = true;
+                BGM.Play();
+                Playing = true;
+            }
         }
-    }
 
-    public void ExecuteEveryFrame()
-    {
-        // throw new System.NotImplementedException();
-    }
+        public void ExecuteEveryFrame()
+        {
+            // throw new System.NotImplementedException();
+        }
 
-    public void SetResource(Resource resource)
-    {
-        BGM = resource.BGMAudioSource;
-    }
+        public void SetResource(Resource resource)
+        {
+            BGM = resource.BGMAudioSource;
+        }
 
-    public void SetScenario(Scenario scenario)
-    {
-    }
+        public void SetScenario(Scenario scenario)
+        {
+        }
 
-    public void SetUI(UI ui)
-    {
+        public void SetUI(UI ui)
+        {
+        }
     }
 }

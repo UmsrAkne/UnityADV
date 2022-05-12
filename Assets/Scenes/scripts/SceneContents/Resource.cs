@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public class Resource
+﻿namespace SceneContents
 {
-    public List<Scenario> Scenarios { get; set; }
+    using System.Collections.Generic;
+    using UnityEngine;
 
-    public List<Sprite> Images { get; set; }
+    public class Resource
+    {
+        public List<Scenario> Scenarios { get; set; }
 
-    public Dictionary<string, Sprite> ImagesByName { get; set; }
+        public List<Sprite> Images { get; set; }
 
-    public AudioSource BGMAudioSource { get; set; }
+        public Dictionary<string, Sprite> ImagesByName { get; set; }
 
-    public List<ISound> Voices { get; set; }
+        public AudioSource BGMAudioSource { get; set; }
+
+        public List<ISound> Voices { get; set; }
+    }
 }

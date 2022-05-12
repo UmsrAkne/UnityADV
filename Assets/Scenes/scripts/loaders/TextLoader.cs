@@ -1,37 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-
-public class TextLoader
+﻿namespace Loaders
 {
-    public List<Scenario> Scenario { get; set; }
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
 
-    private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
-
-    public void Load(string targetPath)
+    public class TextLoader
     {
-        Converters.Add(new ImageElementConverter());
-        Converters.Add(new DrawElementConverter());
-        Converters.Add(new VoiceElementConverter());
+        public List<Scenario> Scenario { get; set; }
 
-        try
+        private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
+
+        public void Load(string targetPath)
         {
-            XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
+            Converters.Add(new ImageElementConverter());
+            Converters.Add(new DrawElementConverter());
+            Converters.Add(new VoiceElementConverter());
 
-            Scenario =
-            xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
+            try
             {
-                var scenario = new Scenario() { Text = x.Element("text").Attribute("str").Value };
-                Converters.ForEach(c => c.Convert(x, scenario));
-                return scenario;
-            }).ToList();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
+                XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
+
+                Scenario =
+                xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
+                {
+                    var scenario = new Scenario() { Text = x.Element("text").Attribute("str").Value };
+                    Converters.ForEach(c => c.Convert(x, scenario));
+                    return scenario;
+                }).ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
         }
     }
 }

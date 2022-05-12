@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
-
-public class Scenario
+﻿namespace SceneContents
 {
-    public string Text { get; set; }
+    using System.Collections.Generic;
 
-    public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
+    public class Scenario
+    {
+        public string Text { get; set; }
 
-    public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
+        public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
 
-    public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
+        public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
 
-    public int VoiceIndex { get; set; }
+        public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
+
+        public int VoiceIndex { get; set; }
+    }
 }

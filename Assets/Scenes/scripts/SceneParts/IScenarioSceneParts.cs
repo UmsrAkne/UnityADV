@@ -1,14 +1,19 @@
-﻿public interface IScenarioSceneParts
+﻿namespace SceneParts
 {
-    bool NeedExecuteEveryFrame { get; }
+    using SceneContents;
 
-    void Execute();
+    public interface IScenarioSceneParts
+    {
+        bool NeedExecuteEveryFrame { get; }
 
-    void ExecuteEveryFrame();
+        void Execute();
 
-    void SetScenario(Scenario scenario);
+        void ExecuteEveryFrame();
 
-    void SetResource(Resource resource);
+        void SetScenario(Scenario scenario);
 
-    void SetUI(UI ui);
+        void SetResource(Resource resource);
+
+        void SetUI(UI ui);
+    }
 }

@@ -3,6 +3,8 @@
     using System.Collections;
     using System.Collections.Generic;
     using NUnit.Framework;
+    using SceneContents;
+    using SceneParts;
     using UnityEngine.TestTools;
 
     public class TestTextWriter

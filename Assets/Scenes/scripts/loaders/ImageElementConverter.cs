@@ -1,52 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-
-public class ImageElementConverter : IXMLElementConverter
+﻿namespace Loaders
 {
-    public string TargetElementName => "image";
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
 
-    public void Convert(XElement xmlElement, Scenario scenario)
+    public class ImageElementConverter : IXMLElementConverter
     {
-        var tags = xmlElement.Elements(TargetElementName);
+        public string TargetElementName => "image";
 
-        if (tags.Count() != 0)
+        public void Convert(XElement xmlElement, Scenario scenario)
         {
-            foreach (XElement imageTag in tags)
+            var tags = xmlElement.Elements(TargetElementName);
+
+            if (tags.Count() != 0)
             {
-                var order = new ImageOrder();
-
-                order.Names.Add(imageTag.Attribute("a").Value);
-                order.Names.Add(imageTag.Attribute("b").Value);
-                order.Names.Add(imageTag.Attribute("c").Value);
-                order.Names.Add(imageTag.Attribute("d").Value);
-
-                if (imageTag.Attribute("scale") != null)
+                foreach (XElement imageTag in tags)
                 {
-                    if (double.TryParse(imageTag.Attribute("scale").Value, out double scale))
+                    var order = new ImageOrder();
+
+                    order.Names.Add(imageTag.Attribute("a").Value);
+                    order.Names.Add(imageTag.Attribute("b").Value);
+                    order.Names.Add(imageTag.Attribute("c").Value);
+                    order.Names.Add(imageTag.Attribute("d").Value);
+
+                    if (imageTag.Attribute("scale") != null)
                     {
-                        order.Scale = scale;
+                        if (double.TryParse(imageTag.Attribute("scale").Value, out double scale))
+                        {
+                            order.Scale = scale;
+                        }
                     }
-                }
 
-                if (imageTag.Attribute("x") != null)
-                {
-                    order.X = int.Parse(imageTag.Attribute("x").Value);
-                }
+                    if (imageTag.Attribute("x") != null)
+                    {
+                        order.X = int.Parse(imageTag.Attribute("x").Value);
+                    }
 
-                if (imageTag.Attribute("y") != null)
-                {
-                    order.Y = int.Parse(imageTag.Attribute("y").Value);
-                }
+                    if (imageTag.Attribute("y") != null)
+                    {
+                        order.Y = int.Parse(imageTag.Attribute("y").Value);
+                    }
 
-                if (imageTag.Attribute("angle") != null)
-                {
-                    order.Angle = int.Parse(imageTag.Attribute("angle").Value);
-                }
+                    if (imageTag.Attribute("angle") != null)
+                    {
+                        order.Angle = int.Parse(imageTag.Attribute("angle").Value);
+                    }
 
-                scenario.ImageOrders.Add(order);
+                    scenario.ImageOrders.Add(order);
+                }
             }
         }
     }

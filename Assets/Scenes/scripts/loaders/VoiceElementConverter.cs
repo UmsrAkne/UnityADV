@@ -1,49 +1,53 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using UnityEngine;
-
-public class VoiceElementConverter : IXMLElementConverter
+﻿namespace Loaders
 {
-    public string TargetElementName => "voice";
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+    using SceneContents;
+    using UnityEngine;
 
-    private readonly string numberAttribute = "number";
-    private readonly string fileNameAttribute = "fileName";
-    private readonly string channelAttribute = "channel";
-
-    public void Convert(XElement xmlElement, Scenario scenario)
+    public class VoiceElementConverter : IXMLElementConverter
     {
-        var tags = xmlElement.Elements(TargetElementName);
+        private readonly string numberAttribute = "number";
+        private readonly string fileNameAttribute = "fileName";
+        private readonly string channelAttribute = "channel";
 
-        if (tags.Count() != 0)
+        public string TargetElementName => "voice";
+
+        public void Convert(XElement xmlElement, Scenario scenario)
         {
-            foreach (XElement voiceTag in tags)
+            var tags = xmlElement.Elements(TargetElementName);
+
+            if (tags.Count() != 0)
             {
-                var order = new VoiceOrder();
-
-                if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
+                foreach (XElement voiceTag in tags)
                 {
-                    throw new FormatException("<voice> には fileName か number 属性のどちらかが必須です");
-                }
+                    var order = new VoiceOrder();
 
-                if (voiceTag.Attribute(numberAttribute) != null)
-                {
-                    order.Index = int.Parse(voiceTag.Attribute(numberAttribute).Value);
-                }
+                    if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
+                    {
+                        throw new FormatException("<voice> には fileName か number 属性のどちらかが必須です");
+                    }
 
-                if (voiceTag.Attribute(fileNameAttribute) != null)
-                {
-                    order.FileName = voiceTag.Attribute(fileNameAttribute).Value;
-                }
+                    if (voiceTag.Attribute(numberAttribute) != null)
+                    {
+                        order.Index = int.Parse(voiceTag.Attribute(numberAttribute).Value);
+                    }
 
-                if (voiceTag.Attribute(channelAttribute) != null)
-                {
-                    order.Channel = int.Parse(voiceTag.Attribute(channelAttribute).Value);
-                }
+                    if (voiceTag.Attribute(fileNameAttribute) != null)
+                    {
+                        order.FileName = voiceTag.Attribute(fileNameAttribute).Value;
+                    }
 
-                scenario.VoiceOrders.Add(order);
+                    if (voiceTag.Attribute(channelAttribute) != null)
+                    {
+                        order.Channel = int.Parse(voiceTag.Attribute(channelAttribute).Value);
+                    }
+
+                    scenario.VoiceOrders.Add(order);
+                }
             }
         }
     }

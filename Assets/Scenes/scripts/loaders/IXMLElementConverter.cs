@@ -1,8 +1,12 @@
-﻿using System.Xml.Linq;
-
-public interface IXMLElementConverter
+﻿namespace Loaders
 {
-    string TargetElementName { get; }
+    using System.Xml.Linq;
+    using SceneContents;
 
-    void Convert(XElement xmlElement, Scenario scenario);
+    public interface IXMLElementConverter
+    {
+        string TargetElementName { get; }
+
+        void Convert(XElement xmlElement, Scenario scenario);
+    }
 }
