@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SceneContents;
-using sceneParts;
+using SceneParts;
 
-namespace animations
+namespace Animations
 {
     public class AnimationsManager : IScenarioSceneParts
     {

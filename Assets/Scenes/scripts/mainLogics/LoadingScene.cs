@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Loaders;
-using mainLogics;
+using MainLogics;
 
 public class LoadingScene : MonoBehaviour
 {

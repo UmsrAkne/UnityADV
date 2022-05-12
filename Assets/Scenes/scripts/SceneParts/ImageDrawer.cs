@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using SceneContents;
 
-namespace sceneParts
+namespace SceneParts
 {
     public class ImageDrawer : IScenarioSceneParts
     {

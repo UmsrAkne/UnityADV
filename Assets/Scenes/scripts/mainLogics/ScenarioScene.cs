@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using animations;
-using sceneParts;
+using Animations;
+using SceneParts;
 using SceneContents;
 
-namespace mainLogics
+namespace MainLogics
 {
     public class ScenarioScene : MonoBehaviour
     {

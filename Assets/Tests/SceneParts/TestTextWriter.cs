@@ -5,7 +5,7 @@
     using NUnit.Framework;
     using UnityEngine.TestTools;
     using SceneContents;
-    using sceneParts;
+    using SceneParts;
 
     public class TestTextWriter
     {

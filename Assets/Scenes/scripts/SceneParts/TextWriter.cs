@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SceneContents;
 
-namespace sceneParts
+namespace SceneParts
 {
     public class TextWriter : IScenarioSceneParts
     {

@@ -2,7 +2,7 @@
 using UnityEngine.Audio;
 using SceneContents;
 
-namespace sceneParts
+namespace SceneParts
 {
     public class BGMPlayer : IScenarioSceneParts
     {

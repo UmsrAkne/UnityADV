@@ -1,4 +1,4 @@
-﻿namespace sceneParts
+﻿namespace SceneParts
 {
     using SceneContents;
 
