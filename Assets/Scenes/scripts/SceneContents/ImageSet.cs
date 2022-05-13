@@ -32,6 +32,7 @@ public class ImageSet : MonoBehaviour
 
     public int X
     {
+        get => (int)gameObject.transform.localPosition.x;
         set
         {
             gameObject.transform.localPosition = new Vector3((float)value, gameObject.transform.localPosition.y);
