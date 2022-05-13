@@ -10,9 +10,15 @@
     {
         public bool NeedExecuteEveryFrame => true;
 
-        private List<ImageContainer> ImageContainers { get; set; }
+        public ImageContainer TargetImageContainer { get; }
 
         private List<IAnimation> Animations { get; set; } = new List<IAnimation>();
+
+        public AnimationsManager(ImageContainer imageContainer)
+        {
+            TargetImageContainer = imageContainer;
+            TargetImageContainer.Added += ImageAddedEventHandler;
+        }
 
         public void Execute()
         {
@@ -57,8 +63,6 @@
 
         public void SetUI(UI ui)
         {
-            ImageContainers = ui.ImageContainers;
-            ImageContainers.ForEach(imgContainer => { imgContainer.Added += ImageAddedEventHandler; });
         }
 
         private void ImageAddedEventHandler(object sender, ImageAddedEventArgs e)
@@ -71,7 +75,7 @@
                 Animations.Add(new AlphaChanger());
             }
 
-            Animations.ForEach(a => a.Target = ImageContainers[dispatcher.Index].FrontChild.GetComponent<ImageSet>());
+            Animations.ForEach(a => a.Target = TargetImageContainer.FrontChild.GetComponent<ImageSet>());
         }
 
         /// <summary>
