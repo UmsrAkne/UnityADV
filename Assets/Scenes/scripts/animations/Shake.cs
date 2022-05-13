@@ -1,16 +1,16 @@
 ﻿namespace Animations
 {
+    using System;
     using System.Drawing;
     using UnityEngine;
 
     public class Shake : IAnimation
     {
+        private int frameCounter;
+
         public string AnimationName => "shake";
 
-        private int TotalMovementDistanceX;
-        private int TotalMovementDistanceY;
-
-        public bool IsWorking { get; private set; }
+        public bool IsWorking { get; private set; } = true;
 
         public ImageSet Target { private get; set; }
 
@@ -18,22 +18,35 @@
 
         public int Strength { get; set; }
 
-        public int Duration { get; set; }
+        public int Duration { get; set; } = 60;
 
+        private Point TotalMovementDistance { get; set; } = new Point(0, 0);
 
         public void Execute()
         {
-            if (Target == null)
+            if (Target == null || !IsWorking)
             {
                 return;
             }
 
-            Target.X += Strength;
-            TotalMovementDistanceY += Strength;
+            double angle = frameCounter * (90.0 / Duration);
+            var cos = Math.Cos(angle * (Math.PI / 180));
 
-            Duration--;
+            int strength = (int)(Strength * cos);
 
-            if (Duration < 0)
+            if (frameCounter != 0)
+            {
+                strength *= (frameCounter % 2 == 0) ? 2 : -2;
+            }
+
+            Target.X += strength;
+            Target.Y += strength;
+
+            TotalMovementDistance = new Point(TotalMovementDistance.X + strength, TotalMovementDistance.Y + strength);
+
+            frameCounter++;
+
+            if (frameCounter >= Duration)
             {
                 Stop();
             }
@@ -42,6 +55,9 @@
         public void Stop()
         {
             IsWorking = false;
+            frameCounter = Duration;
+            Target.X -= TotalMovementDistance.X;
+            Target.Y -= TotalMovementDistance.Y;
         }
     }
 }

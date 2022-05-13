@@ -61,6 +61,7 @@
             switch (animationName)
             {
                 case "alphaChanger": return new AlphaChanger();
+                case "shake": return new Shake();
             }
 
             throw new ArgumentException($"指定されたアニメーションの名前が不正です。[{animationName}]");
