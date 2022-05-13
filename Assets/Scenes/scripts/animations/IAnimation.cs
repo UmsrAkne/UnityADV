@@ -1,5 +1,7 @@
 ﻿public interface IAnimation
 {
+    string AnimationName { get; }
+
     bool IsWorking { get; }
 
     ImageSet Target { set; }
