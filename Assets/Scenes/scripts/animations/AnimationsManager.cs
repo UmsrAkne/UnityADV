@@ -1,6 +1,7 @@
 ﻿namespace Animations
 {
     using System.Collections.Generic;
+    using System.Linq;
     using SceneContents;
     using SceneParts;
     using UnityEngine;
@@ -9,9 +10,15 @@
     {
         public bool NeedExecuteEveryFrame => true;
 
-        private List<ImageContainer> ImageContainers { get; set; }
+        public ImageContainer TargetImageContainer { get; }
 
-        private List<IAnimation> Animations { get; } = new List<IAnimation>();
+        private List<IAnimation> Animations { get; set; } = new List<IAnimation>();
+
+        public AnimationsManager(ImageContainer imageContainer)
+        {
+            TargetImageContainer = imageContainer;
+            TargetImageContainer.Added += ImageAddedEventHandler;
+        }
 
         public void Execute()
         {
@@ -43,12 +50,19 @@
 
         public void SetScenario(Scenario scenario)
         {
+            if (scenario.Animations.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var anime in scenario.Animations)
+            {
+                AddAnimation(anime);
+            }
         }
 
         public void SetUI(UI ui)
         {
-            ImageContainers = ui.ImageContainers;
-            ImageContainers.ForEach(imgContainer => { imgContainer.Added += ImageAddedEventHandler; });
         }
 
         private void ImageAddedEventHandler(object sender, ImageAddedEventArgs e)
@@ -56,10 +70,29 @@
             //// 画像が挿入される時、アルファの変化を使ってアニメーションを行う。
 
             ImageContainer dispatcher = sender as ImageContainer;
-            Animations.Add(new AlphaChanger()
+            if (!Animations.Any(a => a.AnimationName == nameof(AlphaChanger)))
             {
-                Target = ImageContainers[dispatcher.Index].FrontChild.GetComponent<ImageSet>()
+                Animations.Add(new AlphaChanger());
+            }
+
+            Animations.ForEach(a => a.Target = TargetImageContainer.FrontChild.GetComponent<ImageSet>());
+        }
+
+        /// <summary>
+        /// 指定したアニメーションを Animations に追加します。
+        /// また、内部に追加するアニメーションと同じものがあった場合、既にある側の Stop() を呼び出します。
+        /// </summary>
+        private void AddAnimation(IAnimation anime)
+        {
+            Animations.ForEach(a =>
+            {
+                if (a.AnimationName == anime.AnimationName)
+                {
+                    a.Stop();
+                }
             });
+
+            Animations.Add(anime);
         }
     }
 }

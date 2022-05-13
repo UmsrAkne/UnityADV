@@ -28,6 +28,8 @@
             set => targetLayerIndex = value;
         }
 
+        public string AnimationName => nameof(AlphaChanger);
+
         public void Execute()
         {
             if (!IsWorking)

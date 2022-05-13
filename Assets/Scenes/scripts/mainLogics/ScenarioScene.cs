@@ -26,7 +26,11 @@
             ScenarioSceneParts.Add(TextWriter);
 
             ScenarioSceneParts.Add(new ImageDrawer());
-            ScenarioSceneParts.Add(new AnimationsManager());
+
+            ScenarioSceneParts.Add(new AnimationsManager(UI.ImageContainers[0]));
+            ScenarioSceneParts.Add(new AnimationsManager(UI.ImageContainers[1]));
+            ScenarioSceneParts.Add(new AnimationsManager(UI.ImageContainers[2]));
+
             ScenarioSceneParts.Add(new BGMPlayer());
             ScenarioSceneParts.Add(new VoicePlayer());
 
@@ -50,11 +54,8 @@
 
         public void Forward()
         {
-            ScenarioSceneParts.ForEach(p =>
-            {
-                p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]);
-                p.Execute();
-            });
+            ScenarioSceneParts.ForEach(p => p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]));
+            ScenarioSceneParts.ForEach(p => p.Execute());
         }
 
         private void InjectUI(UI ui)
