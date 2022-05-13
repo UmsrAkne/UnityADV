@@ -31,7 +31,7 @@
 
                         if (propInfo != null)
                         {
-                            propInfo.SetValue(anime, int.Parse(attribute.Value));
+                            propInfo.SetValue(anime, double.Parse(attribute.Value));
                         }
                         else
                         {
