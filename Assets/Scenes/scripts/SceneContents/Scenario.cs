@@ -13,5 +13,7 @@
         public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
 
         public int VoiceIndex { get; set; }
+
+        public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
     }
 }
