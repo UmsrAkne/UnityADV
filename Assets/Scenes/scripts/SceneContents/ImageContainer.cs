@@ -8,7 +8,7 @@ public class ImageContainer
 
     public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
 
-    public event ImageAddedEventHandler Added = delegate { };
+    public event ImageAddedEventHandler Added;
 
     public GameObject GameObject
     {
@@ -35,6 +35,6 @@ public class ImageContainer
 
         ImageAddedEventArgs e = new ImageAddedEventArgs();
         e.CurrentImageSet = childObject.GetComponent<ImageSet>();
-        Added(this, e);
+        Added?.Invoke(this, e);
     }
 }

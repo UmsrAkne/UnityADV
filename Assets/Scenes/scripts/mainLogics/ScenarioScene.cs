@@ -50,11 +50,8 @@
 
         public void Forward()
         {
-            ScenarioSceneParts.ForEach(p =>
-            {
-                p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]);
-                p.Execute();
-            });
+            ScenarioSceneParts.ForEach(p => p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]));
+            ScenarioSceneParts.ForEach(p => p.Execute());
         }
 
         private void InjectUI(UI ui)
