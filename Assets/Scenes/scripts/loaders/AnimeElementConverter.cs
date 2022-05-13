@@ -35,7 +35,15 @@
 
                         if (propInfo != null)
                         {
-                            propInfo.SetValue(anime, double.Parse(attribute.Value));
+                            if (propInfo.PropertyType == typeof(int))
+                            {
+                                propInfo.SetValue(anime, int.Parse(attribute.Value));
+                            }
+
+                            if (propInfo.PropertyType == typeof(double))
+                            {
+                                propInfo.SetValue(anime, double.Parse(attribute.Value));
+                            }
                         }
                         else
                         {
