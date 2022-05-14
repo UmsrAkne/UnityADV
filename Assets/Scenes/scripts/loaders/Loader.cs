@@ -29,6 +29,7 @@
             Resource.ImagesByName = imageLoader.SpriteDictionary;
             Resource.BGMAudioSource = bgmLoader.AudioSource;
             Resource.Voices = voiceLoader.AudioSources;
+            Resource.Ses = seLoader.AudioSources;
         }
     }
 }
