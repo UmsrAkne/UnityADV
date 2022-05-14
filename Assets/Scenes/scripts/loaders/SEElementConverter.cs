@@ -12,6 +12,7 @@
     {
         private readonly string numberAttribute = "number";
         private readonly string fileNameAttribute = "fileName";
+        private readonly string repeatCountAttribute = "repeatCount";
 
         public string TargetElementName => "se";
 
@@ -38,6 +39,11 @@
                     if (voiceTag.Attribute(fileNameAttribute) != null)
                     {
                         order.FileName = voiceTag.Attribute(fileNameAttribute).Value;
+                    }
+
+                    if (voiceTag.Attribute(repeatCountAttribute) != null)
+                    {
+                        order.RepeatCount = int.Parse(voiceTag.Attribute(repeatCountAttribute).Value);
                     }
 
                     scenario.SEOrders.Add(order);
