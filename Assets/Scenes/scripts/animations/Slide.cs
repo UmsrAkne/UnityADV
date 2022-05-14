@@ -5,7 +5,6 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-
     public class Slide : IAnimation
     {
         private int frameCount;
@@ -29,6 +28,8 @@
         public int Distance { get; set; }
 
         public int Duration { get; set; } = int.MaxValue;
+
+        public int LoopCount { get; set; }
 
         public void Execute()
         {
@@ -64,7 +65,18 @@
 
             if (frameCount >= Duration || Distance < totalDistance)
             {
-                Stop();
+                if (LoopCount != 0)
+                {
+                    LoopCount--;
+                    frameCount = 0;
+                    totalDistance = 0;
+                    Degree += 180;
+                    resistance = 1.0;
+                }
+                else
+                {
+                    Stop();
+                }
             }
         }
 
