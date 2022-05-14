@@ -10,6 +10,9 @@
     {
         private int frameCount;
         private double totalDistance = 0;
+        private double resistance = 1.0;
+        private int period;
+        private bool isInitialExecute = true;
 
         public string AnimationName => "slide";
 
@@ -35,13 +38,29 @@
             }
 
             frameCount++;
-
             var rad = Degree * (Math.PI / 180);
 
-            Target.X += (float)(Math.Sin(rad) * Speed);
-            Target.Y += (float)(Math.Cos(rad) * Speed);
+            if (isInitialExecute)
+            {
+                isInitialExecute = false;
+                period = (int)Math.Ceiling(Distance / (Math.Tan(rad) * Speed));
+            }
+
+            Target.X += (float)(Math.Sin(rad) * Speed * resistance);
+            Target.Y += (float)(Math.Cos(rad) * Speed * resistance);
 
             totalDistance += Math.Tan(rad) * Speed;
+
+            // 全移動距離に対して、一定割合移動したらブレーキをかける。
+            if (totalDistance >= Distance * 0.7)
+            {
+                resistance = Math.Cos(frameCount * (90.0 / period) * (Math.PI / 180));
+
+                if (resistance <= 0)
+                {
+                    resistance = 0.01;
+                }
+            }
 
             if (frameCount >= Duration || Distance < totalDistance)
             {
