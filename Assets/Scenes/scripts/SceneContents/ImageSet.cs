@@ -30,21 +30,21 @@ public class ImageSet : MonoBehaviour
         }
     }
 
-    public int X
+    public float X
     {
-        get => (int)gameObject.transform.localPosition.x;
+        get => gameObject.transform.localPosition.x;
         set
         {
-            gameObject.transform.localPosition = new Vector3((float)value, gameObject.transform.localPosition.y);
+            gameObject.transform.localPosition = new Vector3(value, gameObject.transform.localPosition.y);
         }
     }
 
-    public int Y
+    public float Y
     {
-        get => (int)gameObject.transform.localPosition.y;
+        get => gameObject.transform.localPosition.y;
         set
         {
-            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, (float)value);
+            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, value);
         }
     }
 
