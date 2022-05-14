@@ -19,7 +19,7 @@
 
         public int TargetLayerIndex { get; set; }
 
-        public int Speed { get; set; } = 1;
+        public double Speed { get; set; } = 1.0;
 
         public int Degree { get; set; }
 
@@ -38,10 +38,9 @@
 
             var rad = Degree * (Math.PI / 180);
 
-            Target.X += (int)Math.Ceiling(Math.Sin(rad) * Speed);
-            Target.Y += (int)Math.Ceiling(Math.Cos(rad) * Speed);
+            Target.X += (float)(Math.Sin(rad) * Speed);
+            Target.Y += (float)(Math.Cos(rad) * Speed);
 
-            var t = Math.Tan(rad) * Speed;
             totalDistance += Math.Tan(rad) * Speed;
 
             if (frameCount >= Duration || Distance < totalDistance)
