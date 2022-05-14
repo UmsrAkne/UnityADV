@@ -57,7 +57,10 @@
 
             foreach (var anime in scenario.Animations)
             {
-                AddAnimation(anime);
+                if (anime.TargetLayerIndex == TargetImageContainer.Index)
+                {
+                    AddAnimation(anime);
+                }
             }
         }
 
