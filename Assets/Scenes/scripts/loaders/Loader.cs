@@ -12,6 +12,7 @@
         private ImageLoader imageLoader = new ImageLoader();
         private BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
         private VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
+        private VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
 
         public Resource Resource { get; set; } = new Resource();
 
@@ -21,6 +22,7 @@
             imageLoader.Load($@"{path}\images");
             voiceLoader.Load($@"{path}\voices");
             bgmLoader.Load(@"commonResource\bgms");
+            seLoader.Load(@"commonResource\ses");
 
             Resource.Scenarios = textLoader.Scenario;
             Resource.Images = imageLoader.Sprites;
