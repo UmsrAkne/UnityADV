@@ -47,6 +47,12 @@
                 period = (int)Math.Ceiling(Distance / (Math.Tan(rad) * Speed));
             }
 
+            // アニメーション開始直後はゆっくり動き始める。
+            if (frameCount <= 45)
+            {
+                resistance = Math.Sin(frameCount * 2 * (Math.PI / 180));
+            }
+
             Target.X += (float)(Math.Sin(rad) * Speed * resistance);
             Target.Y += (float)(Math.Cos(rad) * Speed * resistance);
 
