@@ -25,13 +25,25 @@
 
                     foreach (var attribute in attributes)
                     {
+                        // xml の属性名は先頭小文字。プロパティは先頭大文字となるため
+                        // プロパティの存在を確認する前に先頭を大文字に変換した文字列を準備する。
+                        var originalName = attribute.Name.ToString();
+                        var attributeNameUpperCamel = $"{Char.ToUpper(originalName[0])}{originalName.Substring(1)}";
+
                         // リフレクションを使用して、セットしたいプロパティがクラスに存在するかを確認してからセットする。
-                        // 20220513 現在の実装では、存在を確認してセットできるのは整数型のみ。
-                        var propInfo = type.GetProperty(attribute.Name.ToString());
+                        var propInfo = type.GetProperty(attributeNameUpperCamel);
 
                         if (propInfo != null)
                         {
-                            propInfo.SetValue(anime, double.Parse(attribute.Value));
+                            if (propInfo.PropertyType == typeof(int))
+                            {
+                                propInfo.SetValue(anime, int.Parse(attribute.Value));
+                            }
+
+                            if (propInfo.PropertyType == typeof(double))
+                            {
+                                propInfo.SetValue(anime, double.Parse(attribute.Value));
+                            }
                         }
                         else
                         {
@@ -49,6 +61,8 @@
             switch (animationName)
             {
                 case "alphaChanger": return new AlphaChanger();
+                case "shake": return new Shake();
+                case "slide": return new Slide();
             }
 
             throw new ArgumentException($"指定されたアニメーションの名前が不正です。[{animationName}]");
