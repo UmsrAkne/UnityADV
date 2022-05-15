@@ -23,14 +23,18 @@
             }
 
             PlayingSound?.Stop();
-            PlayingSound = Ses[CurrentOrder.Index];
 
-            if (CurrentOrder.RepeatCount > 0)
+            if (Ses.Count > CurrentOrder.Index && CurrentOrder.Index != 0)
             {
-                PlayingSound.AudioSource.loop = true;
-            }
+                PlayingSound = Ses[CurrentOrder.Index];
 
-            PlayingSound.Play();
+                if (CurrentOrder.RepeatCount > 0)
+                {
+                    PlayingSound.AudioSource.loop = true;
+                }
+
+                PlayingSound.Play();
+            }
 
             CurrentOrder = null;
         }
