@@ -8,17 +8,17 @@
 
     public class AnimationsManager : IScenarioSceneParts
     {
-        public bool NeedExecuteEveryFrame => true;
-
-        public ImageContainer TargetImageContainer { get; }
-
-        private List<IAnimation> Animations { get; set; } = new List<IAnimation>();
-
         public AnimationsManager(ImageContainer imageContainer)
         {
             TargetImageContainer = imageContainer;
             TargetImageContainer.Added += ImageAddedEventHandler;
         }
+
+        public bool NeedExecuteEveryFrame => true;
+
+        public ImageContainer TargetImageContainer { get; }
+
+        private List<IAnimation> Animations { get; set; } = new List<IAnimation>();
 
         public void Execute()
         {
