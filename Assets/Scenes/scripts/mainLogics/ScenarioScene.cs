@@ -10,6 +10,8 @@
 
     public class ScenarioScene : MonoBehaviour
     {
+        private Scenario currentScenario;
+
         public Resource Resource { private get; set; } = new Resource();
 
         private List<IScenarioSceneParts> ScenarioSceneParts { get; } = new List<IScenarioSceneParts>();
@@ -22,8 +24,6 @@
         public void Start()
         {
             InjectUI(UI);
-
-            ScenarioSceneParts.Add(TextWriter);
 
             ScenarioSceneParts.Add(new ImageDrawer());
 
@@ -41,6 +41,9 @@
                 s.SetUI(UI);
             });
 
+            TextWriter.SetResource(Resource);
+            TextWriter.SetUI(UI);
+
             InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
         }
 
@@ -55,8 +58,14 @@
 
         public void Forward()
         {
-            ScenarioSceneParts.ForEach(p => p.SetScenario(Resource.Scenarios[TextWriter.ScenarioIndex]));
-            ScenarioSceneParts.ForEach(p => p.Execute());
+            TextWriter.Execute();
+
+            if (currentScenario == null || currentScenario != Resource.Scenarios[TextWriter.ScenarioIndex])
+            {
+                currentScenario = Resource.Scenarios[TextWriter.ScenarioIndex];
+                ScenarioSceneParts.ForEach(p => p.SetScenario(currentScenario));
+                ScenarioSceneParts.ForEach(p => p.Execute());
+            }
         }
 
         private void InjectUI(UI ui)
@@ -68,6 +77,7 @@
 
         private void ExecuteEveryFrames()
         {
+            TextWriter.ExecuteEveryFrame();
             ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
         }
     }

@@ -39,12 +39,12 @@
 
             if (writing)
             {
+                ScenarioIndex++;
                 WriteText(Scenario.Text);
                 writing = false;
             }
             else
             {
-                ScenarioIndex++;
                 Scenario = Scenarios[ScenarioIndex];
                 writing = true;
                 WriteText(string.Empty);
@@ -65,6 +65,7 @@
             {
                 writing = false;
                 counter = 0;
+                ScenarioIndex++;
                 return;
             }
         }
