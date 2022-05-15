@@ -33,6 +33,7 @@
 
             ScenarioSceneParts.Add(new BGMPlayer());
             ScenarioSceneParts.Add(new VoicePlayer());
+            ScenarioSceneParts.Add(new SEPlayer());
 
             ScenarioSceneParts.ForEach(s =>
             {

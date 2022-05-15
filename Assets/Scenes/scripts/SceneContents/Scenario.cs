@@ -14,6 +14,8 @@
 
         public int VoiceIndex { get; set; }
 
+        public List<SEOrder> SEOrders { get; set; } = new List<SEOrder>();
+
         public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
     }
 }

@@ -25,6 +25,7 @@ public class VoiceLoader : MonoBehaviour
             loadCompleteCounter++;
             if (loadCompleteCounter >= AudioSources.Count)
             {
+                AudioSources.Insert(0, null);
                 LoadCompleted?.Invoke(this, EventArgs.Empty);
             }
         };

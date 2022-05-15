@@ -14,5 +14,7 @@
         public AudioSource BGMAudioSource { get; set; }
 
         public List<ISound> Voices { get; set; }
+
+        public List<ISound> Ses { get; set; }
     }
 }
