@@ -13,11 +13,16 @@ public class ImageLoader
     {
         GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
         {
-            var sp = Sprite.Create(ReadTexture(path, imageWidth, imageHeight), new Rect(0, 0, imageWidth, imageHeight), new Vector2(0.5f, 0.5f), 1);
+            var sp = LoadImage(path, imageWidth, imageHeight);
             Sprites.Add(sp);
             SpriteDictionary.Add(Path.GetFileName(path), sp);
             SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), sp);
         });
+    }
+
+    public Sprite LoadImage(string targetFilePath, int imageWidth, int imageHeight)
+    {
+        return Sprite.Create(ReadTexture(targetFilePath, imageWidth, imageHeight), new Rect(0, 0, imageWidth, imageHeight), new Vector2(0.5f, 0.5f), 1);
     }
 
     private Texture2D ReadTexture(string path, int width, int height)
