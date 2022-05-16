@@ -10,6 +10,7 @@
     {
         private TextLoader textLoader = new TextLoader();
         private ImageLoader imageLoader = new ImageLoader();
+        private ImageLoader uiLoader = new ImageLoader();
         private BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
         private VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
         private VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
@@ -19,7 +20,7 @@
         public void Load(string path)
         {
             textLoader.Load($@"{path}\texts\scenario.xml");
-            imageLoader.Load($@"{path}\images");
+            imageLoader.Load($@"{path}\images", 1280, 720);
             voiceLoader.Load($@"{path}\voices");
             bgmLoader.Load(@"commonResource\bgms");
             seLoader.Load(@"commonResource\ses");
@@ -30,6 +31,8 @@
             Resource.BGMAudioSource = bgmLoader.AudioSource;
             Resource.Voices = voiceLoader.AudioSources;
             Resource.Ses = seLoader.AudioSources;
+
+            Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png", 800, 150);
         }
     }
 }

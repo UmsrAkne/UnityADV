@@ -7,6 +7,7 @@
     using SceneContents;
     using SceneParts;
     using UnityEngine;
+    using UnityEngine.Rendering;
 
     public class ScenarioScene : MonoBehaviour
     {
@@ -73,6 +74,24 @@
             ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_0"), Index = 0 });
             ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1"), Index = 1 });
             ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2"), Index = 2 });
+
+            ui.UIImageContainer = new ImageContainer() { GameObject = GameObject.Find("ImageContainer_ui"), Index = 3 };
+
+            //// ここからメッセージウィンドウを表示するためのコード
+
+            var emptyGameObject = new GameObject();
+            var imageSet = emptyGameObject.AddComponent<ImageSet>();
+            imageSet.Sprites.Add(Resource.MessageWindowImage);
+
+            imageSet.Alpha = 0.6f;
+            imageSet.Y = -200;
+
+            ui.UIImageContainer.AddChild(emptyGameObject);
+
+            imageSet.Draw();
+
+            var sortingGroup = ui.UIImageContainer.FrontChild.GetComponent<SortingGroup>();
+            sortingGroup.sortingOrder = 1;
         }
 
         private void ExecuteEveryFrames()
