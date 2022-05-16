@@ -19,7 +19,7 @@
         public void Load(string path)
         {
             textLoader.Load($@"{path}\texts\scenario.xml");
-            imageLoader.Load($@"{path}\images");
+            imageLoader.Load($@"{path}\images", 1280, 720);
             voiceLoader.Load($@"{path}\voices");
             bgmLoader.Load(@"commonResource\bgms");
             seLoader.Load(@"commonResource\ses");

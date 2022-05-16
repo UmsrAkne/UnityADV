@@ -9,11 +9,11 @@ public class ImageLoader
 
     public Dictionary<string, Sprite> SpriteDictionary { get; private set; } = new Dictionary<string, Sprite>();
 
-    public void Load(string targetDirectoryPath)
+    public void Load(string targetDirectoryPath, int imageWidth, int imageHeight)
     {
         GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
         {
-            var sp = Sprite.Create(ReadTexture(path, 1280, 720), new Rect(0, 0, 1280, 720), new Vector2(0.5f, 0.5f), 1);
+            var sp = Sprite.Create(ReadTexture(path, imageWidth, imageHeight), new Rect(0, 0, imageWidth, imageHeight), new Vector2(0.5f, 0.5f), 1);
             Sprites.Add(sp);
             SpriteDictionary.Add(Path.GetFileName(path), sp);
             SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), sp);
