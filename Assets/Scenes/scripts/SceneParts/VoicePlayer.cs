@@ -1,5 +1,6 @@
 ﻿namespace SceneParts
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -8,11 +9,11 @@
 
     public class VoicePlayer : IScenarioSceneParts
     {
-        private int nextPlayIndex;
-        private int currentPlayIndex;
         private bool playRequire;
         private ISound currentVoice;
         private VoiceOrder nextOrder;
+
+        public event EventHandler SoundComplete;
 
         public bool NeedExecuteEveryFrame => false;
 
@@ -34,14 +35,20 @@
 
             currentVoice = Voices[nextOrder.Index];
             currentVoice.Play();
-            currentPlayIndex = nextOrder.Index;
-            nextPlayIndex = 0;
             nextOrder = null;
             playRequire = false;
         }
 
         public void ExecuteEveryFrame()
         {
+            if (currentVoice != null)
+            {
+                if (!currentVoice.IsPlaying)
+                {
+                    SoundComplete?.Invoke(this, EventArgs.Empty);
+                    currentVoice = null;
+                }
+            }
         }
 
         public void SetResource(Resource resource)
@@ -56,11 +63,12 @@
                 return;
             }
 
-            nextOrder = scenario.VoiceOrders.First();
+            nextOrder = scenario.VoiceOrders.FirstOrDefault(order => order.Channel == Channel);
 
-            if (nextOrder.Index >= 0)
+            // nextOrder.Index == 0 は無視する。
+            // [0] は未使用番号。インデックス 0 はデフォルト値であり、未設定の状態を表す。
+            if (nextOrder != null && nextOrder.Index > 0)
             {
-                nextPlayIndex = nextOrder.Index;
                 playRequire = true;
             }
         }
