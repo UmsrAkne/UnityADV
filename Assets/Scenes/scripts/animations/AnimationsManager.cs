@@ -78,7 +78,10 @@
                 Animations.Add(new AlphaChanger());
             }
 
-            Animations.ForEach(a => a.Target = TargetImageContainer.FrontChild.GetComponent<ImageSet>());
+            Animations.ForEach(a =>
+            {
+                a.Target = TargetImageContainer.FrontChild.GetComponent<ImageSet>();
+            });
         }
 
         /// <summary>
@@ -95,6 +98,7 @@
                 }
             });
 
+            anime.TargetContainer = TargetImageContainer;
             Animations.Add(anime);
         }
     }

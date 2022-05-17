@@ -63,6 +63,7 @@
                 case "alphaChanger": return new AlphaChanger();
                 case "shake": return new Shake();
                 case "slide": return new Slide();
+                case "flash": return new Flash();
             }
 
             throw new ArgumentException($"指定されたアニメーションの名前が不正です。[{animationName}]");

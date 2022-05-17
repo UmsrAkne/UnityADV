@@ -79,6 +79,10 @@
             ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_1"), Index = 1 });
             ui.ImageContainers.Add(new ImageContainer() { GameObject = GameObject.Find("ImageContainer_2"), Index = 2 });
 
+            ui.ImageContainers[0].AddEffectLayer();
+            ui.ImageContainers[1].AddEffectLayer();
+            ui.ImageContainers[2].AddEffectLayer();
+
             ui.UIImageContainer = new ImageContainer() { GameObject = GameObject.Find("ImageContainer_ui"), Index = 3 };
 
             //// ここからメッセージウィンドウを表示するためのコード
