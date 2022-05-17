@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Sound : ISound
 {
-    public event EventHandler SoundComplete;
-
     public AudioSource AudioSource { get; set; }
 
     public double Volume { get; set; }
