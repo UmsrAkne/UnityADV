@@ -26,7 +26,7 @@ public class ImageContainer
 
     public GameObject FrontChild => Childs.FirstOrDefault();
 
-    public GameObject EffectGameObject { get => EffectGameObject; }
+    public GameObject EffectGameObject { get => effectGameObject; }
 
     public int Index { get; set; }
 
