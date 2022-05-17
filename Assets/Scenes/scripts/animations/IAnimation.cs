@@ -6,6 +6,8 @@
 
     ImageSet Target { set; }
 
+    ImageContainer TargetContainer { set; }
+
     int TargetLayerIndex { get; set; }
 
     void Execute();

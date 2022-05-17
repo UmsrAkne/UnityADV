@@ -22,6 +22,8 @@
             }
         }
 
+        public ImageContainer TargetContainer { set { _ = value; } }
+
         public int TargetLayerIndex
         {
             get => targetLayerIndex;
