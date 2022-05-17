@@ -9,6 +9,8 @@ public class Sound : ISound
 
     public double Volume { get; set; }
 
+    bool ISound.IsPlaying => AudioSource.isPlaying && AudioSource.time != 0f;
+
     public void Play()
     {
         AudioSource.Play();
@@ -17,15 +19,5 @@ public class Sound : ISound
     public void Stop()
     {
         AudioSource.Stop();
-    }
-
-    public bool IsPlaying()
-    {
-        if (!AudioSource.isPlaying && AudioSource.time != 0.0f)
-        {
-            SoundComplete?.Invoke(this, EventArgs.Empty);
-        }
-
-        return AudioSource.isPlaying;
     }
 }

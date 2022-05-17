@@ -9,6 +9,8 @@ public interface ISound
 
     double Volume { get; set; }
 
+    bool IsPlaying { get; }
+
     void Play();
 
     void Stop();
