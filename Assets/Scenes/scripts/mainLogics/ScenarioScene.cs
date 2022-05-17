@@ -33,7 +33,11 @@
             ScenarioSceneParts.Add(new AnimationsManager(UI.ImageContainers[2]));
 
             ScenarioSceneParts.Add(new BGMPlayer());
-            ScenarioSceneParts.Add(new VoicePlayer());
+
+            ScenarioSceneParts.Add(new VoicePlayer() { Channel = 0 });
+            ScenarioSceneParts.Add(new VoicePlayer() { Channel = 1 });
+            ScenarioSceneParts.Add(new VoicePlayer() { Channel = 2 });
+
             ScenarioSceneParts.Add(new SEPlayer());
 
             ScenarioSceneParts.ForEach(s =>
