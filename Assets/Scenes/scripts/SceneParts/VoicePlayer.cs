@@ -1,5 +1,6 @@
 ﻿namespace SceneParts
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,6 +14,8 @@
         private bool playRequire;
         private ISound currentVoice;
         private VoiceOrder nextOrder;
+
+        public event EventHandler SoundComplete;
 
         public bool NeedExecuteEveryFrame => false;
 
@@ -42,6 +45,14 @@
 
         public void ExecuteEveryFrame()
         {
+            if (currentVoice != null)
+            {
+                if (!currentVoice.IsPlaying)
+                {
+                    SoundComplete?.Invoke(this, EventArgs.Empty);
+                    currentVoice = null;
+                }
+            }
         }
 
         public void SetResource(Resource resource)
