@@ -1,16 +1,21 @@
-﻿public interface IAnimation
+﻿namespace Animations
 {
-    string AnimationName { get; }
+    using SceneContents;
 
-    bool IsWorking { get; }
+    public interface IAnimation
+    {
+        string AnimationName { get; }
 
-    ImageSet Target { set; }
+        bool IsWorking { get; }
 
-    ImageContainer TargetContainer { set; }
+        ImageSet Target { set; }
 
-    int TargetLayerIndex { get; set; }
+        ImageContainer TargetContainer { set; }
 
-    void Execute();
+        int TargetLayerIndex { get; set; }
 
-    void Stop();
+        void Execute();
+
+        void Stop();
+    }
 }

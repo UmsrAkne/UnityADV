@@ -1,6 +1,7 @@
 ﻿namespace Animations
 {
     using System;
+    using SceneContents;
 
     public class Flash : IAnimation
     {

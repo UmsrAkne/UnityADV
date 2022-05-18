@@ -1,5 +1,7 @@
 ﻿namespace Animations
 {
+    using SceneContents;
+
     public class AlphaChanger : IAnimation
     {
         private ImageSet target;

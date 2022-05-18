@@ -2,7 +2,7 @@
 {
     using System;
     using System.Drawing;
-    using UnityEngine;
+    using SceneContents;
 
     public class Shake : IAnimation
     {

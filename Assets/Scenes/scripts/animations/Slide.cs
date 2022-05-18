@@ -1,9 +1,7 @@
 ﻿namespace Animations
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    using SceneContents;
 
     public class Slide : IAnimation
     {
