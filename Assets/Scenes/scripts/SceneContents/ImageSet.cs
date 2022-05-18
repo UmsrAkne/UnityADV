@@ -6,10 +6,11 @@
     using UnityEngine.Rendering;
     using UnityEngine.UI;
 
-    public class ImageSet : MonoBehaviour
+    public class ImageSet : MonoBehaviour, IDisplayObject
     {
         private float alpha = 1.0f;
         private float scale = 1.0f;
+        private int angle = 0;
 
         private List<GameObject> gos = new List<GameObject>();
 
@@ -25,6 +26,7 @@
 
         public double Scale
         {
+            get => scale;
             set
             {
                 gameObject.transform.localScale = new Vector3((float)value, (float)value, 0);
@@ -52,9 +54,11 @@
 
         public int Angle
         {
+            get => angle;
             set
             {
                 gameObject.transform.localRotation = Quaternion.AngleAxis((float)value, Vector3.forward);
+                angle = value;
             }
         }
 
