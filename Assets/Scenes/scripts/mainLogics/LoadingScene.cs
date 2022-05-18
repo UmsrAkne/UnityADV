@@ -1,59 +1,110 @@
-﻿using System.IO;
-using Loaders;
-using MainLogics;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
-public class LoadingScene : MonoBehaviour
+﻿namespace MainLogics
 {
-    private int cursorIndex;
-    private bool keyboardLock = true;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Loaders;
+    using UnityEngine;
+    using UnityEngine.Rendering;
+    using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
 
-    private Text Text { get; set; }
-
-    private string[] Paths { get; set; }
-
-    // Start is called before the first frame update
-    public void Start()
+    public class LoadingScene : MonoBehaviour
     {
-        Text = GameObject.Find("TextWindow").GetComponent<Text>();
-        Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
-        Text.text = Paths[cursorIndex];
-        keyboardLock = false;
-    }
+        private int cursorIndex;
+        private bool keyboardLock = true;
+        private ImageLoader imageLoader = new ImageLoader();
 
-    // Update is called once per frame
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow) && !keyboardLock)
+        private Text Text { get; set; }
+
+        private string[] Paths { get; set; }
+
+        private List<GameObject> GameObjects { get; } = new List<GameObject>();
+
+        private List<Sprite> Sprites { get; } = new List<Sprite>();
+
+        // Start is called before the first frame update
+        public void Start()
         {
-            if (cursorIndex < Paths.Length - 1)
+            Text = GameObject.Find("TextWindow").GetComponent<Text>();
+            Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
+            Text.text = Paths[cursorIndex];
+
+            var g = new GameObject();
+            var topBarImage = g.AddComponent<ImageSet>();
+            topBarImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\topBar.png", 1280, 50));
+            topBarImage.Y = 350;
+            topBarImage.Draw();
+            g.GetComponent<SortingGroup>().sortingOrder = 2;
+
+            Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
+            Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
+            keyboardLock = false;
+            LoadCurrentCursorImage();
+        }
+
+        // Update is called once per frame
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow) && !keyboardLock)
             {
-                cursorIndex++;
-                Text.text = Paths[cursorIndex];
+                if (cursorIndex < Paths.Length - 1)
+                {
+                    cursorIndex++;
+                    Text.text = Paths[cursorIndex];
+                    LoadCurrentCursorImage();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow) && !keyboardLock)
+            {
+                if (cursorIndex > 0)
+                {
+                    cursorIndex--;
+                    Text.text = Paths[cursorIndex];
+                    LoadCurrentCursorImage();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return) && !keyboardLock)
+            {
+                SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
+                {
+                    Loader loader = new Loader();
+                    loader.Load(Paths[cursorIndex]);
+                    GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+                };
+
+                SceneManager.LoadScene("SampleScene");
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && !keyboardLock)
+        private void LoadCurrentCursorImage()
         {
-            if (cursorIndex > 0)
+            var imageSet = GameObjects[cursorIndex].GetComponent<ImageSet>();
+
+            if (imageSet == null)
             {
-                cursorIndex--;
-                Text.text = Paths[cursorIndex];
+                imageSet = GameObjects[cursorIndex].AddComponent<ImageSet>();
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Return) && !keyboardLock)
-        {
-            SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
+            if (Sprites[cursorIndex] == null)
             {
-                Loader loader = new Loader();
-                loader.Load(Paths[cursorIndex]);
-                GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
-            };
+                var fistImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
+                Sprites[cursorIndex] = imageLoader.LoadImage(fistImagePath, 1280, 720);
+                imageSet.Sprites.Add(Sprites[cursorIndex]);
+                imageSet.Draw();
+            }
 
-            SceneManager.LoadScene("SampleScene");
+            GameObjects.ForEach(g =>
+            {
+                if (g.GetComponent<ImageSet>() != null && g.GetComponent<SortingGroup>() != null)
+                {
+                    g.GetComponent<ImageSet>().GetComponent<SortingGroup>().sortingOrder = 0;
+                }
+            });
+
+            imageSet.GetComponent<SortingGroup>().sortingOrder = 1;
         }
     }
 }
