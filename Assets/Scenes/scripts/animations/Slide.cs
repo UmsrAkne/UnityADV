@@ -42,7 +42,10 @@
 
         public int LoopCount { get; set; }
 
-        public ImageContainer TargetContainer { set { _ = value; } }
+        public ImageContainer TargetContainer
+        {
+            set { _ = value; }
+        }
 
         public void Execute()
         {
