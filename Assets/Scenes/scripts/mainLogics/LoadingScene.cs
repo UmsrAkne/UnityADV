@@ -4,6 +4,7 @@
     using System.IO;
     using System.Linq;
     using Loaders;
+    using SceneContents;
     using UnityEngine;
     using UnityEngine.Rendering;
     using UnityEngine.SceneManagement;

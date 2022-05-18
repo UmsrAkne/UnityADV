@@ -1,6 +1,9 @@
-﻿using System;
-
-public class ImageAddedEventArgs : EventArgs
+﻿namespace SceneContents
 {
-    public ImageSet CurrentImageSet { get; set; }
+    using System;
+
+    public class ImageAddedEventArgs : EventArgs
+    {
+        public ImageSet CurrentImageSet { get; set; }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SceneContents
 {
     using System.Collections.Generic;
+    using Animations;
 
     public class Scenario
     {

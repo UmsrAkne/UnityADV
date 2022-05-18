@@ -1,8 +1,10 @@
 ﻿namespace Animations
 {
+    using SceneContents;
+
     public class AlphaChanger : IAnimation
     {
-        private ImageSet target;
+        private IDisplayObject target;
         private int targetLayerIndex;
         private float amount = 0.1f;
 
@@ -10,7 +12,7 @@
 
         public double Amount { set => amount = (float)value; }
 
-        public ImageSet Target
+        public IDisplayObject Target
         {
             get => target;
             set

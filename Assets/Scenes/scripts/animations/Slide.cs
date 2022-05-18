@@ -1,9 +1,7 @@
 ﻿namespace Animations
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    using SceneContents;
 
     public class Slide : IAnimation
     {
@@ -12,13 +10,13 @@
         private double resistance = 1.0;
         private int period;
         private bool isInitialExecute = true;
-        private ImageSet target;
+        private IDisplayObject target;
 
         public string AnimationName => "slide";
 
         public bool IsWorking { get; private set; } = true;
 
-        public ImageSet Target
+        public IDisplayObject Target
         {
             private get => target;
             set

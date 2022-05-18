@@ -2,7 +2,7 @@
 {
     using System;
     using System.Drawing;
-    using UnityEngine;
+    using SceneContents;
 
     public class Shake : IAnimation
     {
@@ -12,7 +12,7 @@
 
         public bool IsWorking { get; private set; } = true;
 
-        public ImageSet Target { private get; set; }
+        public IDisplayObject Target { private get; set; }
 
         public ImageContainer TargetContainer
         {

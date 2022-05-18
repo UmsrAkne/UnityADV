@@ -1,6 +1,7 @@
 ﻿namespace Animations
 {
     using System;
+    using SceneContents;
 
     public class Flash : IAnimation
     {
@@ -11,7 +12,7 @@
 
         public bool IsWorking => true;
 
-        public ImageSet Target { private get; set; }
+        public IDisplayObject Target { private get; set; }
 
         public int TargetLayerIndex { get; set; }
 
