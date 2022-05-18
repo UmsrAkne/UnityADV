@@ -8,7 +8,7 @@
 
         bool IsWorking { get; }
 
-        ImageSet Target { set; }
+        IDisplayObject Target { set; }
 
         ImageContainer TargetContainer { set; }
 
