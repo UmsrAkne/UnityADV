@@ -1,5 +1,6 @@
 ﻿namespace MainLogics
 {
+    using System.Collections.Generic;
     using System.IO;
     using Loaders;
     using UnityEngine;
@@ -10,6 +11,7 @@
     {
         private int cursorIndex;
         private bool keyboardLock = true;
+        private ImageLoader imageLoader = new ImageLoader();
 
         private Text Text { get; set; }
 
@@ -22,6 +24,7 @@
             Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
             Text.text = Paths[cursorIndex];
             keyboardLock = false;
+            LoadCurrentCursorImage();
         }
 
         // Update is called once per frame
@@ -33,6 +36,7 @@
                 {
                     cursorIndex++;
                     Text.text = Paths[cursorIndex];
+                    LoadCurrentCursorImage();
                 }
             }
 
@@ -42,6 +46,7 @@
                 {
                     cursorIndex--;
                     Text.text = Paths[cursorIndex];
+                    LoadCurrentCursorImage();
                 }
             }
 
@@ -56,6 +61,16 @@
 
                 SceneManager.LoadScene("SampleScene");
             }
+        }
+
+        private void LoadCurrentCursorImage()
+        {
+            var sp = imageLoader.LoadImage($@"{Paths[cursorIndex]}\images\A0101.png", 1280, 720);
+            var emptyGameObject = new GameObject();
+            var imageSet = emptyGameObject.AddComponent<ImageSet>();
+
+            imageSet.Sprites.Add(sp);
+            imageSet.Draw();
         }
     }
 }
