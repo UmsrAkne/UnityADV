@@ -14,7 +14,10 @@
 
         public ImageSet Target { private get; set; }
 
-        public ImageContainer TargetContainer { set { _ = value; } }
+        public ImageContainer TargetContainer
+        {
+            set { _ = value; }
+        }
 
         public int TargetLayerIndex { get; set; }
 

@@ -22,7 +22,10 @@
             }
         }
 
-        public ImageContainer TargetContainer { set { _ = value; } }
+        public ImageContainer TargetContainer
+        {
+            set { _ = value; }
+        }
 
         public int TargetLayerIndex
         {

@@ -11,7 +11,7 @@
 
         public bool IsWorking => true;
 
-        public ImageSet Target { set; private get; }
+        public ImageSet Target { private get; set; }
 
         public int TargetLayerIndex { get; set; }
 
