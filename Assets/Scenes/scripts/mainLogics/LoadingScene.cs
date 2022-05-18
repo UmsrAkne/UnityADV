@@ -1,59 +1,61 @@
-﻿using System.IO;
-using Loaders;
-using MainLogics;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
-public class LoadingScene : MonoBehaviour
+﻿namespace MainLogics
 {
-    private int cursorIndex;
-    private bool keyboardLock = true;
+    using System.IO;
+    using Loaders;
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
 
-    private Text Text { get; set; }
-
-    private string[] Paths { get; set; }
-
-    // Start is called before the first frame update
-    public void Start()
+    public class LoadingScene : MonoBehaviour
     {
-        Text = GameObject.Find("TextWindow").GetComponent<Text>();
-        Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
-        Text.text = Paths[cursorIndex];
-        keyboardLock = false;
-    }
+        private int cursorIndex;
+        private bool keyboardLock = true;
 
-    // Update is called once per frame
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow) && !keyboardLock)
+        private Text Text { get; set; }
+
+        private string[] Paths { get; set; }
+
+        // Start is called before the first frame update
+        public void Start()
         {
-            if (cursorIndex < Paths.Length - 1)
-            {
-                cursorIndex++;
-                Text.text = Paths[cursorIndex];
-            }
+            Text = GameObject.Find("TextWindow").GetComponent<Text>();
+            Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
+            Text.text = Paths[cursorIndex];
+            keyboardLock = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && !keyboardLock)
+        // Update is called once per frame
+        public void Update()
         {
-            if (cursorIndex > 0)
+            if (Input.GetKeyDown(KeyCode.DownArrow) && !keyboardLock)
             {
-                cursorIndex--;
-                Text.text = Paths[cursorIndex];
+                if (cursorIndex < Paths.Length - 1)
+                {
+                    cursorIndex++;
+                    Text.text = Paths[cursorIndex];
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Return) && !keyboardLock)
-        {
-            SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
+            if (Input.GetKeyDown(KeyCode.UpArrow) && !keyboardLock)
             {
-                Loader loader = new Loader();
-                loader.Load(Paths[cursorIndex]);
-                GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
-            };
+                if (cursorIndex > 0)
+                {
+                    cursorIndex--;
+                    Text.text = Paths[cursorIndex];
+                }
+            }
 
-            SceneManager.LoadScene("SampleScene");
+            if (Input.GetKeyDown(KeyCode.Return) && !keyboardLock)
+            {
+                SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
+                {
+                    Loader loader = new Loader();
+                    loader.Load(Paths[cursorIndex]);
+                    GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+                };
+
+                SceneManager.LoadScene("SampleScene");
+            }
         }
     }
 }
