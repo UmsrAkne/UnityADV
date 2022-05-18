@@ -29,6 +29,14 @@
             Text = GameObject.Find("TextWindow").GetComponent<Text>();
             Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
             Text.text = Paths[cursorIndex];
+
+            var g = new GameObject();
+            var topBarImage = g.AddComponent<ImageSet>();
+            topBarImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\topBar.png", 1280, 50));
+            topBarImage.Y = 350;
+            topBarImage.Draw();
+            g.GetComponent<SortingGroup>().sortingOrder = 2;
+
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
             keyboardLock = false;
@@ -82,7 +90,8 @@
 
             if (Sprites[cursorIndex] == null)
             {
-                Sprites[cursorIndex] = imageLoader.LoadImage($@"{Paths[cursorIndex]}\images\A0101.png", 1280, 720);
+                var fistImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
+                Sprites[cursorIndex] = imageLoader.LoadImage(fistImagePath, 1280, 720);
                 imageSet.Sprites.Add(Sprites[cursorIndex]);
                 imageSet.Draw();
             }
