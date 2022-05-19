@@ -43,7 +43,8 @@
                 return;
             }
 
-            var target = TargetContainer.EffectGameObject.GetComponent<ImageSet>();
+            var target = TargetContainer.EffectImageSet;
+
             target.Alpha = GetAlpha();
             frameCounter++;
 
@@ -55,7 +56,7 @@
 
         public void Stop()
         {
-            var target = TargetContainer.EffectGameObject.GetComponent<ImageSet>();
+            var target = TargetContainer.EffectImageSet;
             target.Alpha = 0f;
         }
 

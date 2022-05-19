@@ -65,6 +65,8 @@
 
         public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
 
+        public GameObject GameObject => gameObject;
+
         public GameObject MaskObject => maskObject;
 
         private List<SpriteRenderer> Renderers { get; set; } = new List<SpriteRenderer>();

@@ -80,7 +80,7 @@
 
             Animations.ForEach(a =>
             {
-                a.Target = TargetImageContainer.FrontChild.GetComponent<ImageSet>();
+                a.Target = TargetImageContainer.FrontChild;
             });
         }
 

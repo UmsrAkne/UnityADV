@@ -35,7 +35,7 @@
             topBarImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\topBar.png", 1280, 50));
             topBarImage.Y = 350;
             topBarImage.Draw();
-            // g.GetComponent<SortingGroup>().sortingOrder = 2;
+            topBarImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
 
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
