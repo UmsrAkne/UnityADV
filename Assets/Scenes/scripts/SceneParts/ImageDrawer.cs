@@ -51,6 +51,11 @@
                 imageSet.Angle = order.Angle;
                 targetContainer.AddChild(imageSet);
                 imageSet.Draw();
+
+                if (!string.IsNullOrWhiteSpace(order.MaskImageName))
+                {
+                    imageSet.SetMask(resource.MaskImagesByName[order.MaskImageName]);
+                }
             }
 
             foreach (ImageOrder order in scenario.DrawOrders)

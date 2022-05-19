@@ -17,4 +17,6 @@ public class ImageOrder
     public int Angle { get; set; }
 
     public bool IsDrawOrder { get; set; }
+
+    public string MaskImageName { get; set; } = string.Empty;
 }

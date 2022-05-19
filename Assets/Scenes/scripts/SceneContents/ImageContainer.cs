@@ -62,7 +62,7 @@ public class ImageContainer
 
             imageSet.Draw();
             var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
-            sortingGroup.sortingOrder = 1;
+            sortingGroup.sortingOrder = 2;
 
             EffectImageSet = imageSet;
         }

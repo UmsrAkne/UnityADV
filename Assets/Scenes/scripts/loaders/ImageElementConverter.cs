@@ -49,6 +49,11 @@
                         order.Angle = int.Parse(imageTag.Attribute("angle").Value);
                     }
 
+                    if (imageTag.Attribute("mask") != null)
+                    {
+                        order.MaskImageName = imageTag.Attribute("mask").Value;
+                    }
+
                     scenario.ImageOrders.Add(order);
                 }
             }
