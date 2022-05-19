@@ -30,7 +30,7 @@
                 // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
                 var emptyGameObject = new GameObject();
-                var imageSet = emptyGameObject.AddComponent<ImageSet>();
+                var imageSet = new ImageSet();
 
                 order.Names.ForEach(name =>
                 {

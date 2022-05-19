@@ -88,7 +88,7 @@
             //// ここからメッセージウィンドウを表示するためのコード
 
             var emptyGameObject = new GameObject();
-            var imageSet = emptyGameObject.AddComponent<ImageSet>();
+            var imageSet = new ImageSet();
             imageSet.Sprites.Add(Resource.MessageWindowImage);
 
             imageSet.Alpha = 0.6f;

@@ -6,11 +6,12 @@
     using UnityEngine.Rendering;
     using UnityEngine.UI;
 
-    public class ImageSet : MonoBehaviour, IDisplayObject
+    public class ImageSet : IDisplayObject
     {
         private float alpha = 1.0f;
         private float scale = 1.0f;
         private int angle = 0;
+        private GameObject gameObject = new GameObject();
 
         private List<GameObject> gos = new List<GameObject>();
 

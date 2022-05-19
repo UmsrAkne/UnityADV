@@ -48,7 +48,7 @@ public class ImageContainer
         if (effectGameObject == null)
         {
             effectGameObject = new GameObject();
-            var imageSet = effectGameObject.AddComponent<ImageSet>();
+            var imageSet = new ImageSet();
 
             var loader = new ImageLoader();
             var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png", 1280, 720);

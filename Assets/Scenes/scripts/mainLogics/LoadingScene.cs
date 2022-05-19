@@ -31,12 +31,11 @@
             Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
             Text.text = Paths[cursorIndex];
 
-            var g = new GameObject();
-            var topBarImage = g.AddComponent<ImageSet>();
+            var topBarImage = new ImageSet();
             topBarImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\topBar.png", 1280, 50));
             topBarImage.Y = 350;
             topBarImage.Draw();
-            g.GetComponent<SortingGroup>().sortingOrder = 2;
+            // g.GetComponent<SortingGroup>().sortingOrder = 2;
 
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
@@ -82,11 +81,11 @@
 
         private void LoadCurrentCursorImage()
         {
-            var imageSet = GameObjects[cursorIndex].GetComponent<ImageSet>();
+            var imageSet = new ImageSet();
 
             if (imageSet == null)
             {
-                imageSet = GameObjects[cursorIndex].AddComponent<ImageSet>();
+                imageSet = new ImageSet();
             }
 
             if (Sprites[cursorIndex] == null)
@@ -99,13 +98,13 @@
 
             GameObjects.ForEach(g =>
             {
-                if (g.GetComponent<ImageSet>() != null && g.GetComponent<SortingGroup>() != null)
-                {
-                    g.GetComponent<ImageSet>().GetComponent<SortingGroup>().sortingOrder = 0;
-                }
+                // if (g.GetComponent<ImageSet>() != null && g.GetComponent<SortingGroup>() != null)
+                // {
+                //     // g.GetComponent<ImageSet>().GetComponent<SortingGroup>().sortingOrder = 0;
+                // }
             });
 
-            imageSet.GetComponent<SortingGroup>().sortingOrder = 1;
+            // imageSet.GetComponent<SortingGroup>().sortingOrder = 1;
         }
     }
 }
