@@ -30,7 +30,7 @@
                 // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
                 var emptyGameObject = new GameObject();
-                var imageSet = emptyGameObject.AddComponent<ImageSet>();
+                var imageSet = new ImageSet();
 
                 order.Names.ForEach(name =>
                 {
@@ -49,22 +49,21 @@
                 imageSet.X = order.X;
                 imageSet.Y = order.Y;
                 imageSet.Angle = order.Angle;
-                targetContainer.AddChild(emptyGameObject);
+                targetContainer.AddChild(imageSet);
                 imageSet.Draw();
             }
 
             foreach (ImageOrder order in scenario.DrawOrders)
             {
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
-                var frontGameObject = targetContainer.FrontChild;
-                var imageSet = frontGameObject.GetComponent<ImageSet>();
+                var frontImageSet = targetContainer.FrontChild;
 
                 for (var i = 0; i < order.Names.Count; i++)
                 {
                     var name = order.Names[i];
                     if (!string.IsNullOrEmpty(name))
                     {
-                        var r = imageSet.SetSprite(resource.ImagesByName[name]);
+                        var r = frontImageSet.SetSprite(resource.ImagesByName[name]);
                         r.color = new Color(1.0f, 1.0f, 1.0f, 0);
                         DrawingImages.Add(r);
                     }

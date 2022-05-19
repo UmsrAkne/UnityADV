@@ -6,12 +6,13 @@
     using UnityEngine.Rendering;
     using UnityEngine.UI;
 
-    public class ImageSet : MonoBehaviour, IDisplayObject
+    public class ImageSet : IDisplayObject
     {
         private float alpha = 1.0f;
         private float scale = 1.0f;
         private int angle = 0;
-
+        private GameObject gameObject = new GameObject();
+        private GameObject maskObject;
         private List<GameObject> gos = new List<GameObject>();
 
         public float Alpha
@@ -64,12 +65,11 @@
 
         public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
 
-        private List<SpriteRenderer> Renderers { get; set; } = new List<SpriteRenderer>();
+        public GameObject GameObject => gameObject;
 
-        // Start is called before the first frame update
-        public void Start()
-        {
-        }
+        public GameObject MaskObject => maskObject;
+
+        private List<SpriteRenderer> Renderers { get; set; } = new List<SpriteRenderer>();
 
         public void Draw()
         {
@@ -117,9 +117,23 @@
             return renderer;
         }
 
-        // Update is called once per frame
-        public void Update()
+        public void SetMask(Sprite sp)
         {
+            if (maskObject == null)
+            {
+                maskObject = new GameObject();
+            }
+
+            gameObject.transform.SetParent(maskObject.transform);
+
+            var spriteMask = maskObject.GetComponent<SpriteMask>();
+
+            if (spriteMask == null)
+            {
+                spriteMask = maskObject.AddComponent<SpriteMask>();
+            }
+
+            spriteMask.sprite = sp;
         }
     }
 }

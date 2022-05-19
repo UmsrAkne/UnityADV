@@ -87,18 +87,16 @@
 
             //// ここからメッセージウィンドウを表示するためのコード
 
-            var emptyGameObject = new GameObject();
-            var imageSet = emptyGameObject.AddComponent<ImageSet>();
+            var imageSet = new ImageSet();
             imageSet.Sprites.Add(Resource.MessageWindowImage);
 
             imageSet.Alpha = 0.6f;
             imageSet.Y = -200;
 
-            ui.UIImageContainer.AddChild(emptyGameObject);
+            ui.UIImageContainer.AddChild(imageSet);
 
             imageSet.Draw();
-
-            var sortingGroup = ui.UIImageContainer.FrontChild.GetComponent<SortingGroup>();
+            var sortingGroup = imageSet.GameObject.GetComponent<SortingGroup>();
             sortingGroup.sortingOrder = 1;
         }
 
