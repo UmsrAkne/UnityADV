@@ -11,6 +11,10 @@
 
         public Dictionary<string, Sprite> ImagesByName { get; set; }
 
+        public List<Sprite> MaskImages { get; set; }
+
+        public Dictionary<string, Sprite> MaskImagesByName { get; set; }
+
         public AudioSource BGMAudioSource { get; set; }
 
         public List<ISound> Voices { get; set; }

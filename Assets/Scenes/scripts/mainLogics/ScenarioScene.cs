@@ -88,16 +88,15 @@
             //// ここからメッセージウィンドウを表示するためのコード
 
             var imageSet = new ImageSet();
+            imageSet.GameObject.name = "msgWindowImage";
             imageSet.Sprites.Add(Resource.MessageWindowImage);
+            var r = imageSet.SetSprite(Resource.MessageWindowImage);
+            r.maskInteraction = SpriteMaskInteraction.None;
+            r.color = new Color(1f, 1f, 1f, 0.6f);
 
-            imageSet.Alpha = 0.6f;
             imageSet.Y = -200;
 
             ui.UIImageContainer.AddChild(imageSet);
-
-            imageSet.Draw();
-            var sortingGroup = imageSet.GameObject.GetComponent<SortingGroup>();
-            sortingGroup.sortingOrder = 1;
         }
 
         private void ExecuteEveryFrames()

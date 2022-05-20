@@ -37,6 +37,7 @@ public class ImageContainer
 
     public void AddChild(ImageSet childObject)
     {
+        // childObject.GameObject.name = "children";
         childObject.GameObject.transform.SetParent(GameObject.transform);
         Children.Insert(0, childObject);
 
@@ -51,6 +52,7 @@ public class ImageContainer
         {
             var imageSet = new ImageSet();
             effectGameObject = imageSet.GameObject;
+            EffectGameObject.name = "EffectGameObject";
 
             var loader = new ImageLoader();
             var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png", 1280, 720);
@@ -62,7 +64,7 @@ public class ImageContainer
 
             imageSet.Draw();
             var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
-            sortingGroup.sortingOrder = 1;
+            sortingGroup.sortingOrder = 999;
 
             EffectImageSet = imageSet;
         }
