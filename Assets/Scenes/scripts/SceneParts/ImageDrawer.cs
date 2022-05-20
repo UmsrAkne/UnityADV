@@ -6,6 +6,7 @@
     using System.Linq;
     using SceneContents;
     using UnityEngine;
+    using UnityEngine.Rendering;
 
     public class ImageDrawer : IScenarioSceneParts
     {
@@ -49,7 +50,9 @@
                 imageSet.X = order.X;
                 imageSet.Y = order.Y;
                 imageSet.Angle = order.Angle;
+                imageSet.SortingLayerIndex = order.TargetLayerIndex;
                 targetContainer.AddChild(imageSet);
+
                 imageSet.Draw();
 
                 if (!string.IsNullOrWhiteSpace(order.MaskImageName))

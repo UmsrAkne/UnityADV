@@ -11,8 +11,8 @@
         private float alpha = 1.0f;
         private float scale = 1.0f;
         private int angle = 0;
-        private GameObject gameObject = new GameObject();
-        private GameObject maskObject;
+        private GameObject gameObject = new GameObject("imageSet");
+        private GameObject maskObject = new GameObject("maskObject");
         private List<GameObject> gos = new List<GameObject>();
 
         public float Alpha
@@ -63,6 +63,8 @@
             }
         }
 
+        public int SortingLayerIndex { get; set; }
+
         public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
 
         public GameObject GameObject => gameObject;
@@ -74,7 +76,8 @@
         public void Draw()
         {
             var container = this.gameObject;
-            gameObject.AddComponent<SortingGroup>();
+            var sg = gameObject.AddComponent<SortingGroup>();
+            sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
 
             var gameObjects = new List<GameObject>()
             {
@@ -124,6 +127,7 @@
                 maskObject = new GameObject();
             }
 
+            maskObject.transform.SetParent(GameObject.transform.parent);
             gameObject.transform.SetParent(maskObject.transform);
 
             var spriteMask = maskObject.GetComponent<SpriteMask>();
@@ -134,6 +138,15 @@
             }
 
             spriteMask.sprite = sp;
+
+            var sg = maskObject.GetComponent<SortingGroup>();
+
+            if (sg == null)
+            {
+                sg = maskObject.AddComponent<SortingGroup>();
+            }
+
+            sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
         }
     }
 }
