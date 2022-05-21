@@ -11,6 +11,8 @@
     {
         public string TargetElementName => "image";
 
+        public List<string> Log { get; } = new List<string>();
+
         public void Convert(XElement xmlElement, Scenario scenario)
         {
             var tags = xmlElement.Elements(TargetElementName);

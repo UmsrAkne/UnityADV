@@ -8,9 +8,11 @@
     using SceneParts;
     using UnityEngine;
     using UnityEngine.Rendering;
+    using UnityEngine.UI;
 
     public class ScenarioScene : MonoBehaviour
     {
+        private GameObject logWindowObject;
         private Scenario currentScenario;
 
         public Resource Resource { private get; set; } = new Resource();
@@ -24,6 +26,10 @@
         // Start is called before the first frame update
         public void Start()
         {
+            logWindowObject = GameObject.Find("LogTextField");
+            Resource.Log.ForEach(t => logWindowObject.GetComponent<Text>().text += $"{t}\n");
+            logWindowObject.GetComponent<Text>().text += "ロード完了";
+
             InjectUI(UI);
 
             ScenarioSceneParts.Add(new ImageDrawer());
@@ -58,6 +64,12 @@
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 Forward();
+
+                if (logWindowObject != null)
+                {
+                    Destroy(logWindowObject);
+                    logWindowObject = null;
+                }
             }
         }
 

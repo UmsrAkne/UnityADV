@@ -16,6 +16,8 @@
 
         public string TargetElementName => "voice";
 
+        public List<string> Log { get; } = new List<string>();
+
         public void Convert(XElement xmlElement, Scenario scenario)
         {
             var tags = xmlElement.Elements(TargetElementName);
@@ -28,7 +30,7 @@
 
                     if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
                     {
-                        throw new FormatException("<voice> には fileName か number 属性のどちらかが必須です");
+                        Log.Add("<voice> には fileName か number 属性のどちらかが必須です");
                     }
 
                     if (voiceTag.Attribute(numberAttribute) != null)

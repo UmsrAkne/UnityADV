@@ -1,6 +1,7 @@
 ﻿namespace Animations
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using Loaders;
@@ -9,6 +10,8 @@
     public class AnimeElementConverter : IXMLElementConverter
     {
         public string TargetElementName => "anime";
+
+        public List<string> Log { get; } = new List<string>();
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {
@@ -19,6 +22,11 @@
                 foreach (XElement animeTag in tags)
                 {
                     IAnimation anime = GenerateAnimation(animeTag.Attribute("name").Value);
+
+                    if (anime == null)
+                    {
+                        continue;
+                    }
 
                     Type type = anime.GetType();
                     var attributes = animeTag.Attributes().Where(a => a.Name != "name");
@@ -47,7 +55,7 @@
                         }
                         else
                         {
-                            UnityEngine.Debug.Log($"アニメーションのプロパティをセットできませんでした {attribute.Name}");
+                            Log.Add($"アニメーションのプロパティのセットに失敗しました。 name={attribute.Name}");
                         }
                     }
 
@@ -66,7 +74,9 @@
                 case "flash": return new Flash();
             }
 
-            throw new ArgumentException($"指定されたアニメーションの名前が不正です。[{animationName}]");
+            Log.Add($"アニメーションの生成に失敗。 name={animationName}");
+
+            return null;
         }
     }
 }
