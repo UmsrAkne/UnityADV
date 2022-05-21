@@ -41,6 +41,7 @@
             Resource.Ses = seLoader.AudioSources;
 
             Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png", 800, 150);
+            Resource.SceneDirectoryPath = path;
         }
     }
 }

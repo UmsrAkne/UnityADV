@@ -85,13 +85,7 @@
 
                 if (fillBlackImage.Alpha >= 1.0f)
                 {
-                    SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
-                    {
-                        Loader loader = new Loader();
-                        loader.Load(Paths[cursorIndex]);
-                        GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
-                    };
-
+                    SceneManager.sceneLoaded += LoadNextSceneResource;
                     SceneManager.LoadScene("SampleScene");
                 }
             }
@@ -123,6 +117,14 @@
             });
 
             // imageSet.GetComponent<SortingGroup>().sortingOrder = 1;
+        }
+
+        private void LoadNextSceneResource(Scene next, LoadSceneMode mode)
+        {
+            Loader loader = new Loader();
+            loader.Load(Paths[cursorIndex]);
+            GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+            SceneManager.sceneLoaded -= LoadNextSceneResource;
         }
     }
 }

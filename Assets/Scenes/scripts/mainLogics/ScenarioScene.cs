@@ -4,10 +4,12 @@
     using System.Collections;
     using System.Collections.Generic;
     using Animations;
+    using Loaders;
     using SceneContents;
     using SceneParts;
     using UnityEngine;
     using UnityEngine.Rendering;
+    using UnityEngine.SceneManagement;
     using UnityEngine.UI;
 
     public class ScenarioScene : MonoBehaviour
@@ -71,6 +73,15 @@
                     logWindowObject = null;
                 }
             }
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    SceneManager.sceneLoaded += LoadSceneResource;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
         }
 
         public void Forward()
@@ -115,6 +126,14 @@
         {
             TextWriter.ExecuteEveryFrame();
             ScenarioSceneParts.ForEach(p => p.ExecuteEveryFrame());
+        }
+
+        private void LoadSceneResource(Scene next, LoadSceneMode mode)
+        {
+            Loader loader = new Loader();
+            loader.Load(Resource.SceneDirectoryPath);
+            GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+            SceneManager.sceneLoaded -= LoadSceneResource;
         }
     }
 }
