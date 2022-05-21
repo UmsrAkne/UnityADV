@@ -16,7 +16,7 @@
 
         public string TargetElementName => "se";
 
-        public List<string> Log => throw new System.NotImplementedException();
+        public List<string> Log { get; } = new List<string>();
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {

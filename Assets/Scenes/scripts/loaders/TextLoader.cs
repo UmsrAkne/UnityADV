@@ -13,6 +13,8 @@
     {
         public List<Scenario> Scenario { get; set; }
 
+        public List<string> Log { get; private set; } = new List<string>();
+
         private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
 
         public void Load(string targetPath)
@@ -23,22 +25,17 @@
             Converters.Add(new SEElementConverter());
             Converters.Add(new AnimeElementConverter());
 
-            try
-            {
-                XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
+            XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
 
-                Scenario =
-                xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
-                {
-                    var scenario = new Scenario() { Text = x.Element("text").Attribute("str").Value };
-                    Converters.ForEach(c => c.Convert(x, scenario));
-                    return scenario;
-                }).ToList();
-            }
-            catch (Exception e)
+            Scenario =
+            xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
             {
-                Debug.Log(e);
-            }
+                var scenario = new Scenario() { Text = x.Element("text").Attribute("str").Value };
+                Converters.ForEach(c => c.Convert(x, scenario));
+                return scenario;
+            }).ToList();
+
+            Converters.ForEach(c => Log.AddRange(c.Log));
         }
     }
 }
