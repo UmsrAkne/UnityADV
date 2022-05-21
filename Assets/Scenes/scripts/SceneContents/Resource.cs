@@ -24,5 +24,7 @@
         public List<ISound> Ses { get; set; }
 
         public Sprite MessageWindowImage { get; set; }
+
+        public string SceneDirectoryPath { get; set; }
     }
 }
