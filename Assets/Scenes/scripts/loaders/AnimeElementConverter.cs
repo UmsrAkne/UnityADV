@@ -1,6 +1,7 @@
 ﻿namespace Animations
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using Loaders;
@@ -9,6 +10,8 @@
     public class AnimeElementConverter : IXMLElementConverter
     {
         public string TargetElementName => "anime";
+
+        public List<string> Log { get; } = new List<string>();
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {

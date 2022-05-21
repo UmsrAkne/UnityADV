@@ -16,6 +16,8 @@
 
         public string TargetElementName => "se";
 
+        public List<string> Log => throw new System.NotImplementedException();
+
         public void Convert(XElement xmlElement, Scenario scenario)
         {
             var tags = xmlElement.Elements(TargetElementName);
