@@ -70,7 +70,7 @@
             Target.X += (float)(Math.Sin(rad) * Speed * resistance);
             Target.Y += (float)(Math.Cos(rad) * Speed * resistance);
 
-            totalDistance += Math.Tan(rad) * Speed;
+            totalDistance += Speed * resistance;
 
             // 全移動距離に対して、一定割合移動したらブレーキをかける。
             if (totalDistance >= Distance * 0.7)
