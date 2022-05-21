@@ -15,6 +15,8 @@
         private int cursorIndex;
         private bool keyboardLock = true;
         private ImageLoader imageLoader = new ImageLoader();
+        private ImageSet fillBlackImage;
+        private bool loading;
 
         private Text Text { get; set; }
 
@@ -36,6 +38,12 @@
             topBarImage.Y = 350;
             topBarImage.Draw();
             topBarImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
+
+            fillBlackImage = new ImageSet();
+            fillBlackImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\fillBlack.png", 1280, 720));
+            fillBlackImage.Draw();
+            fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
+            fillBlackImage.Alpha = 0;
 
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
@@ -68,14 +76,24 @@
 
             if (Input.GetKeyDown(KeyCode.Return) && !keyboardLock)
             {
-                SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
-                {
-                    Loader loader = new Loader();
-                    loader.Load(Paths[cursorIndex]);
-                    GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
-                };
+                loading = true;
+            }
 
-                SceneManager.LoadScene("SampleScene");
+            if (loading)
+            {
+                fillBlackImage.Alpha += 0.02f;
+
+                if (fillBlackImage.Alpha >= 1.0f)
+                {
+                    SceneManager.sceneLoaded += (Scene next, LoadSceneMode mode) =>
+                    {
+                        Loader loader = new Loader();
+                        loader.Load(Paths[cursorIndex]);
+                        GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+                    };
+
+                    SceneManager.LoadScene("SampleScene");
+                }
             }
         }
 
