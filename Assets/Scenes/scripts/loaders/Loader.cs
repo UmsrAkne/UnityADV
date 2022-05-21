@@ -21,6 +21,7 @@
         public void Load(string path)
         {
             textLoader.Load($@"{path}\texts\scenario.xml");
+
             imageLoader.Load($@"{path}\images", 1280, 720);
             maskLoader.Load($@"{path}\masks", 1280, 720);
             voiceLoader.Load($@"{path}\voices");
@@ -28,6 +29,7 @@
             seLoader.Load(@"commonResource\ses");
 
             Resource.Scenarios = textLoader.Scenario;
+            Resource.Log = textLoader.Log;
             Resource.Images = imageLoader.Sprites;
             Resource.ImagesByName = imageLoader.SpriteDictionary;
 

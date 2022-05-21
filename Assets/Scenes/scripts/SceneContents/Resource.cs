@@ -5,6 +5,8 @@
 
     public class Resource
     {
+        public List<string> Log { get; set; }
+
         public List<Scenario> Scenarios { get; set; }
 
         public List<Sprite> Images { get; set; }
