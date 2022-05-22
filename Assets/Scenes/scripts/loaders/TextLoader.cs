@@ -27,10 +27,17 @@
 
             XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
 
+            var scenarioIndex = 0;
+
             Scenario =
             xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
             {
-                var scenario = new Scenario() { Text = x.Element("text").Attribute("str").Value };
+                var scenario = new Scenario()
+                {
+                    Text = x.Element("text").Attribute("str").Value,
+                    Index = ++scenarioIndex
+                };
+
                 Converters.ForEach(c => c.Convert(x, scenario));
                 return scenario;
             }).ToList();
