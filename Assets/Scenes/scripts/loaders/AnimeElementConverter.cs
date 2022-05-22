@@ -72,6 +72,7 @@
                 case "shake": return new Shake();
                 case "slide": return new Slide();
                 case "flash": return new Flash();
+                case "bound": return new Bound();
             }
 
             Log.Add($"アニメーションの生成に失敗。 name={animationName}");
