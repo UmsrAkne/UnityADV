@@ -5,6 +5,8 @@
 
     public class Scenario
     {
+        public int Index { get; set; }
+
         public string Text { get; set; }
 
         public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
