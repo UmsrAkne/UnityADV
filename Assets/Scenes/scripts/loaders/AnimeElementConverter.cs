@@ -55,7 +55,7 @@
                         }
                         else
                         {
-                            Log.Add($"アニメーションのプロパティのセットに失敗しました。 name={attribute.Name}");
+                            Log.Add($"アニメーションのプロパティのセットに失敗しました。Index={scenario.Index}, name={attribute.Name}");
                         }
                     }
 
