@@ -7,10 +7,11 @@
     {
         private ImageContainer targetContainer;
         private int frameCounter;
+        private ImageSet effectImageSet;
 
         public string AnimationName => "flash";
 
-        public bool IsWorking => true;
+        public bool IsWorking { get; private set; } = true;
 
         public IDisplayObject Target { private get; set; }
 
@@ -38,14 +39,12 @@
 
         public void Execute()
         {
-            if (!IsWorking || TargetContainer == null)
+            if (!IsWorking)
             {
                 return;
             }
 
-            var target = TargetContainer.EffectImageSet;
-
-            target.Alpha = GetAlpha();
+            effectImageSet.Alpha = GetAlpha();
             frameCounter++;
 
             if (frameCounter > Duration * RepeatCount)
@@ -56,12 +55,13 @@
 
         public void Start()
         {
+            effectImageSet = TargetContainer.EffectImageSet;
         }
 
         public void Stop()
         {
-            var target = TargetContainer.EffectImageSet;
-            target.Alpha = 0f;
+            effectImageSet.Alpha = 0;
+            IsWorking = false;
         }
 
         private float GetAlpha()
