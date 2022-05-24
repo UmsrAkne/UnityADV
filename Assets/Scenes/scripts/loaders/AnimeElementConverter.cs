@@ -52,6 +52,11 @@
                             {
                                 propInfo.SetValue(anime, double.Parse(attribute.Value));
                             }
+
+                            if (propInfo.PropertyType == typeof(string))
+                            {
+                                propInfo.SetValue(anime, attribute.Value);
+                            }
                         }
                         else
                         {

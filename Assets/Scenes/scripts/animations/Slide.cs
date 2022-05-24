@@ -40,6 +40,17 @@
 
         public int LoopCount { get; set; }
 
+        public string Direction
+        {
+            set
+            {
+                Enum.TryParse(value, out Direction d);
+
+                // 方向による角度の指定は45度単位とする。
+                Degree = (int)d * 45;
+            }
+        }
+
         public ImageContainer TargetContainer
         {
             set { _ = value; }
