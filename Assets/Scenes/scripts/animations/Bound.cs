@@ -60,6 +60,10 @@
             }
         }
 
+        public void Start()
+        {
+        }
+
         public void Stop()
         {
             Target.X -= (float)totalDx;

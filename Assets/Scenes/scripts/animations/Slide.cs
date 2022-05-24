@@ -100,6 +100,10 @@
             }
         }
 
+        public void Start()
+        {
+        }
+
         public void Stop()
         {
             IsWorking = false;
