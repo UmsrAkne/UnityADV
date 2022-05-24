@@ -16,6 +16,8 @@
 
         void Execute();
 
+        void Start();
+
         void Stop();
     }
 }

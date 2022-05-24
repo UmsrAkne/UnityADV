@@ -54,6 +54,10 @@
             }
         }
 
+        public void Start()
+        {
+        }
+
         public void Stop()
         {
             var target = TargetContainer.EffectImageSet;
