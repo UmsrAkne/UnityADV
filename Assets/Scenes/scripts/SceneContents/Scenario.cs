@@ -15,6 +15,8 @@
 
         public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
 
+        public List<BGVOrder> BGVOrders { get; set; } = new List<BGVOrder>();
+
         public int VoiceIndex { get; set; }
 
         public List<SEOrder> SEOrders { get; set; } = new List<SEOrder>();
