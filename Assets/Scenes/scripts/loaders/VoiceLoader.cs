@@ -16,6 +16,8 @@ public class VoiceLoader : MonoBehaviour
 
     public List<ISound> AudioSources { get; private set; } = new List<ISound>();
 
+    public Dictionary<string, ISound> AudioSourcesByName { get; private set; } = new Dictionary<string, ISound>();
+
     private List<AudioClip> AudioClips { get; set; }
 
     public void Load(string targetDirectoryPath)
@@ -34,7 +36,10 @@ public class VoiceLoader : MonoBehaviour
         for (var i = 0; i < audioPaths.Count; i++)
         {
             /// これって GameObject がメモリから消滅しても大丈夫？
-            AudioSources.Add(new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() });
+            var sound = new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
+            AudioSources.Add(sound);
+            AudioSourcesByName.Add(Path.GetFileName(audioPaths[i]), sound);
+            AudioSourcesByName.Add(Path.GetFileNameWithoutExtension(audioPaths[i]), sound);
         }
 
         AudioClips = Enumerable.Repeat<AudioClip>(null, audioPaths.Count).ToList();
