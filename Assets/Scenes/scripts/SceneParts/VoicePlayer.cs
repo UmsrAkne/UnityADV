@@ -19,6 +19,8 @@
 
         public List<ISound> Voices { get; set; }
 
+        public Dictionary<string, ISound> VoicesByName { get; set; }
+
         public int Channel { get; set; }
 
         public void Execute()
@@ -33,7 +35,15 @@
                 currentVoice.Stop();
             }
 
-            currentVoice = Voices[nextOrder.Index];
+            if (nextOrder.Index > 0)
+            {
+                currentVoice = Voices[nextOrder.Index];
+            }
+            else
+            {
+                currentVoice = VoicesByName[nextOrder.FileName];
+            }
+
             currentVoice.Play();
             nextOrder = null;
             playRequire = false;
@@ -54,6 +64,7 @@
         public void SetResource(Resource resource)
         {
             Voices = resource.Voices;
+            VoicesByName = resource.VoicesByName;
         }
 
         public void SetScenario(Scenario scenario)
@@ -67,9 +78,12 @@
 
             // nextOrder.Index == 0 は無視する。
             // [0] は未使用番号。インデックス 0 はデフォルト値であり、未設定の状態を表す。
-            if (nextOrder != null && nextOrder.Index > 0)
+            if (nextOrder != null)
             {
-                playRequire = true;
+                if (nextOrder.Index > 0 || !string.IsNullOrWhiteSpace(nextOrder.FileName))
+                {
+                    playRequire = true;
+                }
             }
         }
 
