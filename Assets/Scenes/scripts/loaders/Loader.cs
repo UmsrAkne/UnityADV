@@ -38,6 +38,7 @@
 
             Resource.BGMAudioSource = bgmLoader.AudioSource;
             Resource.Voices = voiceLoader.AudioSources;
+            Resource.VoicesByName = voiceLoader.AudioSourcesByName;
             Resource.Ses = seLoader.AudioSources;
 
             Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png", 800, 150);

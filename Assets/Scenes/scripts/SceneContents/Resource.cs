@@ -21,6 +21,8 @@
 
         public List<ISound> Voices { get; set; }
 
+        public Dictionary<string, ISound> VoicesByName { get; set; }
+
         public List<ISound> Ses { get; set; }
 
         public Sprite MessageWindowImage { get; set; }
