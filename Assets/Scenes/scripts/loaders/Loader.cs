@@ -14,6 +14,7 @@
         private ImageLoader maskLoader = new ImageLoader();
         private BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
         private VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
+        private VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
         private VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
 
         public Resource Resource { get; set; } = new Resource();
@@ -25,7 +26,8 @@
             imageLoader.Load($@"{path}\images", 1280, 720);
             maskLoader.Load($@"{path}\masks", 1280, 720);
             voiceLoader.Load($@"{path}\voices");
-            bgmLoader.Load(@"commonResource\bgms");
+            bgvLoader.Load($@"{path}\bgvs");
+            bgmLoader.Load($@"commonResource\bgms");
             seLoader.Load(@"commonResource\ses");
 
             Resource.Scenarios = textLoader.Scenario;
@@ -37,8 +39,12 @@
             Resource.MaskImagesByName = maskLoader.SpriteDictionary;
 
             Resource.BGMAudioSource = bgmLoader.AudioSource;
+
             Resource.Voices = voiceLoader.AudioSources;
             Resource.VoicesByName = voiceLoader.AudioSourcesByName;
+
+            Resource.BGVoices = bgvLoader.AudioSources;
+            Resource.BGVoicesByName = bgvLoader.AudioSourcesByName;
             Resource.Ses = seLoader.AudioSources;
 
             Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png", 800, 150);
