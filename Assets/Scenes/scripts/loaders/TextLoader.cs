@@ -11,6 +11,10 @@
 
     public class TextLoader
     {
+        private string textAttribute = "text";
+        private string stringAttribute = "string";
+        private string strAttribute = "str";
+
         public List<Scenario> Scenario { get; set; }
 
         public List<string> Log { get; private set; } = new List<string>();
@@ -32,11 +36,17 @@
             Scenario =
             xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
             {
-                var scenario = new Scenario()
+                var scenario = new Scenario() { Index = ++scenarioIndex };
+
+                if (x.Element(textAttribute).Attribute(strAttribute) != null)
                 {
-                    Text = x.Element("text").Attribute("str").Value,
-                    Index = ++scenarioIndex
-                };
+                    scenario.Text = x.Element(textAttribute).Attribute(strAttribute).Value;
+                }
+
+                if (x.Element(textAttribute).Attribute(stringAttribute) != null)
+                {
+                    scenario.Text = x.Element(textAttribute).Attribute(stringAttribute).Value;
+                }
 
                 Converters.ForEach(c => c.Convert(x, scenario));
                 return scenario;
