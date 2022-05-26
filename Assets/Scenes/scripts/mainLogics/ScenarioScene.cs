@@ -42,9 +42,17 @@
 
             ScenarioSceneParts.Add(new BGMPlayer());
 
-            ScenarioSceneParts.Add(new VoicePlayer() { Channel = 0 });
-            ScenarioSceneParts.Add(new VoicePlayer() { Channel = 1 });
-            ScenarioSceneParts.Add(new VoicePlayer() { Channel = 2 });
+            var vp1 = new VoicePlayer() { Channel = 0 };
+            var vp2 = new VoicePlayer() { Channel = 1 };
+            var vp3 = new VoicePlayer() { Channel = 2 };
+
+            ScenarioSceneParts.Add(vp1);
+            ScenarioSceneParts.Add(vp2);
+            ScenarioSceneParts.Add(vp3);
+
+            ScenarioSceneParts.Add(new BGVoicePlayer(vp1));
+            ScenarioSceneParts.Add(new BGVoicePlayer(vp2));
+            ScenarioSceneParts.Add(new BGVoicePlayer(vp3));
 
             ScenarioSceneParts.Add(new SEPlayer());
 

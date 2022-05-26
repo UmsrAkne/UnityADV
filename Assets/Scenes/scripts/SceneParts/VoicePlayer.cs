@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using SceneContents;
     using UnityEngine;
@@ -12,6 +13,7 @@
         private bool playRequire;
         private ISound currentVoice;
         private VoiceOrder nextOrder;
+        private Stopwatch playTimeStopwatch = new Stopwatch();
 
         public event EventHandler SoundComplete;
 
@@ -45,6 +47,7 @@
             }
 
             currentVoice.Play();
+            playTimeStopwatch.Restart();
             nextOrder = null;
             playRequire = false;
         }
@@ -53,10 +56,11 @@
         {
             if (currentVoice != null)
             {
-                if (!currentVoice.IsPlaying)
+                if (!currentVoice.IsPlaying && playTimeStopwatch.ElapsedMilliseconds > 100)
                 {
                     SoundComplete?.Invoke(this, EventArgs.Empty);
                     currentVoice = null;
+                    playTimeStopwatch.Stop();
                 }
             }
         }

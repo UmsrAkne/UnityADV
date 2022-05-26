@@ -23,6 +23,10 @@
 
         public Dictionary<string, ISound> VoicesByName { get; set; }
 
+        public List<ISound> BGVoices { get; set; }
+
+        public Dictionary<string, ISound> BGVoicesByName { get; set; }
+
         public List<ISound> Ses { get; set; }
 
         public Sprite MessageWindowImage { get; set; }
