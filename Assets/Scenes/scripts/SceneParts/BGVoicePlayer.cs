@@ -22,12 +22,12 @@
         private int playingVoiceIndex;
         private Stopwatch playElapsedTimer = new Stopwatch();
         private bool increasingVolume;
-        private bool playing;
+        private VoicePlayer voicePlayer;
 
         public BGVoicePlayer(VoicePlayer voicePlayer)
         {
             channel = voicePlayer.Channel;
-            voicePlayer.SoundComplete += VoiceCompleteEventHandler;
+            this.voicePlayer = voicePlayer;
         }
 
         public bool NeedExecuteEveryFrame => true;
@@ -105,7 +105,7 @@
                 {
                     currentOrder = order;
                     playRequest = true;
-                    playing = true;
+                    voicePlayer.SoundComplete += VoiceCompleteEventHandler;
                 }
             });
 
@@ -123,11 +123,12 @@
 
         private void VoiceCompleteEventHandler(object sender, EventArgs e)
         {
-            if (playRequest || playing)
+            if (playRequest)
             {
                 increasingVolume = true;
             }
 
+            voicePlayer.SoundComplete -= VoiceCompleteEventHandler;
             playRequest = false;
         }
     }
