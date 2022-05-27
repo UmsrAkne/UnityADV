@@ -22,5 +22,7 @@
         public List<SEOrder> SEOrders { get; set; } = new List<SEOrder>();
 
         public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
+
+        public List<StopOrder> StopOrders { get; set; } = new List<StopOrder>();
     }
 }
