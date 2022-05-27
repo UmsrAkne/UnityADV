@@ -29,6 +29,7 @@
             Converters.Add(new SEElementConverter());
             Converters.Add(new AnimeElementConverter());
             Converters.Add(new BackgroundVoiceElementConverter());
+            Converters.Add(new StopElementConverter());
 
             XDocument xml = XDocument.Parse(File.ReadAllText(targetPath));
 
