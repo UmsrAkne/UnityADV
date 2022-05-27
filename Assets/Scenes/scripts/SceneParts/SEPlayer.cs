@@ -7,6 +7,8 @@
 
     public class SEPlayer : IScenarioSceneParts
     {
+        private StopOrder stopOrder;
+
         public bool NeedExecuteEveryFrame => false;
 
         private List<ISound> Ses { get; set; }
@@ -17,6 +19,12 @@
 
         public void Execute()
         {
+            if (stopOrder != null)
+            {
+                PlayingSound?.Stop();
+                stopOrder = null;
+            }
+
             if (CurrentOrder == null)
             {
                 return;
@@ -50,6 +58,14 @@
 
         public void SetScenario(Scenario scenario)
         {
+            scenario.StopOrders.ForEach(order =>
+            {
+                if (order.Target == StoppableSceneParts.se)
+                {
+                    stopOrder = order;
+                }
+            });
+
             if (scenario.SEOrders.Count == 0)
             {
                 return;
