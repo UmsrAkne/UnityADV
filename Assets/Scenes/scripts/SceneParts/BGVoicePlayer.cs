@@ -23,6 +23,7 @@
         private Stopwatch playElapsedTimer = new Stopwatch();
         private bool increasingVolume;
         private VoicePlayer voicePlayer;
+        private StopOrder stopOrder;
 
         public BGVoicePlayer(VoicePlayer voicePlayer)
         {
@@ -48,6 +49,16 @@
 
         public void Execute()
         {
+            if (stopOrder != null)
+            {
+                playingVoice.Stop();
+                playingVoice = null;
+                playingVoiceList = null;
+                playingVoiceIndex = 0;
+                Volume = 0;
+                stopOrder = null;
+            }
+
             if (!playRequest)
             {
                 return;
@@ -106,6 +117,17 @@
                     currentOrder = order;
                     playRequest = true;
                     voicePlayer.SoundComplete += VoiceCompleteEventHandler;
+                }
+            });
+
+            scenario.StopOrders.ForEach(order =>
+            {
+                if (order.Target == StoppableSceneParts.backgroundVoice || order.Target == StoppableSceneParts.bgv)
+                {
+                    if (order.Channel == channel)
+                    {
+                        stopOrder = order;
+                    }
                 }
             });
 
