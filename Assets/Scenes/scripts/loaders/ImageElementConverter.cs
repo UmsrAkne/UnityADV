@@ -9,6 +9,8 @@
 
     public class ImageElementConverter : IXMLElementConverter
     {
+        private List<string> abcdAttribute = new List<string>() { "a", "b", "c", "d" };
+
         public string TargetElementName => "image";
 
         public List<string> Log { get; } = new List<string>();
@@ -23,10 +25,17 @@
                 {
                     var order = new ImageOrder();
 
-                    order.Names.Add(imageTag.Attribute("a").Value);
-                    order.Names.Add(imageTag.Attribute("b").Value);
-                    order.Names.Add(imageTag.Attribute("c").Value);
-                    order.Names.Add(imageTag.Attribute("d").Value);
+                    if (imageTag.Attributes().Any(x => x.Name == "a" || x.Name == "b" || x.Name == "c" || x.Name == "d"))
+                    {
+                        abcdAttribute.ForEach(s =>
+                        {
+                            order.Names.Add(imageTag.Attribute(s) != null ? imageTag.Attribute(s).Value : string.Empty);
+                        });
+                    }
+                    else
+                    {
+                        Log.Add($"image要素に a, b. c, d 属性が含まれていません。Index={scenario.Index}");
+                    }
 
                     if (imageTag.Attribute("scale") != null)
                     {
