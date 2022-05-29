@@ -28,9 +28,14 @@
             IsPlaying = false;
         }
 
-        public void Forward(int time)
+        public void Forward(int additionTime)
         {
-            this.time += time;
+            if (!IsPlaying)
+            {
+                return;
+            }
+
+            time += additionTime;
             if (time >= Duration)
             {
                 IsPlaying = false;
