@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Xml.Linq;
     using SceneContents;
     using UnityEngine;
 
@@ -17,21 +18,34 @@
         private VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
         private VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
 
+        private SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
+
         public Resource Resource { get; set; } = new Resource();
 
         public void Load(string path)
         {
+            var settingXMLPath = $@"{path}\texts\setting.xml";
+
+            if (File.Exists(settingXMLPath))
+            {
+                Resource.SceneSetting = sceneSettingLoader.LoadSetting(XDocument.Parse(File.ReadAllText(settingXMLPath)));
+            }
+            else
+            {
+                Resource.Log.Add("setting.xml を読み込めませんでした");
+            }
+
             textLoader.Load($@"{path}\texts\scenario.xml");
 
-            imageLoader.Load($@"{path}\images", 1280, 720);
-            maskLoader.Load($@"{path}\masks", 1280, 720);
+            imageLoader.Load($@"{path}\images");
+            maskLoader.Load($@"{path}\masks");
             voiceLoader.Load($@"{path}\voices");
             bgvLoader.Load($@"{path}\bgvs");
             bgmLoader.Load($@"commonResource\bgms");
             seLoader.Load(@"commonResource\ses");
 
             Resource.Scenarios = textLoader.Scenario;
-            Resource.Log = textLoader.Log;
+            Resource.Log.AddRange(textLoader.Log);
             Resource.Images = imageLoader.Sprites;
             Resource.ImagesByName = imageLoader.SpriteDictionary;
 
@@ -47,7 +61,7 @@
             Resource.BGVoicesByName = bgvLoader.AudioSourcesByName;
             Resource.Ses = seLoader.AudioSources;
 
-            Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png", 800, 150);
+            Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png");
             Resource.SceneDirectoryPath = path;
         }
     }

@@ -1,11 +1,14 @@
 ﻿namespace SceneContents
 {
     using System.Collections.Generic;
+    using Loaders;
     using UnityEngine;
 
     public class Resource
     {
-        public List<string> Log { get; set; }
+        public SceneSetting SceneSetting { get; set; } = new SceneSetting();
+
+        public List<string> Log { get; set; } = new List<string>();
 
         public List<Scenario> Scenarios { get; set; }
 

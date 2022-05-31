@@ -55,7 +55,7 @@ public class ImageContainer
             EffectGameObject.name = "EffectGameObject";
 
             var loader = new ImageLoader();
-            var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png", 1280, 720);
+            var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png");
             imageSet.Sprites.Add(sp);
             imageSet.Alpha = 0;
 
