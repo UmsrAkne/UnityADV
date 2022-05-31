@@ -34,13 +34,13 @@
             Text.text = Paths[cursorIndex];
 
             var topBarImage = new ImageSet();
-            topBarImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\topBar.png", 1280, 50));
+            topBarImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\topBar.png"));
             topBarImage.Y = 350;
             topBarImage.Draw();
             topBarImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
 
             fillBlackImage = new ImageSet();
-            fillBlackImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\fillBlack.png", 1280, 720));
+            fillBlackImage.Sprites.Add(imageLoader.LoadImage($@"commonResource\uis\fillBlack.png"));
             fillBlackImage.Draw();
             fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
             fillBlackImage.Alpha = 0;
@@ -103,7 +103,7 @@
             if (Sprites[cursorIndex] == null)
             {
                 var fistImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
-                Sprites[cursorIndex] = imageLoader.LoadImage(fistImagePath, 1280, 720);
+                Sprites[cursorIndex] = imageLoader.LoadImage(fistImagePath);
                 imageSet.Sprites.Add(Sprites[cursorIndex]);
                 imageSet.Draw();
             }
