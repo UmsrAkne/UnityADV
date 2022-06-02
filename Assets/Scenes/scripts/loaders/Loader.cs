@@ -24,7 +24,7 @@
 
         public void Load(string path)
         {
-            var settingXMLPath = $@"{path}\texts\setting.xml";
+            var settingXMLPath = $@"{path}\{ResourcePath.SceneTextDirectoryName}\setting.xml";
 
             if (File.Exists(settingXMLPath))
             {
@@ -35,14 +35,14 @@
                 Resource.Log.Add("setting.xml を読み込めませんでした");
             }
 
-            textLoader.Load($@"{path}\texts\scenario.xml");
+            textLoader.Load($@"{path}\{ResourcePath.SceneTextDirectoryName}\scenario.xml");
 
-            imageLoader.Load($@"{path}\images");
-            maskLoader.Load($@"{path}\masks");
-            voiceLoader.Load($@"{path}\voices");
-            bgvLoader.Load($@"{path}\bgvs");
-            bgmLoader.Load($@"commonResource\bgms");
-            seLoader.Load(@"commonResource\ses");
+            imageLoader.Load($@"{path}\{ResourcePath.SceneImageDirectoryName}");
+            maskLoader.Load($@"{path}\{ResourcePath.SceneMaskImageDirectoryName}");
+            voiceLoader.Load($@"{path}\{ResourcePath.SceneVoiceDirectoryName}");
+            bgvLoader.Load($@"{path}\{ResourcePath.SceneBGVDirectoryName}");
+            bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
+            seLoader.Load($@"{ResourcePath.CommonSEDirectoryName}");
 
             Resource.Scenarios = textLoader.Scenario;
             Resource.Log.AddRange(textLoader.Log);
@@ -61,7 +61,7 @@
             Resource.BGVoicesByName = bgvLoader.AudioSourcesByName;
             Resource.Ses = seLoader.AudioSources;
 
-            Resource.MessageWindowImage = uiLoader.LoadImage(@"commonResource\uis\msgWindowImage.png");
+            Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png");
             Resource.SceneDirectoryPath = path;
         }
     }
