@@ -1,72 +1,75 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SceneContents;
-using UnityEngine;
-using UnityEngine.Rendering;
-
-public class ImageContainer
+﻿namespace SceneContents
 {
-    private GameObject gameObject;
-    private GameObject effectGameObject;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SceneContents;
+    using UnityEngine;
+    using UnityEngine.Rendering;
 
-    public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
-
-    public event ImageAddedEventHandler Added;
-
-    public GameObject GameObject
+    public class ImageContainer
     {
-        get => gameObject;
-        set
+        private GameObject gameObject;
+        private GameObject effectGameObject;
+
+        public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
+
+        public event ImageAddedEventHandler Added;
+
+        public GameObject GameObject
         {
-            if (gameObject == null)
+            get => gameObject;
+            set
             {
-                gameObject = value;
+                if (gameObject == null)
+                {
+                    gameObject = value;
+                }
             }
         }
-    }
 
-    public ImageSet FrontChild => Children.FirstOrDefault();
+        public ImageSet FrontChild => Children.FirstOrDefault();
 
-    public GameObject EffectGameObject { get => effectGameObject; }
+        public GameObject EffectGameObject { get => effectGameObject; }
 
-    public ImageSet EffectImageSet { get; private set; }
+        public ImageSet EffectImageSet { get; private set; }
 
-    public int Index { get; set; }
+        public int Index { get; set; }
 
-    private List<ImageSet> Children { get; } = new List<ImageSet>();
+        private List<ImageSet> Children { get; } = new List<ImageSet>();
 
-    public void AddChild(ImageSet childObject)
-    {
-        // childObject.GameObject.name = "children";
-        childObject.GameObject.transform.SetParent(GameObject.transform);
-        Children.Insert(0, childObject);
-
-        ImageAddedEventArgs e = new ImageAddedEventArgs();
-        e.CurrentImageSet = childObject;
-        Added?.Invoke(this, e);
-    }
-
-    public void AddEffectLayer()
-    {
-        if (EffectGameObject == null)
+        public void AddChild(ImageSet childObject)
         {
-            var imageSet = new ImageSet();
-            effectGameObject = imageSet.GameObject;
-            EffectGameObject.name = "EffectGameObject";
+            // childObject.GameObject.name = "children";
+            childObject.GameObject.transform.SetParent(GameObject.transform);
+            Children.Insert(0, childObject);
 
-            var loader = new ImageLoader();
-            var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png");
-            imageSet.Sprites.Add(sp);
-            imageSet.Alpha = 0;
+            ImageAddedEventArgs e = new ImageAddedEventArgs();
+            e.CurrentImageSet = childObject;
+            Added?.Invoke(this, e);
+        }
 
-            EffectGameObject.transform.SetParent(GameObject.transform);
-            Children.Insert(0, imageSet);
+        public void AddEffectLayer()
+        {
+            if (EffectGameObject == null)
+            {
+                var imageSet = new ImageSet();
+                effectGameObject = imageSet.GameObject;
+                EffectGameObject.name = "EffectGameObject";
 
-            imageSet.Draw();
-            var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
-            sortingGroup.sortingOrder = 999;
+                var loader = new ImageLoader();
+                var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png");
+                imageSet.Sprites.Add(sp);
+                imageSet.Alpha = 0;
 
-            EffectImageSet = imageSet;
+                EffectGameObject.transform.SetParent(GameObject.transform);
+                Children.Insert(0, imageSet);
+
+                imageSet.Draw();
+                var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
+                sortingGroup.sortingOrder = 999;
+
+                EffectImageSet = imageSet;
+            }
         }
     }
 }

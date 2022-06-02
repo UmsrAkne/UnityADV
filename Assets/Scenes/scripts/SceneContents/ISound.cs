@@ -1,15 +1,17 @@
-﻿using System;
-using UnityEngine;
-
-public interface ISound
+﻿namespace SceneContents
 {
-    AudioSource AudioSource { get; set; }
+    using UnityEngine;
 
-    double Volume { get; set; }
+    public interface ISound
+    {
+        AudioSource AudioSource { get; set; }
 
-    bool IsPlaying { get; }
+        double Volume { get; set; }
 
-    void Play();
+        bool IsPlaying { get; }
 
-    void Stop();
+        void Play();
+
+        void Stop();
+    }
 }

@@ -1,7 +1,6 @@
 ﻿namespace Tests
 {
     using System.Collections.Generic;
-    using Assets.Tests.SceneContents;
     using NUnit.Framework;
     using SceneContents;
     using SceneParts;

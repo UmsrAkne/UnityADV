@@ -1,12 +1,9 @@
 ﻿namespace SceneParts
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using SceneContents;
     using UnityEngine;
-    using UnityEngine.Rendering;
 
     public class ImageDrawer : IScenarioSceneParts
     {
