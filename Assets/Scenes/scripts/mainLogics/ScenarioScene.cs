@@ -1,14 +1,11 @@
 ﻿namespace MainLogics
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using Animations;
     using Loaders;
     using SceneContents;
     using SceneParts;
     using UnityEngine;
-    using UnityEngine.Rendering;
     using UnityEngine.SceneManagement;
     using UnityEngine.UI;
 
