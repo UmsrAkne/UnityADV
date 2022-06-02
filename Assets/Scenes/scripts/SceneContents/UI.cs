@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
-
-public class UI
+﻿namespace SceneContents
 {
-    public List<ImageContainer> ImageContainers { get; private set; } = new List<ImageContainer>();
+    using System.Collections.Generic;
 
-    public ImageContainer UIImageContainer { get; set; }
+    public class UI
+    {
+        public List<ImageContainer> ImageContainers { get; private set; } = new List<ImageContainer>();
+
+        public ImageContainer UIImageContainer { get; set; }
+    }
 }

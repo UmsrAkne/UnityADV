@@ -1,6 +1,7 @@
-﻿namespace Assets.Tests.SceneContents
+﻿namespace Tests
 {
     using System;
+    using SceneContents;
     using UnityEngine;
 
     /// <summary>

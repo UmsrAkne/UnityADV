@@ -1,44 +1,47 @@
-﻿using System;
-using UnityEngine;
-
-public class Sound : ISound
+﻿namespace SceneContents
 {
-    private DateTime playStartedDateTime;
-    private bool playing;
+    using System;
+    using UnityEngine;
 
-    public AudioSource AudioSource { get; set; }
-
-    public double Volume
+    public class Sound : ISound
     {
-        get => AudioSource.volume;
-        set => AudioSource.volume = (float)value;
-    }
+        private DateTime playStartedDateTime;
+        private bool playing;
 
-    public bool IsPlaying
-    {
-        get
+        public AudioSource AudioSource { get; set; }
+
+        public double Volume
         {
-            if (DateTime.Now - playStartedDateTime < TimeSpan.FromMilliseconds(150))
+            get => AudioSource.volume;
+            set => AudioSource.volume = (float)value;
+        }
+
+        public bool IsPlaying
+        {
+            get
             {
-                return playing;
-            }
-            else
-            {
-                return AudioSource.isPlaying;
+                if (DateTime.Now - playStartedDateTime < TimeSpan.FromMilliseconds(150))
+                {
+                    return playing;
+                }
+                else
+                {
+                    return AudioSource.isPlaying;
+                }
             }
         }
-    }
 
-    public void Play()
-    {
-        AudioSource.Play();
-        playStartedDateTime = DateTime.Now;
-        playing = true;
-    }
+        public void Play()
+        {
+            AudioSource.Play();
+            playStartedDateTime = DateTime.Now;
+            playing = true;
+        }
 
-    public void Stop()
-    {
-        AudioSource.Stop();
-        playing = false;
+        public void Stop()
+        {
+            AudioSource.Stop();
+            playing = false;
+        }
     }
 }
