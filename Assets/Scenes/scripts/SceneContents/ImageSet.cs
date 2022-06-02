@@ -4,7 +4,6 @@
     using System.Linq;
     using UnityEngine;
     using UnityEngine.Rendering;
-    using UnityEngine.UI;
 
     public class ImageSet : IDisplayObject
     {
