@@ -62,7 +62,6 @@
                 imageSet.Alpha = 0;
 
                 EffectGameObject.transform.SetParent(GameObject.transform);
-                Children.Insert(0, imageSet);
 
                 imageSet.Draw();
                 var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();

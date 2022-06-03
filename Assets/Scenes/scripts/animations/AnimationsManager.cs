@@ -99,6 +99,7 @@
             });
 
             anime.TargetContainer = TargetImageContainer;
+            anime.Target = TargetImageContainer.FrontChild;
             anime.Start();
             Animations.Add(anime);
         }
