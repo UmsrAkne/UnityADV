@@ -8,6 +8,8 @@
 
     public class AnimationsManager : IScenarioSceneParts
     {
+        private Scenario scenario;
+
         public AnimationsManager(ImageContainer imageContainer)
         {
             TargetImageContainer = imageContainer;
@@ -50,6 +52,8 @@
 
         public void SetScenario(Scenario scenario)
         {
+            this.scenario = scenario;
+
             if (scenario.Animations.Count == 0)
             {
                 return;
@@ -71,9 +75,9 @@
         private void ImageAddedEventHandler(object sender, ImageAddedEventArgs e)
         {
             //// 画像が挿入される時、アルファの変化を使ってアニメーションを行う。
-
             ImageContainer dispatcher = sender as ImageContainer;
-            if (!Animations.Any(a => a.AnimationName == nameof(AlphaChanger)))
+
+            if (!scenario.Animations.Any(a => a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
             {
                 Animations.Add(new AlphaChanger());
             }
