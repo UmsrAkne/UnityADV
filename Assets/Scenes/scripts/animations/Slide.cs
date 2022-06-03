@@ -21,7 +21,7 @@
             private get => target;
             set
             {
-                if (target == null)
+                if (totalDistance == 0)
                 {
                     target = value;
                 }
