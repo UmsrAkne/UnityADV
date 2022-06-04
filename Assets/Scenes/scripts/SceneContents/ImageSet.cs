@@ -11,7 +11,7 @@
         private float scale = 1.0f;
         private int angle = 0;
         private GameObject gameObject = new GameObject("imageSet");
-        private GameObject maskObject = new GameObject("maskObject");
+        private GameObject maskObject;
         private List<GameObject> gos = new List<GameObject>();
 
         public float Alpha
@@ -123,7 +123,7 @@
         {
             if (maskObject == null)
             {
-                maskObject = new GameObject();
+                maskObject = new GameObject("maskObject");
             }
 
             maskObject.transform.SetParent(GameObject.transform.parent);
@@ -153,8 +153,9 @@
         /// </summary>
         public void Dispose()
         {
-            GameObject.SetActive(false);
-            MaskObject.SetActive(false);
+            GameObject?.SetActive(false);
+            MaskObject?.SetActive(false);
+
             gos.ForEach(g => g.SetActive(false));
         }
     }
