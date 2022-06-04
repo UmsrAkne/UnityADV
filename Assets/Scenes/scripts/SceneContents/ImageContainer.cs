@@ -35,6 +35,8 @@
 
         public int Index { get; set; }
 
+        public int Capacity { get; set; } = 4;
+
         private List<ImageSet> Children { get; } = new List<ImageSet>();
 
         public void AddChild(ImageSet childObject)
@@ -46,6 +48,12 @@
             ImageAddedEventArgs e = new ImageAddedEventArgs();
             e.CurrentImageSet = childObject;
             Added?.Invoke(this, e);
+
+            while (Children.Count > Capacity)
+            {
+                Children.LastOrDefault().Dispose();
+                Children.RemoveAt(Children.Count - 1);
+            }
         }
 
         public void AddEffectLayer()
