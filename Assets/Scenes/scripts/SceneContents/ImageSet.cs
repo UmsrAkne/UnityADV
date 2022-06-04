@@ -147,5 +147,15 @@
 
             sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
         }
+
+        /// <summary>
+        /// この ImageSet が参照している GameObject を SetActive(false) に設定します。
+        /// </summary>
+        public void Dispose()
+        {
+            GameObject.SetActive(false);
+            MaskObject.SetActive(false);
+            gos.ForEach(g => g.SetActive(false));
+        }
     }
 }
