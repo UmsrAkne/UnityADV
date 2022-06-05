@@ -66,12 +66,11 @@
 
                 var loader = new ImageLoader();
                 var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png");
-                imageSet.Sprites.Add(sp);
                 imageSet.Alpha = 0;
 
                 EffectGameObject.transform.SetParent(GameObject.transform);
 
-                imageSet.Draw();
+                imageSet.Draw(new List<Sprite>() { sp });
                 var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
                 sortingGroup.sortingOrder = 999;
 

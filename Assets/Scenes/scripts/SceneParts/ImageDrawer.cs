@@ -30,15 +30,16 @@
                 var emptyGameObject = new GameObject();
                 var imageSet = new ImageSet();
 
+                var sprites = new List<Sprite>();
                 order.Names.ForEach(name =>
                 {
                     if (!string.IsNullOrEmpty(name))
                     {
-                        imageSet.Sprites.Add(resource.ImagesByName[name]);
+                        sprites.Add(resource.ImagesByName[name]);
                     }
                     else
                     {
-                        imageSet.Sprites.Add(null);
+                        sprites.Add(null);
                     }
                 });
 
@@ -50,7 +51,7 @@
                 imageSet.SortingLayerIndex = order.TargetLayerIndex;
                 targetContainer.AddChild(imageSet);
 
-                imageSet.Draw();
+                imageSet.Draw(sprites);
 
                 if (!string.IsNullOrWhiteSpace(order.MaskImageName))
                 {

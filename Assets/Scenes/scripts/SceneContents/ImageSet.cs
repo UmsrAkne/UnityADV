@@ -11,7 +11,7 @@
         private float scale = 1.0f;
         private int angle = 0;
         private GameObject gameObject = new GameObject("imageSet");
-        private GameObject maskObject = new GameObject("maskObject");
+        private GameObject maskObject;
         private List<GameObject> gos = new List<GameObject>();
 
         public float Alpha
@@ -72,39 +72,41 @@
 
         private List<SpriteRenderer> Renderers { get; set; } = new List<SpriteRenderer>();
 
-        public void Draw()
+        private List<GameObject> GameObjects { get; set; } = new List<GameObject>(4) { null, null, null, null };
+
+        public void Draw(List<Sprite> sprites)
         {
             var container = this.gameObject;
             var sg = gameObject.AddComponent<SortingGroup>();
             sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
 
-            var gameObjects = new List<GameObject>()
+            for (var i = 0; i < sprites.Count; i++)
             {
-                new GameObject(),
-                new GameObject(),
-                new GameObject(),
-                new GameObject()
-            };
+                var sp = sprites[i];
 
-            Enumerable.Range(0, Sprites.Count).ToList().ForEach(n =>
-            {
-                var g = gameObjects[n];
-                gos.Add(gameObjects[n]);
-                g.transform.SetParent(container.transform, false);
-                var renderer = g.AddComponent<SpriteRenderer>();
-
-                renderer.sprite = Sprites[n];
-
-                if (n != 0)
+                if (sp == null)
                 {
-                    g.AddComponent<SpriteMask>().sprite = renderer.sprite;
+                    continue;
                 }
 
-                Renderers.Add(renderer);
-            });
+                var g = new GameObject();
+                GameObjects[i] = g;
 
-            Renderers[0].sortingOrder = -1;
-            Renderers[0].maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+                g.transform.SetParent(container.transform, false);
+                var r = g.AddComponent<SpriteRenderer>();
+                Renderers.Add(r);
+                r.sprite = sp;
+
+                if (i == 0)
+                {
+                    r.sortingOrder = -1;
+                    r.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+                }
+                else
+                {
+                    g.AddComponent<SpriteMask>().sprite = r.sprite;
+                }
+            }
 
             Alpha = alpha;
             Scale = scale;
@@ -123,7 +125,7 @@
         {
             if (maskObject == null)
             {
-                maskObject = new GameObject();
+                maskObject = new GameObject("maskObject");
             }
 
             maskObject.transform.SetParent(GameObject.transform.parent);
@@ -153,9 +155,11 @@
         /// </summary>
         public void Dispose()
         {
-            GameObject.SetActive(false);
-            MaskObject.SetActive(false);
+            GameObject?.SetActive(false);
+            MaskObject?.SetActive(false);
+
             gos.ForEach(g => g.SetActive(false));
+            GameObjects.ForEach(g => g.SetActive(false));
         }
     }
 }
