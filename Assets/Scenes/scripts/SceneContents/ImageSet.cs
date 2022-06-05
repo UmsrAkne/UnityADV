@@ -74,44 +74,6 @@
 
         private List<GameObject> GameObjects { get; set; } = new List<GameObject>(4) { null, null, null, null };
 
-        public void Draw()
-        {
-            var container = this.gameObject;
-            var sg = gameObject.AddComponent<SortingGroup>();
-            sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
-
-            var gameObjects = new List<GameObject>()
-            {
-                new GameObject(),
-                new GameObject(),
-                new GameObject(),
-                new GameObject()
-            };
-
-            Enumerable.Range(0, Sprites.Count).ToList().ForEach(n =>
-            {
-                var g = gameObjects[n];
-                gos.Add(gameObjects[n]);
-                g.transform.SetParent(container.transform, false);
-                var renderer = g.AddComponent<SpriteRenderer>();
-
-                renderer.sprite = Sprites[n];
-
-                if (n != 0)
-                {
-                    g.AddComponent<SpriteMask>().sprite = renderer.sprite;
-                }
-
-                Renderers.Add(renderer);
-            });
-
-            Renderers[0].sortingOrder = -1;
-            Renderers[0].maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
-
-            Alpha = alpha;
-            Scale = scale;
-        }
-
         public void Draw(List<Sprite> sprites)
         {
             var container = this.gameObject;
