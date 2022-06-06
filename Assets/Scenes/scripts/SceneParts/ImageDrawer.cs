@@ -9,6 +9,7 @@
     {
         private Scenario scenario;
         private Resource resource;
+        private ImageSet drawingImageSet;
 
         public bool NeedExecuteEveryFrame => true;
 
@@ -63,13 +64,14 @@
             {
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
                 var frontImageSet = targetContainer.FrontChild;
+                drawingImageSet = frontImageSet;
 
                 for (var i = 0; i < order.Names.Count; i++)
                 {
                     var name = order.Names[i];
                     if (!string.IsNullOrEmpty(name))
                     {
-                        var r = frontImageSet.SetSprite(resource.ImagesByName[name]);
+                        var r = frontImageSet.SetSprite(resource.ImagesByName[name], i);
                         r.color = new Color(1.0f, 1.0f, 1.0f, 0);
                         DrawingImages.Add(r);
                     }
@@ -79,17 +81,16 @@
 
         public void ExecuteEveryFrame()
         {
-            bool doDelete = false;
-
-            DrawingImages.ForEach(r =>
+            if (drawingImageSet == null)
             {
-                r.color = new Color(1.0f, 1.0f, 1.0f, r.color.a + 0.1f);
-                doDelete = r.color.a > 1.0f;
-            });
+                return;
+            }
 
-            if (doDelete)
+            drawingImageSet.Overwrite(0.1f);
+
+            if (!drawingImageSet.Overwriting)
             {
-                DrawingImages = DrawingImages.Where(r => r.color.a <= 1.0f).ToList();
+                drawingImageSet = null;
             }
         }
 

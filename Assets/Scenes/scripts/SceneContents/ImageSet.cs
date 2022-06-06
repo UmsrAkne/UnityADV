@@ -74,7 +74,11 @@
 
         public GameObject MaskObject => maskUnit.GameObject;
 
+        public bool Overwriting { get; private set; }
+
         private List<ImageUnit> ImageUnits { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
+
+        private List<ImageUnit> TemporaryImages { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
 
         public void Draw(List<Sprite> sprites)
         {
@@ -116,6 +120,46 @@
             var renderer = g.AddComponent<SpriteRenderer>();
             renderer.sprite = sp;
             return renderer;
+        }
+
+        public SpriteRenderer SetSprite(Sprite sp, int index)
+        {
+            Overwriting = true;
+            var imageUnit = new ImageUnit();
+            TemporaryImages[index] = imageUnit;
+            imageUnit.SetParent(GameObject);
+            imageUnit.SpriteRenderer.sprite = sp;
+            return imageUnit.SpriteRenderer;
+        }
+
+        public void Overwrite(float depth)
+        {
+            if (!Overwriting)
+            {
+                return;
+            }
+
+            for (var i = 0; i < TemporaryImages.Count; i++)
+            {
+                var imageUnit = TemporaryImages[i];
+
+                if (imageUnit == null)
+                {
+                    continue;
+                }
+
+                var a = imageUnit.SpriteRenderer.color.a + depth;
+                imageUnit.SpriteRenderer.color = new Color(1, 1, 1, a);
+
+                if (a >= 1)
+                {
+                    ImageUnits[i].GameObject.SetActive(false);
+                    ImageUnits[i] = imageUnit;
+                    TemporaryImages[i] = null;
+                }
+            }
+
+            Overwriting = !TemporaryImages.All(i => i == null);
         }
 
         public void SetMask(Sprite sp)
