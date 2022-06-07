@@ -44,20 +44,28 @@
 
             Resource.Scenarios = textLoader.Scenario;
             Resource.Log.AddRange(textLoader.Log);
+
             Resource.Images = imageLoader.Sprites;
             Resource.ImagesByName = imageLoader.SpriteDictionary;
+            Resource.Log.AddRange(imageLoader.Log);
 
             Resource.MaskImages = maskLoader.Sprites;
             Resource.MaskImagesByName = maskLoader.SpriteDictionary;
+            Resource.Log.AddRange(maskLoader.Log);
 
             Resource.BGMAudioSource = bgmLoader.AudioSource;
+            Resource.Log.AddRange(bgmLoader.Log);
 
             Resource.Voices = voiceLoader.AudioSources;
             Resource.VoicesByName = voiceLoader.AudioSourcesByName;
+            Resource.Log.AddRange(voiceLoader.Log);
 
             Resource.BGVoices = bgvLoader.AudioSources;
             Resource.BGVoicesByName = bgvLoader.AudioSourcesByName;
+            Resource.Log.AddRange(bgvLoader.Log);
+
             Resource.Ses = seLoader.AudioSources;
+            Resource.Log.AddRange(seLoader.Log);
 
             Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png");
             Resource.SceneDirectoryPath = path;
