@@ -23,8 +23,6 @@
 
         private string[] Paths { get; set; }
 
-        private List<GameObject> GameObjects { get; } = new List<GameObject>();
-
         private List<Sprite> Sprites { get; } = new List<Sprite>();
 
         // Start is called before the first frame update
@@ -44,7 +42,6 @@
             fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
             fillBlackImage.Alpha = 0;
 
-            Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
             keyboardLock = false;
             LoadCurrentCursorImage();
@@ -91,7 +88,7 @@
 
             if (mainImageSet.Overwriting)
             {
-                mainImageSet.Overwrite(0.01f);
+                mainImageSet.Overwrite(0.05f);
             }
         }
 
