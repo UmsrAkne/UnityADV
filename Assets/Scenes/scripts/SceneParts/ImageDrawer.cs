@@ -10,6 +10,7 @@
         private Scenario scenario;
         private Resource resource;
         private ImageSet drawingImageSet;
+        private double drawingDepth = 0.1;
 
         public bool NeedExecuteEveryFrame => true;
 
@@ -65,6 +66,7 @@
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
                 var frontImageSet = targetContainer.FrontChild;
                 drawingImageSet = frontImageSet;
+                drawingDepth = order.Depth;
 
                 for (var i = 0; i < order.Names.Count; i++)
                 {
@@ -86,7 +88,7 @@
                 return;
             }
 
-            drawingImageSet.Overwrite(0.1f);
+            drawingImageSet.Overwrite((float)drawingDepth);
 
             if (!drawingImageSet.Overwriting)
             {
