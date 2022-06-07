@@ -12,6 +12,7 @@
         private int angle = 0;
         private ImageUnit parentUnit = new ImageUnit();
         private ImageUnit maskUnit = new ImageUnit();
+        private int overwriteLayerIndex = 1;
 
         public float Alpha
         {
@@ -113,15 +114,6 @@
             Scale = scale;
         }
 
-        public SpriteRenderer SetSprite(Sprite sp)
-        {
-            var g = new GameObject();
-            g.transform.SetParent(GameObject.transform, false);
-            var renderer = g.AddComponent<SpriteRenderer>();
-            renderer.sprite = sp;
-            return renderer;
-        }
-
         public SpriteRenderer SetSprite(Sprite sp, int index)
         {
             Overwriting = true;
@@ -135,6 +127,10 @@
             TemporaryImages[index] = imageUnit;
             imageUnit.SetParent(GameObject);
             imageUnit.SpriteRenderer.sprite = sp;
+
+            // sprite の上書きを常に最前面に対して行う。
+            imageUnit.SpriteRenderer.sortingOrder = ++overwriteLayerIndex;
+
             return imageUnit.SpriteRenderer;
         }
 

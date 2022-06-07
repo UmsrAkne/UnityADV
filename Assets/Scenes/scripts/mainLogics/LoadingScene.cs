@@ -16,13 +16,12 @@
         private bool keyboardLock = true;
         private ImageLoader imageLoader = new ImageLoader();
         private ImageSet fillBlackImage;
+        private ImageSet mainImageSet = new ImageSet();
         private bool loading;
 
         private Text Text { get; set; }
 
         private string[] Paths { get; set; }
-
-        private List<GameObject> GameObjects { get; } = new List<GameObject>();
 
         private List<Sprite> Sprites { get; } = new List<Sprite>();
 
@@ -43,7 +42,6 @@
             fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
             fillBlackImage.Alpha = 0;
 
-            Enumerable.Range(0, Paths.Length).ToList().ForEach(i => GameObjects.Add(new GameObject()));
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
             keyboardLock = false;
             LoadCurrentCursorImage();
@@ -80,6 +78,7 @@
             if (loading)
             {
                 fillBlackImage.Alpha += 0.02f;
+                Text.color = new Color(1, 1, 1, Text.color.a - 0.05f);
 
                 if (fillBlackImage.Alpha >= 1.0f)
                 {
@@ -87,33 +86,22 @@
                     SceneManager.LoadScene("SampleScene");
                 }
             }
+
+            if (mainImageSet.Overwriting)
+            {
+                mainImageSet.Overwrite(0.05f);
+            }
         }
 
         private void LoadCurrentCursorImage()
         {
-            var imageSet = new ImageSet();
-
-            if (imageSet == null)
-            {
-                imageSet = new ImageSet();
-            }
-
             if (Sprites[cursorIndex] == null)
             {
-                var fistImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
-                Sprites[cursorIndex] = imageLoader.LoadImage(fistImagePath);
-                imageSet.Draw(new List<Sprite>() { Sprites[cursorIndex] });
+                var firstImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
+                Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath);
             }
 
-            GameObjects.ForEach(g =>
-            {
-                // if (g.GetComponent<ImageSet>() != null && g.GetComponent<SortingGroup>() != null)
-                // {
-                //     // g.GetComponent<ImageSet>().GetComponent<SortingGroup>().sortingOrder = 0;
-                // }
-            });
-
-            // imageSet.GetComponent<SortingGroup>().sortingOrder = 1;
+            mainImageSet.SetSprite(Sprites[cursorIndex], 0).color = new Color(1, 1, 1, 0);
         }
 
         private void LoadNextSceneResource(Scene next, LoadSceneMode mode)
