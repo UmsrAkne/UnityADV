@@ -20,10 +20,18 @@
 
         public Dictionary<string, ISound> AudioSourcesByName { get; private set; } = new Dictionary<string, ISound>();
 
+        public List<string> Log { get; set; } = new List<string>();
+
         private List<AudioClip> AudioClips { get; set; }
 
         public void Load(string targetDirectoryPath)
         {
+            if (!Directory.Exists(targetDirectoryPath))
+            {
+                Log.Add($"{targetDirectoryPath} が見つかりませんでした");
+                return;
+            }
+
             PartLoadCompleted += (sender, e) =>
             {
                 loadCompleteCounter++;

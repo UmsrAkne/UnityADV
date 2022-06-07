@@ -7,10 +7,18 @@ public class ImageLoader
 {
     public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
 
+    public List<string> Log { get; set; } = new List<string>();
+
     public Dictionary<string, Sprite> SpriteDictionary { get; private set; } = new Dictionary<string, Sprite>();
 
     public void Load(string targetDirectoryPath)
     {
+        if (!Directory.Exists(targetDirectoryPath))
+        {
+            Log.Add($"{targetDirectoryPath} が見つかりませんでした");
+            return;
+        }
+
         GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
         {
             var sp = LoadImage(path);

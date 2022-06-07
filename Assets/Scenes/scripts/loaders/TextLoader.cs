@@ -23,6 +23,13 @@
 
         public void Load(string targetPath)
         {
+            if (!File.Exists(targetPath))
+            {
+                Log.Add($"{targetPath} が見つかりませんでした");
+                Scenario = new List<Scenario>();
+                return;
+            }
+
             Converters.Add(new ImageElementConverter());
             Converters.Add(new DrawElementConverter());
             Converters.Add(new VoiceElementConverter());

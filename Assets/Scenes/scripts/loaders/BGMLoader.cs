@@ -14,8 +14,17 @@ public class BGMLoader : MonoBehaviour
 
     public AudioSource AudioSource { get; private set; }
 
+    public List<string> Log { get; set; } = new List<string>();
+
     public void Load(string targetDirectoryPath)
     {
+        if (!Directory.Exists(targetDirectoryPath))
+        {
+            Log.Add($"{targetDirectoryPath} が見つかりませんでした");
+            AudioSource = new GameObject().AddComponent<AudioSource>();
+            return;
+        }
+
         AudioSource = new GameObject().AddComponent<AudioSource>();
         StartCoroutine(LoadAudio(GetSoundFilePath(targetDirectoryPath)));
     }
