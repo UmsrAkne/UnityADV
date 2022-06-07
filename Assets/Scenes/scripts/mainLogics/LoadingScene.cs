@@ -16,6 +16,7 @@
         private bool keyboardLock = true;
         private ImageLoader imageLoader = new ImageLoader();
         private ImageSet fillBlackImage;
+        private ImageSet mainImageSet = new ImageSet();
         private bool loading;
 
         private Text Text { get; set; }
@@ -87,33 +88,22 @@
                     SceneManager.LoadScene("SampleScene");
                 }
             }
+
+            if (mainImageSet.Overwriting)
+            {
+                mainImageSet.Overwrite(0.01f);
+            }
         }
 
         private void LoadCurrentCursorImage()
         {
-            var imageSet = new ImageSet();
-
-            if (imageSet == null)
-            {
-                imageSet = new ImageSet();
-            }
-
             if (Sprites[cursorIndex] == null)
             {
-                var fistImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
-                Sprites[cursorIndex] = imageLoader.LoadImage(fistImagePath);
-                imageSet.Draw(new List<Sprite>() { Sprites[cursorIndex] });
+                var firstImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
+                Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath);
             }
 
-            GameObjects.ForEach(g =>
-            {
-                // if (g.GetComponent<ImageSet>() != null && g.GetComponent<SortingGroup>() != null)
-                // {
-                //     // g.GetComponent<ImageSet>().GetComponent<SortingGroup>().sortingOrder = 0;
-                // }
-            });
-
-            // imageSet.GetComponent<SortingGroup>().sortingOrder = 1;
+            mainImageSet.SetSprite(Sprites[cursorIndex], 0).color = new Color(1, 1, 1, 0);
         }
 
         private void LoadNextSceneResource(Scene next, LoadSceneMode mode)
