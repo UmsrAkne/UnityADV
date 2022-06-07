@@ -10,16 +10,22 @@
         private float alpha = 1.0f;
         private float scale = 1.0f;
         private int angle = 0;
-        private GameObject gameObject = new GameObject("imageSet");
-        private GameObject maskObject;
-        private List<GameObject> gos = new List<GameObject>();
+        private ImageUnit parentUnit = new ImageUnit();
+        private ImageUnit maskUnit = new ImageUnit();
 
         public float Alpha
         {
             get => alpha;
             set
             {
-                Renderers.ForEach(r => r.color = new Color(1.0f, 1.0f, 1.0f, value));
+                ImageUnits.ForEach(u =>
+                {
+                    if (u != null)
+                    {
+                        u.SpriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, value);
+                    }
+                });
+
                 alpha = value;
             }
         }
@@ -29,26 +35,26 @@
             get => scale;
             set
             {
-                gameObject.transform.localScale = new Vector3((float)value, (float)value, 0);
+                GameObject.transform.localScale = new Vector3((float)value, (float)value, 0);
                 scale = (float)value;
             }
         }
 
         public float X
         {
-            get => gameObject.transform.localPosition.x;
+            get => GameObject.transform.localPosition.x;
             set
             {
-                gameObject.transform.localPosition = new Vector3(value, gameObject.transform.localPosition.y);
+                GameObject.transform.localPosition = new Vector3(value, GameObject.transform.localPosition.y);
             }
         }
 
         public float Y
         {
-            get => gameObject.transform.localPosition.y;
+            get => GameObject.transform.localPosition.y;
             set
             {
-                gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, value);
+                GameObject.transform.localPosition = new Vector3(GameObject.transform.localPosition.x, value);
             }
         }
 
@@ -57,28 +63,26 @@
             get => angle;
             set
             {
-                gameObject.transform.localRotation = Quaternion.AngleAxis((float)value, Vector3.forward);
+                GameObject.transform.localRotation = Quaternion.AngleAxis((float)value, Vector3.forward);
                 angle = value;
             }
         }
 
         public int SortingLayerIndex { get; set; }
 
-        public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
+        public GameObject GameObject => parentUnit.GameObject;
 
-        public GameObject GameObject => gameObject;
+        public GameObject MaskObject => maskUnit.GameObject;
 
-        public GameObject MaskObject => maskObject;
+        public bool Overwriting { get; private set; }
 
-        private List<SpriteRenderer> Renderers { get; set; } = new List<SpriteRenderer>();
+        private List<ImageUnit> ImageUnits { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
 
-        private List<GameObject> GameObjects { get; set; } = new List<GameObject>(4) { null, null, null, null };
+        private List<ImageUnit> TemporaryImages { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
 
         public void Draw(List<Sprite> sprites)
         {
-            var container = this.gameObject;
-            var sg = gameObject.AddComponent<SortingGroup>();
-            sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
+            parentUnit.SortingGroup.sortingLayerName = $"Layer_{SortingLayerIndex}";
 
             for (var i = 0; i < sprites.Count; i++)
             {
@@ -89,22 +93,19 @@
                     continue;
                 }
 
-                var g = new GameObject();
-                GameObjects[i] = g;
-
-                g.transform.SetParent(container.transform, false);
-                var r = g.AddComponent<SpriteRenderer>();
-                Renderers.Add(r);
-                r.sprite = sp;
+                var imageUnit = new ImageUnit();
+                ImageUnits[i] = imageUnit;
+                imageUnit.SetParent(GameObject);
+                imageUnit.SpriteRenderer.sprite = sp;
 
                 if (i == 0)
                 {
-                    r.sortingOrder = -1;
-                    r.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+                    imageUnit.SpriteRenderer.sortingOrder = -1;
+                    imageUnit.SpriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
                 }
                 else
                 {
-                    g.AddComponent<SpriteMask>().sprite = r.sprite;
+                    imageUnit.SetMaskSprite(sp);
                 }
             }
 
@@ -115,39 +116,62 @@
         public SpriteRenderer SetSprite(Sprite sp)
         {
             var g = new GameObject();
-            g.transform.SetParent(this.gameObject.transform, false);
+            g.transform.SetParent(GameObject.transform, false);
             var renderer = g.AddComponent<SpriteRenderer>();
             renderer.sprite = sp;
             return renderer;
         }
 
+        public SpriteRenderer SetSprite(Sprite sp, int index)
+        {
+            Overwriting = true;
+
+            if (TemporaryImages[index] != null)
+            {
+                ReplaceImage(TemporaryImages[index], index);
+            }
+
+            var imageUnit = new ImageUnit();
+            TemporaryImages[index] = imageUnit;
+            imageUnit.SetParent(GameObject);
+            imageUnit.SpriteRenderer.sprite = sp;
+            return imageUnit.SpriteRenderer;
+        }
+
+        public void Overwrite(float depth)
+        {
+            if (!Overwriting)
+            {
+                return;
+            }
+
+            for (var i = 0; i < TemporaryImages.Count; i++)
+            {
+                var imageUnit = TemporaryImages[i];
+
+                if (imageUnit == null)
+                {
+                    continue;
+                }
+
+                var a = imageUnit.SpriteRenderer.color.a + depth;
+                imageUnit.SpriteRenderer.color = new Color(1, 1, 1, a);
+
+                if (a >= 1)
+                {
+                    ReplaceImage(imageUnit, i);
+                }
+            }
+
+            Overwriting = !TemporaryImages.All(i => i == null);
+        }
+
         public void SetMask(Sprite sp)
         {
-            if (maskObject == null)
-            {
-                maskObject = new GameObject("maskObject");
-            }
-
-            maskObject.transform.SetParent(GameObject.transform.parent);
-            gameObject.transform.SetParent(maskObject.transform);
-
-            var spriteMask = maskObject.GetComponent<SpriteMask>();
-
-            if (spriteMask == null)
-            {
-                spriteMask = maskObject.AddComponent<SpriteMask>();
-            }
-
-            spriteMask.sprite = sp;
-
-            var sg = maskObject.GetComponent<SortingGroup>();
-
-            if (sg == null)
-            {
-                sg = maskObject.AddComponent<SortingGroup>();
-            }
-
-            sg.sortingLayerName = $"Layer_{SortingLayerIndex}";
+            maskUnit.SetParent(GameObject.transform.parent.gameObject);
+            parentUnit.SetParent(maskUnit.GameObject);
+            maskUnit.SetMaskSprite(sp);
+            maskUnit.SortingGroup.sortingLayerName = $"Layer_{SortingLayerIndex}";
         }
 
         /// <summary>
@@ -158,8 +182,21 @@
             GameObject?.SetActive(false);
             MaskObject?.SetActive(false);
 
-            gos.ForEach(g => g.SetActive(false));
-            GameObjects.ForEach(g => g.SetActive(false));
+            ImageUnits.ForEach(u =>
+            {
+                if (u != null)
+                {
+                    u.GameObject.SetActive(false);
+                }
+            });
+        }
+
+        private void ReplaceImage(ImageUnit temporaryImageUnit, int index)
+        {
+            ImageUnits[index]?.GameObject.SetActive(false);
+            ImageUnits[index] = temporaryImageUnit;
+            temporaryImageUnit.SpriteRenderer.color = new Color(1, 1, 1, 1);
+            TemporaryImages[index] = null;
         }
     }
 }

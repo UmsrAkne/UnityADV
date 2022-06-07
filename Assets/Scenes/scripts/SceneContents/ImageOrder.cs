@@ -18,6 +18,8 @@
 
         public bool IsDrawOrder { get; set; }
 
+        public double Depth { get; set; } = 0.1;
+
         public string MaskImageName { get; set; } = string.Empty;
     }
 }
