@@ -78,6 +78,7 @@
             if (loading)
             {
                 fillBlackImage.Alpha += 0.02f;
+                Text.color = new Color(1, 1, 1, Text.color.a - 0.05f);
 
                 if (fillBlackImage.Alpha >= 1.0f)
                 {
