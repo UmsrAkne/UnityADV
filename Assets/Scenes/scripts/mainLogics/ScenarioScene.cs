@@ -117,7 +117,7 @@
 
             var imageSet = new ImageSet();
             imageSet.GameObject.name = "msgWindowImage";
-            var r = imageSet.SetSprite(Resource.MessageWindowImage);
+            var r = imageSet.SetSprite(Resource.MessageWindowImage, 0);
             r.maskInteraction = SpriteMaskInteraction.None;
             r.color = new Color(1f, 1f, 1f, 0.6f);
 

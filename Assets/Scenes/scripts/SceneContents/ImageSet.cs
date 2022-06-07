@@ -114,15 +114,6 @@
             Scale = scale;
         }
 
-        public SpriteRenderer SetSprite(Sprite sp)
-        {
-            var g = new GameObject();
-            g.transform.SetParent(GameObject.transform, false);
-            var renderer = g.AddComponent<SpriteRenderer>();
-            renderer.sprite = sp;
-            return renderer;
-        }
-
         public SpriteRenderer SetSprite(Sprite sp, int index)
         {
             Overwriting = true;
