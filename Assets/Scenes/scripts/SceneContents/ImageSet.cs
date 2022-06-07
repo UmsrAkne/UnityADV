@@ -125,6 +125,12 @@
         public SpriteRenderer SetSprite(Sprite sp, int index)
         {
             Overwriting = true;
+
+            if (TemporaryImages[index] != null)
+            {
+                ReplaceImage(TemporaryImages[index], index);
+            }
+
             var imageUnit = new ImageUnit();
             TemporaryImages[index] = imageUnit;
             imageUnit.SetParent(GameObject);
@@ -153,9 +159,7 @@
 
                 if (a >= 1)
                 {
-                    ImageUnits[i].GameObject.SetActive(false);
-                    ImageUnits[i] = imageUnit;
-                    TemporaryImages[i] = null;
+                    ReplaceImage(imageUnit, i);
                 }
             }
 
@@ -185,6 +189,14 @@
                     u.GameObject.SetActive(false);
                 }
             });
+        }
+
+        private void ReplaceImage(ImageUnit temporaryImageUnit, int index)
+        {
+            ImageUnits[index]?.GameObject.SetActive(false);
+            ImageUnits[index] = temporaryImageUnit;
+            temporaryImageUnit.SpriteRenderer.color = new Color(1, 1, 1, 1);
+            TemporaryImages[index] = null;
         }
     }
 }
