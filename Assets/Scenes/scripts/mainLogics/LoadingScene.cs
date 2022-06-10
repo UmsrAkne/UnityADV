@@ -89,7 +89,7 @@
 
             if (mainImageSet.Overwriting)
             {
-                mainImageSet.Overwrite(0.05f);
+                mainImageSet.Overwrite(0.1f);
             }
         }
 
