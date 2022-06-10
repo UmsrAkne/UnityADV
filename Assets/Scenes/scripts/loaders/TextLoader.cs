@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Xml;
     using System.Xml.Linq;
     using Animations;
     using SceneContents;
@@ -27,6 +28,18 @@
             {
                 Log.Add($"{targetPath} が見つかりませんでした");
                 Scenario = new List<Scenario>();
+                return;
+            }
+
+            try
+            {
+                XDocument.Parse(File.ReadAllText(targetPath));
+            }
+            catch (XmlException e)
+            {
+                UnityEngine.Debug.Log($"TextLoader : {e.Message}");
+                Scenario = new List<Scenario>();
+                Log.Add($"scenario.xmlのパースに失敗しました。詳細 : {e.Message}");
                 return;
             }
 
