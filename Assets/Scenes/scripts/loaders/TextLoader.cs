@@ -1,13 +1,12 @@
 ﻿namespace Loaders
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Xml;
     using System.Xml.Linq;
     using Animations;
     using SceneContents;
-    using UnityEngine;
 
     public class TextLoader
     {
@@ -26,7 +25,18 @@
             if (!File.Exists(targetPath))
             {
                 Log.Add($"{targetPath} が見つかりませんでした");
-                Scenario = new List<Scenario>();
+                Scenario = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
+                return;
+            }
+
+            try
+            {
+                XDocument.Parse(File.ReadAllText(targetPath));
+            }
+            catch (XmlException e)
+            {
+                Scenario = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
+                Log.Add($"scenario.xmlのパースに失敗しました。詳細 : {e.Message}");
                 return;
             }
 

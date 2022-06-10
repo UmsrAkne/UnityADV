@@ -37,6 +37,11 @@
                 return;
             }
 
+            if (ScenarioIndex == Scenarios.Count)
+            {
+                return;
+            }
+
             if (Writing)
             {
                 ScenarioIndex++;
