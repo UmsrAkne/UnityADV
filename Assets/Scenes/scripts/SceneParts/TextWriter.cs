@@ -9,8 +9,9 @@
     public class TextWriter : IScenarioSceneParts
     {
         private int counter;
-        private bool writing;
         private bool initialExecute = true;
+
+        public bool Writing { get; private set; }
 
         public int ScenarioIndex { get; private set; }
 
@@ -31,28 +32,28 @@
             {
                 initialExecute = false;
                 Scenario = Scenarios.First();
-                writing = true;
+                Writing = true;
                 WriteText(string.Empty);
                 return;
             }
 
-            if (writing)
+            if (Writing)
             {
                 ScenarioIndex++;
                 WriteText(Scenario.Text);
-                writing = false;
+                Writing = false;
             }
             else
             {
                 Scenario = Scenarios[ScenarioIndex];
-                writing = true;
+                Writing = true;
                 WriteText(string.Empty);
             }
         }
 
         public void ExecuteEveryFrame()
         {
-            if (!writing)
+            if (!Writing)
             {
                 return;
             }
@@ -62,7 +63,7 @@
 
             if (Scenario.Text.Length <= counter)
             {
-                writing = false;
+                Writing = false;
                 counter = 0;
                 ScenarioIndex++;
                 return;

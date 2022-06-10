@@ -93,6 +93,11 @@
         {
             TextWriter.Execute();
 
+            if (!TextWriter.Writing)
+            {
+                return;
+            }
+
             if (currentScenario == null || currentScenario != Resource.Scenarios[TextWriter.ScenarioIndex])
             {
                 currentScenario = Resource.Scenarios[TextWriter.ScenarioIndex];
