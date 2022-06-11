@@ -18,7 +18,7 @@
         private ImageSet fillBlackImage;
         private ImageSet mainImageSet = new ImageSet();
         private bool loading;
-        private int lastSelectedSceneIndex;
+        private string lastSelectedSceneIndexKey = "lastSelectedSceneIndex";
 
         private Text Text { get; set; }
 
@@ -29,9 +29,9 @@
         // Start is called before the first frame update
         public void Start()
         {
-            if (PlayerPrefs.HasKey(nameof(lastSelectedSceneIndex)))
+            if (PlayerPrefs.HasKey(lastSelectedSceneIndexKey))
             {
-                cursorIndex = PlayerPrefs.GetInt(nameof(lastSelectedSceneIndex));
+                cursorIndex = PlayerPrefs.GetInt(lastSelectedSceneIndexKey);
             }
 
             Text = GameObject.Find("TextWindow").GetComponent<Text>();
@@ -88,7 +88,7 @@
 
                 if (fillBlackImage.Alpha >= 1.0f)
                 {
-                    PlayerPrefs.SetInt(nameof(lastSelectedSceneIndex), cursorIndex);
+                    PlayerPrefs.SetInt(lastSelectedSceneIndexKey, cursorIndex);
                     SceneManager.sceneLoaded += LoadNextSceneResource;
                     SceneManager.LoadScene("SampleScene");
                 }
