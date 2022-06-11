@@ -7,6 +7,12 @@
         private IDisplayObject target;
         private int targetLayerIndex;
         private float amount = 0.1f;
+        private bool canUpdateTarget;
+
+        public AlphaChanger(bool canUpdateTarget = false)
+        {
+            this.canUpdateTarget = canUpdateTarget;
+        }
 
         public bool IsWorking { get; private set; } = true;
 
@@ -17,7 +23,7 @@
             get => target;
             set
             {
-                if (target == null)
+                if (canUpdateTarget || target == null)
                 {
                     target = value;
                 }
