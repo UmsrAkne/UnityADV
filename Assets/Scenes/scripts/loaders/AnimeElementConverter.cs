@@ -73,7 +73,7 @@
         {
             switch (animationName)
             {
-                case "alphaChanger": return new AlphaChanger();
+                case "alphaChanger": return new AlphaChanger(true);
                 case "shake": return new Shake();
                 case "slide": return new Slide();
                 case "flash": return new Flash();
