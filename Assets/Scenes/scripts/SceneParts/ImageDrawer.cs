@@ -37,7 +37,7 @@
                 {
                     if (!string.IsNullOrEmpty(name))
                     {
-                        sprites.Add(resource.ImagesByName[name]);
+                        sprites.Add(resource.ImagesByName[name].Sprite);
                     }
                     else
                     {
@@ -57,7 +57,7 @@
 
                 if (!string.IsNullOrWhiteSpace(order.MaskImageName))
                 {
-                    imageSet.SetMask(resource.MaskImagesByName[order.MaskImageName]);
+                    imageSet.SetMask(resource.MaskImagesByName[order.MaskImageName].Sprite);
                 }
             }
 
@@ -73,7 +73,7 @@
                     var name = order.Names[i];
                     if (!string.IsNullOrEmpty(name))
                     {
-                        var r = frontImageSet.SetSprite(resource.ImagesByName[name], i);
+                        var r = frontImageSet.SetSprite(resource.ImagesByName[name].Sprite, i);
                         r.color = new Color(1.0f, 1.0f, 1.0f, 0);
                         DrawingImages.Add(r);
                     }

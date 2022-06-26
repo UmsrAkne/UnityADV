@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SceneContents;
 using UnityEngine;
 
 public class ImageLoader
 {
-    public List<Sprite> Sprites { get; private set; } = new List<Sprite>();
+    public List<SpriteWrapper> Sprites { get; private set; } = new List<SpriteWrapper>();
 
     public List<string> Log { get; set; } = new List<string>();
 
-    public Dictionary<string, Sprite> SpriteDictionary { get; private set; } = new Dictionary<string, Sprite>();
+    public Dictionary<string, SpriteWrapper> SpriteDictionary { get; private set; } = new Dictionary<string, SpriteWrapper>();
 
     public void Load(string targetDirectoryPath)
     {
@@ -21,17 +22,18 @@ public class ImageLoader
 
         GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
         {
-            var sp = LoadImage(path);
-            Sprites.Add(sp);
-            SpriteDictionary.Add(Path.GetFileName(path), sp);
-            SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), sp);
+            var spWrapper = LoadImage(path);
+            Sprites.Add(spWrapper);
+            SpriteDictionary.Add(Path.GetFileName(path), spWrapper);
+            SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), spWrapper);
         });
     }
 
-    public Sprite LoadImage(string targetFilePath)
+    public SpriteWrapper LoadImage(string targetFilePath)
     {
         var size = GetImageSize(targetFilePath);
-        return Sprite.Create(ReadTexture(targetFilePath, (int)size.x, (int)size.y), new Rect(0, 0, (int)size.x, (int)size.y), new Vector2(0.5f, 0.5f), 1);
+        var sp = Sprite.Create(ReadTexture(targetFilePath, (int)size.x, (int)size.y), new Rect(0, 0, (int)size.x, (int)size.y), new Vector2(0.5f, 0.5f), 1);
+        return new SpriteWrapper() { Sprite = sp, Width = (int)size.x, Height = (int)size.y };
     }
 
     private Texture2D ReadTexture(string path, int width, int height)

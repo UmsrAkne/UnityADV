@@ -12,13 +12,13 @@
 
         public List<Scenario> Scenarios { get; set; }
 
-        public List<Sprite> Images { get; set; }
+        public List<SpriteWrapper> Images { get; set; }
 
-        public Dictionary<string, Sprite> ImagesByName { get; set; }
+        public Dictionary<string, SpriteWrapper> ImagesByName { get; set; }
 
-        public List<Sprite> MaskImages { get; set; }
+        public List<SpriteWrapper> MaskImages { get; set; }
 
-        public Dictionary<string, Sprite> MaskImagesByName { get; set; }
+        public Dictionary<string, SpriteWrapper> MaskImagesByName { get; set; }
 
         public AudioSource BGMAudioSource { get; set; }
 
