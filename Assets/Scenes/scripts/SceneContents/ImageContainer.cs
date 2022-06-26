@@ -65,7 +65,7 @@
                 EffectGameObject.name = "EffectGameObject";
 
                 var loader = new ImageLoader();
-                var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png");
+                var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png").Sprite;
                 imageSet.Alpha = 0;
 
                 EffectGameObject.transform.SetParent(GameObject.transform);

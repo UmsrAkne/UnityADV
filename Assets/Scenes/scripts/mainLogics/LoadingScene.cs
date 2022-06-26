@@ -40,11 +40,11 @@
 
             var topBarImage = new ImageSet();
             topBarImage.Y = 350;
-            topBarImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\topBar.png") });
+            topBarImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\topBar.png").Sprite });
             topBarImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
 
             fillBlackImage = new ImageSet();
-            fillBlackImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\fillBlack.png") });
+            fillBlackImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\fillBlack.png").Sprite });
             fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
             fillBlackImage.Alpha = 0;
 
@@ -105,7 +105,7 @@
             if (Sprites[cursorIndex] == null)
             {
                 var firstImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
-                Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath);
+                Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath).Sprite;
             }
 
             mainImageSet.SetSprite(Sprites[cursorIndex], 0).color = new Color(1, 1, 1, 0);
