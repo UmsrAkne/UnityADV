@@ -17,6 +17,9 @@
         private ImageLoader imageLoader = new ImageLoader();
         private ImageSet fillBlackImage;
         private ImageSet mainImageSet = new ImageSet();
+
+        private List<ImageSet> miniImageSets = new List<ImageSet>();
+
         private bool loading;
         private string lastSelectedSceneIndexKey = "lastSelectedSceneIndex";
 
@@ -24,7 +27,7 @@
 
         private string[] Paths { get; set; }
 
-        private List<Sprite> Sprites { get; } = new List<Sprite>();
+        private List<SpriteWrapper> Sprites { get; } = new List<SpriteWrapper>();
 
         // Start is called before the first frame update
         public void Start()
@@ -105,10 +108,41 @@
             if (Sprites[cursorIndex] == null)
             {
                 var firstImagePath = Directory.GetFiles($@"{Paths[cursorIndex]}\images").First();
-                Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath).Sprite;
+                Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath);
             }
 
-            mainImageSet.SetSprite(Sprites[cursorIndex], 0).color = new Color(1, 1, 1, 0);
+            /// 大サイズの画像の描画
+
+            mainImageSet.SetSprite(Sprites[cursorIndex].Sprite, 0).color = new Color(1, 1, 1, 0);
+            mainImageSet.X = 300;
+
+            /// 小サイズの画像の描画
+
+            miniImageSets.ForEach(mi => mi.Dispose());
+            miniImageSets.Clear();
+
+            for (var i = 0; i < 4; i++)
+            {
+                var index = cursorIndex + i;
+
+                if (index >= Sprites.Count)
+                {
+                    return;
+                }
+
+                if (Sprites[index] == null)
+                {
+                    Sprites[index] = imageLoader.LoadImage(Directory.GetFiles($@"{Paths[index]}\images").First());
+                }
+
+                var miniImage = new ImageSet();
+                miniImage.SetSprite(Sprites[index].Sprite, 0);
+                miniImage.Scale = 320.0 / Sprites[index].Width;
+                miniImage.X = -500;
+                miniImage.Y = 270 + (-180 * i);
+
+                miniImageSets.Add(miniImage);
+            }
         }
 
         private void LoadNextSceneResource(Scene next, LoadSceneMode mode)
