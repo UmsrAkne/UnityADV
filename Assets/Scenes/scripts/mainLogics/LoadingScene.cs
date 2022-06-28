@@ -111,8 +111,15 @@
                 Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath);
             }
 
+            /// 大サイズの画像の描画
+
             mainImageSet.SetSprite(Sprites[cursorIndex].Sprite, 0).color = new Color(1, 1, 1, 0);
-            mainImageSet.X = 320;
+            mainImageSet.X = 300;
+
+            /// 小サイズの画像の描画
+
+            miniImageSets.ForEach(mi => mi.Dispose());
+            miniImageSets.Clear();
 
             for (var i = 0; i < 4; i++)
             {
@@ -131,8 +138,10 @@
                 var miniImage = new ImageSet();
                 miniImage.SetSprite(Sprites[index].Sprite, 0);
                 miniImage.Scale = 320.0 / Sprites[index].Width;
-                miniImage.X = -480;
+                miniImage.X = -500;
                 miniImage.Y = 270 + (-180 * i);
+
+                miniImageSets.Add(miniImage);
             }
         }
 
