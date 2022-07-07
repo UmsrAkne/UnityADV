@@ -5,12 +5,10 @@
 
     public class Slide : IAnimation
     {
-        private int frameCount;
         private double totalDistance = 0;
-        private double resistance = 1.0;
-        private int period;
         private bool isInitialExecute = true;
         private IDisplayObject target;
+        private SlideCore core;
 
         public string AnimationName => "slide";
 
@@ -63,52 +61,21 @@
                 return;
             }
 
-            frameCount++;
-            var rad = Degree * (Math.PI / 180);
-
             if (isInitialExecute)
             {
                 isInitialExecute = false;
-                period = (int)Math.Ceiling(Distance / (Math.Tan(rad) * Speed));
-            }
-
-            // アニメーション開始直後はゆっくり動き始める。
-            if (frameCount <= 45)
-            {
-                resistance = Math.Sin(frameCount * 2 * (Math.PI / 180));
-            }
-
-            Target.X += (float)(Math.Sin(rad) * Speed * resistance);
-            Target.Y += (float)(Math.Cos(rad) * Speed * resistance);
-
-            totalDistance += Speed * resistance;
-
-            // 全移動距離に対して、一定割合移動したらブレーキをかける。
-            if (totalDistance >= Distance * 0.7)
-            {
-                resistance = Math.Cos(frameCount * (90.0 / period) * (Math.PI / 180));
-
-                if (resistance <= 0)
+                core = new SlideCore()
                 {
-                    resistance = 0.01;
-                }
+                    Target = Target,
+                    Distance = Distance,
+                    Degree = Degree,
+                    Speed = Speed
+                };
+
+                core.Start();
             }
 
-            if (frameCount >= Duration || Distance < totalDistance)
-            {
-                if (LoopCount != 0)
-                {
-                    LoopCount--;
-                    frameCount = 0;
-                    totalDistance = 0;
-                    Degree += 180;
-                    resistance = 1.0;
-                }
-                else
-                {
-                    Stop();
-                }
-            }
+            core.Execute();
         }
 
         public void Start()
@@ -118,7 +85,6 @@
         public void Stop()
         {
             IsWorking = false;
-            frameCount = Duration;
             Speed = 0;
             Distance = 0;
         }
