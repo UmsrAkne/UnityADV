@@ -57,7 +57,6 @@
                 {
                     var distanceOfEnterdFinalSection = totalDistance - finalSectionCount;
                     resistance = 1.0 - (0.01 * distanceOfEnterdFinalSection);
-
                 }
             }
 
@@ -91,7 +90,7 @@
                 movingDistance.X = (float)Math.Cos(radian);
 
                 startSectionCount = Distance * 0.3;
-                finalSectionCount = Distance * 0.7;
+                finalSectionCount = Distance * 0.8;
             }
         }
 

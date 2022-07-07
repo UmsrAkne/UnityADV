@@ -9,6 +9,7 @@
         private bool isInitialExecute = true;
         private IDisplayObject target;
         private SlideCore core;
+        private int stopTimeCount;
 
         public string AnimationName => "slide";
 
@@ -38,6 +39,8 @@
 
         public int LoopCount { get; set; }
 
+        public int Interval { get; set; }
+
         public string Direction
         {
             set
@@ -64,18 +67,35 @@
             if (isInitialExecute)
             {
                 isInitialExecute = false;
-                core = new SlideCore()
-                {
-                    Target = Target,
-                    Distance = Distance,
-                    Degree = Degree,
-                    Speed = Speed
-                };
-
-                core.Start();
+                Initialize();
             }
 
             core.Execute();
+
+            if (!core.IsWorking)
+            {
+                stopTimeCount++;
+
+                if (Interval > stopTimeCount)
+                {
+                    return;
+                }
+                else
+                {
+                    stopTimeCount = 0;
+                }
+
+                if (LoopCount > 0)
+                {
+                    LoopCount--;
+                    Degree += 180;
+                    Initialize();
+                }
+                else
+                {
+                    Stop();
+                }
+            }
         }
 
         public void Start()
@@ -87,6 +107,19 @@
             IsWorking = false;
             Speed = 0;
             Distance = 0;
+        }
+
+        private void Initialize()
+        {
+            core = new SlideCore()
+            {
+                Target = Target,
+                Distance = Distance,
+                Degree = Degree,
+                Speed = Speed
+            };
+
+            core.Start();
         }
     }
 }
