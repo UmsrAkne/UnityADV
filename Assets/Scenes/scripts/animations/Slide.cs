@@ -5,12 +5,11 @@
 
     public class Slide : IAnimation
     {
-        private int frameCount;
         private double totalDistance = 0;
-        private double resistance = 1.0;
-        private int period;
         private bool isInitialExecute = true;
         private IDisplayObject target;
+        private SlideCore core;
+        private int stopTimeCount;
 
         public string AnimationName => "slide";
 
@@ -40,6 +39,8 @@
 
         public int LoopCount { get; set; }
 
+        public int Interval { get; set; }
+
         public string Direction
         {
             set
@@ -63,46 +64,32 @@
                 return;
             }
 
-            frameCount++;
-            var rad = Degree * (Math.PI / 180);
-
             if (isInitialExecute)
             {
                 isInitialExecute = false;
-                period = (int)Math.Ceiling(Distance / (Math.Tan(rad) * Speed));
+                Initialize();
             }
 
-            // アニメーション開始直後はゆっくり動き始める。
-            if (frameCount <= 45)
+            core.Execute();
+
+            if (!core.IsWorking)
             {
-                resistance = Math.Sin(frameCount * 2 * (Math.PI / 180));
-            }
+                stopTimeCount++;
 
-            Target.X += (float)(Math.Sin(rad) * Speed * resistance);
-            Target.Y += (float)(Math.Cos(rad) * Speed * resistance);
-
-            totalDistance += Speed * resistance;
-
-            // 全移動距離に対して、一定割合移動したらブレーキをかける。
-            if (totalDistance >= Distance * 0.7)
-            {
-                resistance = Math.Cos(frameCount * (90.0 / period) * (Math.PI / 180));
-
-                if (resistance <= 0)
+                if (Interval > stopTimeCount)
                 {
-                    resistance = 0.01;
+                    return;
                 }
-            }
+                else
+                {
+                    stopTimeCount = 0;
+                }
 
-            if (frameCount >= Duration || Distance < totalDistance)
-            {
-                if (LoopCount != 0)
+                if (LoopCount > 0)
                 {
                     LoopCount--;
-                    frameCount = 0;
-                    totalDistance = 0;
                     Degree += 180;
-                    resistance = 1.0;
+                    Initialize();
                 }
                 else
                 {
@@ -118,9 +105,21 @@
         public void Stop()
         {
             IsWorking = false;
-            frameCount = Duration;
             Speed = 0;
             Distance = 0;
+        }
+
+        private void Initialize()
+        {
+            core = new SlideCore()
+            {
+                Target = Target,
+                Distance = Distance,
+                Degree = Degree,
+                Speed = Speed
+            };
+
+            core.Start();
         }
     }
 }
