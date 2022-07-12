@@ -88,6 +88,46 @@
             Assert.AreEqual(writer.ScenarioIndex, 2);
         }
 
+        [Test]
+        public void 特定のインデックスまでジャンプするテスト()
+        {
+            var res = new Resource();
+            res.Scenarios = new List<Scenario>()
+            {
+                new Scenario() { Text = "abcdef" },
+                new Scenario() { Text = "ghijkl" },
+                new Scenario() { Text = "mnopqr" },
+                new Scenario() { Text = "stuvwx" }
+            };
+
+            var writer = new TextWriter();
+            writer.SetResource(res);
+
+            /// ここからテスト
+
+            writer.SetScenarioIndex(2);
+            Assert.AreEqual(writer.CurrentText, string.Empty);
+
+            writer.ExecuteEveryFrame();
+            Assert.AreEqual(writer.CurrentText, "m");
+
+            for (var i = 0; i < 10; i++)
+            {
+                writer.ExecuteEveryFrame();
+            }
+
+            Assert.AreEqual(writer.CurrentText, "mnopqr", "10frame 経過時の状態。テキストの全てが過不足なく入力済みか");
+
+            writer.Execute();
+            Assert.AreEqual(writer.CurrentText, string.Empty);
+
+            writer.ExecuteEveryFrame();
+            writer.ExecuteEveryFrame();
+            writer.Execute();
+
+            Assert.AreEqual(writer.CurrentText, "stuvwx", "2フレーム経過でテキスト描画を切り上げ。テキストが全て入力されているか");
+        }
+
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
         [UnityTest]
