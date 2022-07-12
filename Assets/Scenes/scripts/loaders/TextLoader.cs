@@ -40,6 +40,7 @@
                 return;
             }
 
+            Converters.Add(new ChapterElementConverter());
             Converters.Add(new ImageElementConverter());
             Converters.Add(new DrawElementConverter());
             Converters.Add(new VoiceElementConverter());
