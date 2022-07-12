@@ -19,6 +19,7 @@
         private List<IScenarioSceneParts> ScenarioSceneParts { get; } = new List<IScenarioSceneParts>();
 
         private TextWriter TextWriter { get; } = new TextWriter();
+        private ChapterManager ChapterManager { get; } = new ChapterManager();
 
         private UI UI { get; } = new UI();
 
@@ -52,6 +53,8 @@
             ScenarioSceneParts.Add(new BGVoicePlayer(vp3));
 
             ScenarioSceneParts.Add(new SEPlayer());
+
+            ScenarioSceneParts.Add(ChapterManager);
 
             ScenarioSceneParts.ForEach(s =>
             {
