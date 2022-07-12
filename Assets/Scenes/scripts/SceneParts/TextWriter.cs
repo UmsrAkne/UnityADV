@@ -13,7 +13,7 @@
 
         public bool Writing { get; private set; }
 
-        public int ScenarioIndex { get; private set; }
+        public int ScenarioIndex { get; set; }
 
         public Text Text { get; private set; }
 
@@ -101,6 +101,16 @@
             {
                 SetText(component);
             }
+        }
+
+        public void SetScenarioIndex(int index)
+        {
+            initialExecute = false;
+            ScenarioIndex = index;
+            counter = 0;
+            WriteText(string.Empty);
+            Writing = false;
+            Execute();
         }
 
         private void AppendText(char character)

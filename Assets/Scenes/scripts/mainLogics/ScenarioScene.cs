@@ -19,6 +19,7 @@
         private List<IScenarioSceneParts> ScenarioSceneParts { get; } = new List<IScenarioSceneParts>();
 
         private TextWriter TextWriter { get; } = new TextWriter();
+        private ChapterManager ChapterManager { get; } = new ChapterManager();
 
         private UI UI { get; } = new UI();
 
@@ -53,6 +54,8 @@
 
             ScenarioSceneParts.Add(new SEPlayer());
 
+            ScenarioSceneParts.Add(ChapterManager);
+
             ScenarioSceneParts.ForEach(s =>
             {
                 s.SetResource(Resource);
@@ -77,6 +80,11 @@
                     Destroy(logWindowObject);
                     logWindowObject = null;
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                TextWriter.SetScenarioIndex(ChapterManager.GetNextChapterIndex());
             }
 
             if (Input.GetKey(KeyCode.LeftControl))

@@ -9,6 +9,8 @@
 
         public string Text { get; set; }
 
+        public string ChapterName { get; set; } = string.Empty;
+
         public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
 
         public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
