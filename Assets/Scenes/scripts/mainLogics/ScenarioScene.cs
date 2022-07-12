@@ -82,6 +82,11 @@
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                TextWriter.SetScenarioIndex(ChapterManager.GetNextChapterIndex());
+            }
+
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 if (Input.GetKeyDown(KeyCode.R))

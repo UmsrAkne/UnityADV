@@ -34,12 +34,21 @@ public class ChapterManager : IScenarioSceneParts
 
     public int GetNextChapterIndex()
     {
-        if (scenarios != null || scenarios.Count >= currentIndex)
+        if (scenarios == null || scenarios.Count() <= currentIndex)
         {
             return currentIndex;
         }
 
         var nextChapterScenario = scenarios.Skip(currentIndex + 1).FirstOrDefault(scenario => scenario.ChapterName != string.Empty);
-        return nextChapterScenario != null ? nextChapterScenario.Index : currentIndex;
+
+        if (nextChapterScenario != null)
+        {
+            currentIndex = nextChapterScenario.Index - 1;
+            return nextChapterScenario.Index - 1;
+        }
+        else
+        {
+            return currentIndex;
+        }
     }
 }
