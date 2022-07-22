@@ -13,6 +13,7 @@
         private string textAttribute = "text";
         private string stringAttribute = "string";
         private string strAttribute = "str";
+        private string ignoreElement = "ignore";
 
         public List<Scenario> Scenario { get; set; }
 
@@ -54,7 +55,10 @@
             var scenarioIndex = 0;
 
             Scenario =
-            xml.Root.Descendants().Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario").Select(x =>
+            xml.Root.Descendants()
+                .Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario")
+                .Where(x => x.Element(ignoreElement) == null)
+                .Select(x =>
             {
                 var scenario = new Scenario() { Index = ++scenarioIndex };
 
