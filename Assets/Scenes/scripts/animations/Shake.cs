@@ -6,6 +6,7 @@
     {
         private ShakeCore shakeCore;
         private bool initialExecute = true;
+        private int intervalCounter;
 
         public string AnimationName => "shake";
 
@@ -25,6 +26,8 @@
         public int Duration { get; set; } = 60;
 
         public int RepeatCount { get; set; }
+
+        public int Interval { get; set; }
 
         public void Execute()
         {
@@ -48,9 +51,16 @@
 
             if (!shakeCore.IsWorking)
             {
+                if (intervalCounter < Interval)
+                {
+                    intervalCounter++;
+                    return;
+                }
+
                 if (RepeatCount > 0)
                 {
                     RepeatCount--;
+                    intervalCounter = 0;
                     initialExecute = true;
                 }
                 else
