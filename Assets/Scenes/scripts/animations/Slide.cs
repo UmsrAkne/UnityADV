@@ -37,7 +37,7 @@
 
         public int Duration { get; set; } = int.MaxValue;
 
-        public int LoopCount { get; set; }
+        public int RepeatCount { get; set; }
 
         public int Interval { get; set; }
 
@@ -85,9 +85,9 @@
                     stopTimeCount = 0;
                 }
 
-                if (LoopCount > 0)
+                if (RepeatCount > 0)
                 {
-                    LoopCount--;
+                    RepeatCount--;
                     Degree += 180;
                     Initialize();
                 }

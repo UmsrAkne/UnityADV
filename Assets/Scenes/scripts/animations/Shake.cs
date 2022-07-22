@@ -1,12 +1,12 @@
 ﻿namespace Animations
 {
-    using System;
-    using System.Drawing;
     using SceneContents;
 
     public class Shake : IAnimation
     {
-        private int frameCounter;
+        private ShakeCore shakeCore;
+        private bool initialExecute = true;
+        private int intervalCounter;
 
         public string AnimationName => "shake";
 
@@ -25,35 +25,48 @@
 
         public int Duration { get; set; } = 60;
 
-        private Point TotalMovementDistance { get; set; } = new Point(0, 0);
+        public int RepeatCount { get; set; }
+
+        public int Interval { get; set; }
 
         public void Execute()
         {
-            if (Target == null || !IsWorking)
+            if (Target == null)
             {
                 return;
             }
 
-            double angle = frameCounter * (90.0 / Duration);
-            var cos = Math.Cos(angle * (Math.PI / 180));
-
-            int strength = (int)(Strength * cos);
-
-            if (frameCounter != 0)
+            if (initialExecute)
             {
-                strength *= (frameCounter % 2 == 0) ? 2 : -2;
+                initialExecute = false;
+                shakeCore = new ShakeCore()
+                {
+                    Target = Target,
+                    Strength = Strength,
+                    Duration = Duration,
+                };
             }
 
-            Target.X += strength;
-            Target.Y += strength;
+            shakeCore.Execute();
 
-            TotalMovementDistance = new Point(TotalMovementDistance.X + strength, TotalMovementDistance.Y + strength);
-
-            frameCounter++;
-
-            if (frameCounter >= Duration)
+            if (!shakeCore.IsWorking)
             {
-                Stop();
+                if (intervalCounter < Interval)
+                {
+                    intervalCounter++;
+                    return;
+                }
+
+                if (RepeatCount > 0)
+                {
+                    RepeatCount--;
+                    intervalCounter = 0;
+                    initialExecute = true;
+                }
+                else
+                {
+                    Stop();
+                }
             }
         }
 
@@ -64,9 +77,7 @@
         public void Stop()
         {
             IsWorking = false;
-            frameCounter = Duration;
-            Target.X -= TotalMovementDistance.X;
-            Target.Y -= TotalMovementDistance.Y;
+            RepeatCount = 0;
         }
     }
 }

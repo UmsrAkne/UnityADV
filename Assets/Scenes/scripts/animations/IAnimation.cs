@@ -14,6 +14,8 @@
 
         int TargetLayerIndex { get; set; }
 
+        int RepeatCount { get; set; }
+
         void Execute();
 
         void Start();

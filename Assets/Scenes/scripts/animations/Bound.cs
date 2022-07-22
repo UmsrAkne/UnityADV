@@ -28,6 +28,8 @@
 
         public int Strength { get; set; }
 
+        public int RepeatCount { get; set; }
+
         public void Execute()
         {
             if (Target == null || !IsWorking)
@@ -56,7 +58,19 @@
 
             if (frameCounter >= Duration)
             {
-                Stop();
+                if (RepeatCount > 0)
+                {
+                    frameCounter = 0;
+                    RepeatCount--;
+                    Target.X -= (float)totalDx;
+                    Target.Y -= (float)totalDy;
+
+                    return;
+                }
+                else
+                {
+                    Stop();
+                }
             }
         }
 
