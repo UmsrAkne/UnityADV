@@ -1,12 +1,11 @@
 ﻿namespace Animations
 {
-    using System;
-    using System.Drawing;
     using SceneContents;
 
     public class Shake : IAnimation
     {
-        private int frameCounter;
+        private ShakeCore shakeCore;
+        private bool initialExecute = true;
 
         public string AnimationName => "shake";
 
@@ -27,35 +26,37 @@
 
         public int RepeatCount { get; set; }
 
-        private Point TotalMovementDistance { get; set; } = new Point(0, 0);
-
         public void Execute()
         {
-            if (Target == null || !IsWorking)
+            if (Target == null)
             {
                 return;
             }
 
-            double angle = frameCounter * (90.0 / Duration);
-            var cos = Math.Cos(angle * (Math.PI / 180));
-
-            int strength = (int)(Strength * cos);
-
-            if (frameCounter != 0)
+            if (initialExecute)
             {
-                strength *= (frameCounter % 2 == 0) ? 2 : -2;
+                initialExecute = false;
+                shakeCore = new ShakeCore()
+                {
+                    Target = Target,
+                    Strength = Strength,
+                    Duration = Duration,
+                };
             }
 
-            Target.X += strength;
-            Target.Y += strength;
+            shakeCore.Execute();
 
-            TotalMovementDistance = new Point(TotalMovementDistance.X + strength, TotalMovementDistance.Y + strength);
-
-            frameCounter++;
-
-            if (frameCounter >= Duration)
+            if (!shakeCore.IsWorking)
             {
-                Stop();
+                if (RepeatCount > 0)
+                {
+                    RepeatCount--;
+                    initialExecute = true;
+                }
+                else
+                {
+                    Stop();
+                }
             }
         }
 
@@ -66,9 +67,7 @@
         public void Stop()
         {
             IsWorking = false;
-            frameCounter = Duration;
-            Target.X -= TotalMovementDistance.X;
-            Target.Y -= TotalMovementDistance.Y;
+            RepeatCount = 0;
         }
     }
 }
