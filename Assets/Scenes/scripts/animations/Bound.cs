@@ -28,6 +28,8 @@
 
         public int Strength { get; set; }
 
+        public int RepeatCount { get; set; }
+
         public void Execute()
         {
             if (Target == null || !IsWorking)

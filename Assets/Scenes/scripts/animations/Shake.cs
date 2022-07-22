@@ -25,6 +25,8 @@
 
         public int Duration { get; set; } = 60;
 
+        public int RepeatCount { get; set; }
+
         private Point TotalMovementDistance { get; set; } = new Point(0, 0);
 
         public void Execute()

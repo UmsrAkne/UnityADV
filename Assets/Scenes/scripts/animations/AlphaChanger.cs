@@ -43,6 +43,8 @@
 
         public string AnimationName => nameof(AlphaChanger);
 
+        public int RepeatCount { get; set; }
+
         public void Execute()
         {
             if (!IsWorking)

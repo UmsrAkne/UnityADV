@@ -57,6 +57,8 @@
             set { _ = value; }
         }
 
+        public int RepeatCount { get; set; }
+
         public void Execute()
         {
             if (Target == null || !IsWorking)
