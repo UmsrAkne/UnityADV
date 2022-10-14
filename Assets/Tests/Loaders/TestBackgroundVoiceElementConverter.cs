@@ -3,9 +3,9 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Xml.Linq;
-    using Loaders;
     using NUnit.Framework;
-    using SceneContents;
+    using Scenes.Scripts.Loaders;
+    using Scenes.Scripts.SceneContents;
     using UnityEngine.TestTools;
 
     public class TestBackgroundVoiceElementConverter

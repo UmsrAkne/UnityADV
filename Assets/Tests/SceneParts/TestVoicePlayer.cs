@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using NUnit.Framework;
-    using SceneContents;
-    using SceneParts;
+    using Scenes.Scripts.SceneContents;
+    using Scenes.Scripts.SceneParts;
 
     public class TestVoicePlayer
     {

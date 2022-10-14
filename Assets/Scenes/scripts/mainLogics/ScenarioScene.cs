@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
     using Animations;
-    using Loaders;
-    using SceneContents;
-    using SceneParts;
+    using Scenes.Scripts.Loaders;
+    using Scenes.Scripts.SceneContents;
+    using Scenes.Scripts.SceneParts;
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using UnityEngine.UI;

@@ -1,7 +1,5 @@
-﻿namespace Loaders
+﻿namespace Scenes.Scripts.Loaders
 {
-    using System.Drawing;
-
     public class SceneSetting
     {
         public int DefaultImageWidth { get; set; } = 1280;

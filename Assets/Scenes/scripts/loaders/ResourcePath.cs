@@ -1,4 +1,4 @@
-﻿namespace Loaders
+﻿namespace Scenes.Scripts.Loaders
 {
     public class ResourcePath
     {

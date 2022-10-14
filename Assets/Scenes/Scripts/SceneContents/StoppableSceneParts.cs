@@ -1,4 +1,4 @@
-﻿namespace SceneContents
+﻿namespace Scenes.Scripts.SceneContents
 {
     public enum StoppableSceneParts
     {

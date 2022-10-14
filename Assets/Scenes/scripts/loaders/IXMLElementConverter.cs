@@ -1,4 +1,4 @@
-﻿namespace Loaders
+﻿namespace Scenes.Scripts.Loaders
 {
     using System.Collections.Generic;
     using System.Xml.Linq;

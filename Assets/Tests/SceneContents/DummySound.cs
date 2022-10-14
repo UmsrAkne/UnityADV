@@ -1,7 +1,7 @@
 ﻿namespace Tests
 {
     using System;
-    using SceneContents;
+    using Scenes.Scripts.SceneContents;
     using UnityEngine;
 
     /// <summary>

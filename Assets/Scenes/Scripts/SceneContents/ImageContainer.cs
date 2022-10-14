@@ -1,8 +1,8 @@
-﻿namespace SceneContents
+﻿namespace Scenes.Scripts.SceneContents
 {
     using System.Collections.Generic;
     using System.Linq;
-    using SceneContents;
+    using Scenes.Scripts.Loaders;
     using UnityEngine;
     using UnityEngine.Rendering;
 

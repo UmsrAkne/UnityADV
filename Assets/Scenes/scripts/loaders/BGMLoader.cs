@@ -6,60 +6,63 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class BGMLoader : MonoBehaviour
+namespace Scenes.Scripts.Loaders
 {
-    private AudioClip ac;
-
-    public event EventHandler LoadCompleted;
-
-    public AudioSource AudioSource { get; private set; }
-
-    public List<string> Log { get; set; } = new List<string>();
-
-    public void Load(string targetDirectoryPath)
+    public class BGMLoader : MonoBehaviour
     {
-        if (!Directory.Exists(targetDirectoryPath))
+        private AudioClip ac;
+
+        public event EventHandler LoadCompleted;
+
+        public AudioSource AudioSource { get; private set; }
+
+        public List<string> Log { get; set; } = new List<string>();
+
+        public void Load(string targetDirectoryPath)
         {
-            Log.Add($"{targetDirectoryPath} が見つかりませんでした");
-            AudioSource = new GameObject().AddComponent<AudioSource>();
-            return;
-        }
-
-        AudioSource = new GameObject().AddComponent<AudioSource>();
-        StartCoroutine(LoadAudio(GetSoundFilePath(targetDirectoryPath)));
-    }
-
-    private string GetSoundFilePath(string targetDirectoryPath)
-    {
-        var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
-        return Path.GetFullPath(allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").FirstOrDefault());
-    }
-
-    private IEnumerator LoadAudio(string path)
-    {
-        if (AudioSource == null || string.IsNullOrEmpty(path) || !File.Exists(path))
-        {
-            yield break;
-        }
-
-        using (UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.OGGVORBIS))
-        {
-            req.SendWebRequest();
-
-            while (!req.isDone)
+            if (!Directory.Exists(targetDirectoryPath))
             {
-                yield return null;
+                Log.Add($"{targetDirectoryPath} が見つかりませんでした");
+                AudioSource = new GameObject().AddComponent<AudioSource>();
+                return;
             }
 
-            ac = DownloadHandlerAudioClip.GetContent(req);
+            AudioSource = new GameObject().AddComponent<AudioSource>();
+            StartCoroutine(LoadAudio(GetSoundFilePath(targetDirectoryPath)));
+        }
 
-            if (ac.loadState != AudioDataLoadState.Loaded)
+        private string GetSoundFilePath(string targetDirectoryPath)
+        {
+            var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
+            return Path.GetFullPath(allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").FirstOrDefault());
+        }
+
+        private IEnumerator LoadAudio(string path)
+        {
+            if (AudioSource == null || string.IsNullOrEmpty(path) || !File.Exists(path))
             {
                 yield break;
             }
 
-            AudioSource.clip = ac;
-            LoadCompleted?.Invoke(this, EventArgs.Empty);
+            using (UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.OGGVORBIS))
+            {
+                req.SendWebRequest();
+
+                while (!req.isDone)
+                {
+                    yield return null;
+                }
+
+                ac = DownloadHandlerAudioClip.GetContent(req);
+
+                if (ac.loadState != AudioDataLoadState.Loaded)
+                {
+                    yield break;
+                }
+
+                AudioSource.clip = ac;
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

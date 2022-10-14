@@ -1,4 +1,4 @@
-﻿namespace SceneContents
+﻿namespace Scenes.Scripts.SceneContents
 {
     using System;
     using UnityEngine;

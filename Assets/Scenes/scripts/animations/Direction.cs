@@ -1,11 +1,5 @@
-﻿namespace Animations
+﻿namespace Scenes.Scripts.Animations
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     public enum Direction
     {
         up = 0,

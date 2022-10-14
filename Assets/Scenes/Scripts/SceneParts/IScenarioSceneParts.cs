@@ -1,6 +1,6 @@
-﻿namespace SceneParts
+﻿namespace Scenes.Scripts.SceneParts
 {
-    using SceneContents;
+    using Scenes.Scripts.SceneContents;
 
     public interface IScenarioSceneParts
     {

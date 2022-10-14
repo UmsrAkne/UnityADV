@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Loaders;
-    using SceneContents;
+    using Scenes.Scripts.Loaders;
+    using Scenes.Scripts.SceneContents;
     using UnityEngine;
     using UnityEngine.Rendering;
     using UnityEngine.SceneManagement;
