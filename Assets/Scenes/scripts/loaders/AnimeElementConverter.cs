@@ -1,11 +1,11 @@
-﻿namespace Animations
+﻿namespace Scenes.Scripts.Loaders
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
-    using Loaders;
     using SceneContents;
+    using Scenes.Scripts.Animations;
 
     public class AnimeElementConverter : IXMLElementConverter
     {

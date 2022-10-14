@@ -1,11 +1,10 @@
-﻿namespace Loaders
+﻿namespace Scenes.Scripts.Loaders
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Xml;
     using System.Xml.Linq;
-    using Animations;
     using SceneContents;
 
     public class TextLoader

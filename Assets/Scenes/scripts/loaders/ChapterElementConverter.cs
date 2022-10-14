@@ -1,12 +1,9 @@
-﻿namespace Loaders
+﻿namespace Scenes.Scripts.Loaders
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using SceneContents;
-    using UnityEngine;
 
     public class ChapterElementConverter : IXMLElementConverter
     {

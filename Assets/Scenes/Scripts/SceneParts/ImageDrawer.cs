@@ -1,8 +1,7 @@
-﻿namespace SceneParts
+﻿namespace Scenes.Scripts.SceneParts
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using SceneContents;
+    using Scenes.Scripts.SceneContents;
     using UnityEngine;
 
     public class ImageDrawer : IScenarioSceneParts

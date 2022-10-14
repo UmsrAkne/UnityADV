@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using SceneContents;
-    using SceneParts;
+    using Scenes.Scripts.Animations;
+    using Scenes.Scripts.SceneContents;
+    using Scenes.Scripts.SceneParts;
     using UnityEngine;
 
     public class AnimationsManager : IScenarioSceneParts

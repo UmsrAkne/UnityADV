@@ -1,9 +1,8 @@
-﻿namespace SceneContents
+﻿namespace Scenes.Scripts.SceneContents
 {
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
-    using UnityEngine.Rendering;
 
     public class ImageSet : IDisplayObject
     {

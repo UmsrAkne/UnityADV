@@ -1,11 +1,5 @@
-﻿namespace SceneContents
+﻿namespace Scenes.Scripts.SceneContents
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     public class SEOrder
     {
         public string FileName { get; set; } = string.Empty;

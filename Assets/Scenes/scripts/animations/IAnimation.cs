@@ -1,4 +1,4 @@
-﻿namespace Animations
+﻿namespace Scenes.Scripts.Animations
 {
     using SceneContents;
 

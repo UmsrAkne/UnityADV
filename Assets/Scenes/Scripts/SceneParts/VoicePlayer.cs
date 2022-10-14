@@ -1,12 +1,9 @@
-﻿namespace SceneParts
+﻿namespace Scenes.Scripts.SceneParts
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
-    using SceneContents;
-    using UnityEngine;
+    using Scenes.Scripts.SceneContents;
 
     public class VoicePlayer : IScenarioSceneParts
     {

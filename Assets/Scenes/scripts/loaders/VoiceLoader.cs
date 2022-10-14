@@ -1,10 +1,11 @@
-﻿namespace SceneContents
+﻿namespace Scenes.Scripts.Loaders
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using SceneContents;
     using UnityEngine;
     using UnityEngine.Networking;
 

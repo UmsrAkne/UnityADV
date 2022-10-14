@@ -1,4 +1,4 @@
-﻿namespace Animations
+﻿namespace Scenes.Scripts.Animations
 {
     using System;
     using System.Numerics;
