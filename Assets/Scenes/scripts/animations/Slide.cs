@@ -5,7 +5,7 @@
 
     public class Slide : IAnimation
     {
-        private double totalDistance = 0;
+        private int executeCounter;
         private bool isInitialExecute = true;
         private IDisplayObject target;
         private SlideCore core;
@@ -20,9 +20,15 @@
             private get => target;
             set
             {
-                if (totalDistance == 0)
+                // アニメーションの挿入 -> 直後に画像切替　の間に数回は実行されてしまう可能性があるため
+                // 実行 2 回程度はまだ実行していないものとしてターゲットの変更を許可する
+                if (executeCounter < 3)
                 {
                     target = value;
+                }
+                else
+                {
+                    Stop();
                 }
             }
         }
@@ -54,7 +60,7 @@
 
         public ImageContainer TargetContainer
         {
-            set { _ = value; }
+            set => _ = value;
         }
 
         public void Execute()
@@ -71,6 +77,7 @@
             }
 
             core.Execute();
+            executeCounter++;
 
             if (!core.IsWorking)
             {
@@ -80,10 +87,8 @@
                 {
                     return;
                 }
-                else
-                {
-                    stopTimeCount = 0;
-                }
+
+                stopTimeCount = 0;
 
                 if (RepeatCount > 0)
                 {
