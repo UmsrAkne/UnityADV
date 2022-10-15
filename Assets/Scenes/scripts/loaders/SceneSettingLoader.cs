@@ -9,7 +9,7 @@
         private string bgmElementName = "bgm";
 
         private string widthAttribute = "width";
-        private string heihgtAttribute = "height";
+        private string heightAttribute = "height";
         private string numberAttribute = "number";
 
         public List<string> Log { get; private set; } = new List<string>();
@@ -22,7 +22,7 @@
             if (settingTag.Element(defaultSizeElementName) != null)
             {
                 setting.DefaultImageWidth = (int)settingTag.Element(defaultSizeElementName).Attribute(widthAttribute);
-                setting.DefaultImageHeight = (int)settingTag.Element(defaultSizeElementName).Attribute(heihgtAttribute);
+                setting.DefaultImageHeight = (int)settingTag.Element(defaultSizeElementName).Attribute(heightAttribute);
             }
 
             if (settingTag.Element(bgmElementName) != null)
