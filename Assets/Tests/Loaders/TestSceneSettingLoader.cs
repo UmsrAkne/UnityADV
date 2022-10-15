@@ -27,5 +27,24 @@ namespace Tests.Loaders
             Assert.AreEqual(setting.DefaultImageHeight, 768);
             Assert.AreEqual(setting.BGMNumber, 3);
         }
+
+        [Test]
+        public void 設定に何も書いてない場合のテスト()
+        {
+            var loader = new SceneSettingLoader();
+
+            const string xmlText =
+                @"<setting>
+                    <defaultSize />
+                    <bgm />
+                </setting>";
+
+            var xDocument = XDocument.Parse(xmlText);
+            var setting = loader.LoadSetting(xDocument);
+
+            Assert.AreEqual(setting.DefaultImageWidth, 1280);
+            Assert.AreEqual(setting.DefaultImageHeight, 720);
+            Assert.AreEqual(setting.BGMNumber, 0);
+        }
     }
 }
