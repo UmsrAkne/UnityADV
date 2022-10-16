@@ -39,8 +39,10 @@
             maskLoader.Load($@"{path}\{ResourcePath.SceneMaskImageDirectoryName}");
             voiceLoader.Load($@"{path}\{ResourcePath.SceneVoiceDirectoryName}");
             bgvLoader.Load($@"{path}\{ResourcePath.SceneBGVDirectoryName}");
-            bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
             seLoader.Load($@"{ResourcePath.CommonSEDirectoryName}");
+
+            bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
+            bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
 
             Resource.Scenarios = textLoader.Scenario;
             Resource.Log.AddRange(textLoader.Log);
