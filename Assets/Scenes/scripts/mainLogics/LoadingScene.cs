@@ -116,7 +116,10 @@
             /// 大サイズの画像の描画
 
             mainImageSet.SetSprite(Sprites[cursorIndex].Sprite, 0).color = new Color(1, 1, 1, 0);
-            mainImageSet.X = 300;
+
+            // 画面サイズ 1280 の状態で、画面左端に少画像(幅 300 px) を表示。
+            // 常に被らないように表示するには 大画像の幅 - 画面サイズ / 2 + 300
+            mainImageSet.X = 300 + (Sprites[cursorIndex].Width - 1280) / 2;
 
             /// 小サイズの画像の描画
 
