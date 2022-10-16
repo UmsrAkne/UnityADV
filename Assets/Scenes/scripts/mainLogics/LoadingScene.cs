@@ -1,27 +1,27 @@
-﻿namespace MainLogics
-{
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using Scenes.Scripts.Loaders;
-    using Scenes.Scripts.SceneContents;
-    using UnityEngine;
-    using UnityEngine.Rendering;
-    using UnityEngine.SceneManagement;
-    using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Scenes.Scripts.Loaders;
+using Scenes.Scripts.SceneContents;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
+namespace MainLogics
+{
     public class LoadingScene : MonoBehaviour
     {
         private int cursorIndex;
         private bool keyboardLock = true;
-        private ImageLoader imageLoader = new ImageLoader();
+        private readonly ImageLoader imageLoader = new ImageLoader();
         private ImageSet fillBlackImage;
-        private ImageSet mainImageSet = new ImageSet();
+        private readonly ImageSet mainImageSet = new ImageSet();
 
-        private List<ImageSet> miniImageSets = new List<ImageSet>();
+        private readonly List<ImageSet> miniImageSets = new List<ImageSet>();
 
         private bool loading;
-        private string lastSelectedSceneIndexKey = "lastSelectedSceneIndex";
+        private readonly string lastSelectedSceneIndexKey = "lastSelectedSceneIndex";
 
         private Text Text { get; set; }
 
@@ -41,8 +41,7 @@
             Paths = Directory.GetDirectories($@"{Directory.GetCurrentDirectory()}\scenes");
             Text.text = Paths[cursorIndex];
 
-            var topBarImage = new ImageSet();
-            topBarImage.Y = 350;
+            var topBarImage = new ImageSet { Y = 350 };
             topBarImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\topBar.png").Sprite });
             topBarImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
 
@@ -113,7 +112,7 @@
                 Sprites[cursorIndex] = imageLoader.LoadImage(firstImagePath);
             }
 
-            /// 大サイズの画像の描画
+            // 大サイズの画像の描画
 
             mainImageSet.SetSprite(Sprites[cursorIndex].Sprite, 0).color = new Color(1, 1, 1, 0);
 
@@ -121,7 +120,7 @@
             // 常に被らないように表示するには 大画像の幅 - 画面サイズ / 2 + 300
             mainImageSet.X = 300 + (Sprites[cursorIndex].Width - 1280) / 2;
 
-            /// 小サイズの画像の描画
+            // 小サイズの画像の描画
 
             miniImageSets.ForEach(mi => mi.Dispose());
             miniImageSets.Clear();
