@@ -51,6 +51,8 @@
             fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
             fillBlackImage.Alpha = 0;
 
+            mainImageSet.GameObject.AddComponent<SortingGroup>().sortingOrder = 1;
+
             Enumerable.Range(0, Paths.Length).ToList().ForEach(i => Sprites.Add(null));
             keyboardLock = false;
             LoadCurrentCursorImage();
