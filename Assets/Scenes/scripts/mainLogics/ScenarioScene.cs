@@ -1,13 +1,14 @@
-﻿namespace MainLogics
+﻿using System.Collections.Generic;
+using Scenes.Scripts.Loaders;
+using Scenes.Scripts.SceneContents;
+using Scenes.Scripts.SceneParts;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+namespace Scenes.Scripts.MainLogics
 {
-    using System.Collections.Generic;
     using Animations;
-    using Scenes.Scripts.Loaders;
-    using Scenes.Scripts.SceneContents;
-    using Scenes.Scripts.SceneParts;
-    using UnityEngine;
-    using UnityEngine.SceneManagement;
-    using UnityEngine.UI;
 
     public class ScenarioScene : MonoBehaviour
     {

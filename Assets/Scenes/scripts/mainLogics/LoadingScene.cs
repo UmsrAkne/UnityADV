@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace MainLogics
+namespace Scenes.Scripts.MainLogics
 {
     public class LoadingScene : MonoBehaviour
     {
