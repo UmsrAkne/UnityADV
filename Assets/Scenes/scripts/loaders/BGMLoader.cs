@@ -18,6 +18,8 @@ namespace Scenes.Scripts.Loaders
 
         public List<string> Log { get; set; } = new List<string>();
 
+        public int BGMNumber { private get; set; }
+
         public void Load(string targetDirectoryPath)
         {
             if (!Directory.Exists(targetDirectoryPath))
@@ -34,7 +36,13 @@ namespace Scenes.Scripts.Loaders
         private string GetSoundFilePath(string targetDirectoryPath)
         {
             var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
-            return Path.GetFullPath(allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").FirstOrDefault());
+
+            if (allFilePaths.Count(p => Path.GetExtension(p) == ".ogg") >= BGMNumber)
+            {
+                return Path.GetFullPath(allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").ToList()[BGMNumber]);
+            }
+
+            return Path.GetFullPath(allFilePaths.FirstOrDefault(f => Path.GetExtension(f) == ".ogg") ?? string.Empty);
         }
 
         private IEnumerator LoadAudio(string path)
