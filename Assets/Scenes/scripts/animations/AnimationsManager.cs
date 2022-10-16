@@ -1,12 +1,10 @@
-﻿namespace Animations
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using Scenes.Scripts.Animations;
-    using Scenes.Scripts.SceneContents;
-    using Scenes.Scripts.SceneParts;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Scenes.Scripts.SceneContents;
+using Scenes.Scripts.SceneParts;
 
+namespace Scenes.Scripts.Animations
+{
     public class AnimationsManager : IScenarioSceneParts
     {
         private Scenario scenario;
