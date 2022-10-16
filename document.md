@@ -107,7 +107,7 @@ bgv を鳴らす
     - string target
     - int layerIndex
     - int channel
-    - int name
+    - string name
 
 ## anime
 
@@ -119,3 +119,28 @@ bgv を鳴らす
 ### slide 
 ### flash 
 ### bound
+
+# setting.xml の仕様
+
+各シーンの `texts` ディレクトリ以下に `setting.xml` と命名して配置する。  
+以下のようにルートを `<setting>`  として使用する。
+
+    <setting>
+      <defaultSize width="1280" height="720" />
+      <bgm number="1" />
+    </setting>
+
+実装済みのタグを以下に示す。
+
+## bgm
+
+シーンで流れる BGM を番号で指定する。  
+BGM は `commonResource/bgms` の `.ogg` ファイルのみがカウントの対象となる。  
+デフォルトは `0` となっている。
+
+- 属性
+  - int number
+
+## defaultSize
+
+未実装
