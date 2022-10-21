@@ -78,8 +78,8 @@
 効果音を鳴らす。
 
 - 属性
-    - int number : commonResouce/ses フォルダ内の通し番号で指定します
-    - string fileName : commonResouce/ses フォルダ内のファイル名で指定します
+    - int number : commonResource/ses フォルダ内の通し番号で指定します
+    - string fileName : commonResource/ses フォルダ内のファイル名で指定します
     - int repeatCount : 繰り返し回数を指定します。（現在は一回か無限回のみ対応）
 
 記述例
