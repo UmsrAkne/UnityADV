@@ -139,7 +139,9 @@ BGM は `commonResource/bgms` の `.ogg` ファイルのみがカウントの対
 デフォルトは `0` となっている。
 
 - 属性
-  - int number
+  - int number : BGM の番号を指定します。インデックスは 0 始まり。デフォルトは 0 
+  - float volume : BGM の音量を指定します。`0 - 1.0` の範囲で設定します。  
+  デフォルトは 1.0 です。
 
 ## defaultSize
 
