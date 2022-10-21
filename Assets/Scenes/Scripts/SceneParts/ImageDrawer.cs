@@ -1,9 +1,9 @@
-﻿namespace Scenes.Scripts.SceneParts
-{
-    using System.Collections.Generic;
-    using Scenes.Scripts.SceneContents;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using Scenes.Scripts.SceneContents;
+using UnityEngine;
 
+namespace Scenes.Scripts.SceneParts
+{
     public class ImageDrawer : IScenarioSceneParts
     {
         private Scenario scenario;
@@ -14,8 +14,6 @@
         public bool NeedExecuteEveryFrame => true;
 
         private List<ImageContainer> ImageContainers { get; set; }
-
-        private List<SpriteRenderer> DrawingImages { get; set; } = new List<SpriteRenderer>();
 
         public void Execute()
         {
@@ -28,20 +26,12 @@
             {
                 // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
-                var emptyGameObject = new GameObject();
                 var imageSet = new ImageSet();
 
                 var sprites = new List<Sprite>();
                 order.Names.ForEach(name =>
                 {
-                    if (!string.IsNullOrEmpty(name))
-                    {
-                        sprites.Add(resource.ImagesByName[name].Sprite);
-                    }
-                    else
-                    {
-                        sprites.Add(null);
-                    }
+                    sprites.Add(!string.IsNullOrEmpty(name) ? resource.ImagesByName[name].Sprite : null);
                 });
 
                 imageSet.Alpha = 0;
@@ -74,7 +64,6 @@
                     {
                         var r = frontImageSet.SetSprite(resource.ImagesByName[name].Sprite, i);
                         r.color = new Color(1.0f, 1.0f, 1.0f, 0);
-                        DrawingImages.Add(r);
                     }
                 }
             }
@@ -95,14 +84,14 @@
             }
         }
 
-        public void SetResource(Resource resource)
+        public void SetResource(Resource res)
         {
-            this.resource = resource;
+            this.resource = res;
         }
 
-        public void SetScenario(Scenario scenario)
+        public void SetScenario(Scenario scn)
         {
-            this.scenario = scenario;
+            this.scenario = scn;
         }
 
         public void SetUI(UI ui)
