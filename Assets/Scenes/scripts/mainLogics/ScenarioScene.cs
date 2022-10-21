@@ -98,7 +98,7 @@ namespace Scenes.Scripts.MainLogics
             }
         }
 
-        public void Forward()
+        private void Forward()
         {
             TextWriter.Execute();
 
@@ -129,8 +129,14 @@ namespace Scenes.Scripts.MainLogics
 
             //// ここからメッセージウィンドウを表示するためのコード
 
-            var imageSet = new ImageSet();
-            imageSet.GameObject.name = "msgWindowImage";
+            var imageSet = new ImageSet
+            {
+                GameObject =
+                {
+                    name = "msgWindowImage"
+                }
+            };
+
             var r = imageSet.SetSprite(Resource.MessageWindowImage, 0);
             r.maskInteraction = SpriteMaskInteraction.None;
             r.color = new Color(1f, 1f, 1f, 0.6f);

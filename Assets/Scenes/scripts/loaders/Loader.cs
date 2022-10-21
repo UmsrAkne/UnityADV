@@ -7,16 +7,16 @@
 
     public class Loader
     {
-        private TextLoader textLoader = new TextLoader();
-        private ImageLoader imageLoader = new ImageLoader();
-        private ImageLoader uiLoader = new ImageLoader();
-        private ImageLoader maskLoader = new ImageLoader();
-        private BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
-        private VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
-        private VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
-        private VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
+        private readonly TextLoader textLoader = new TextLoader();
+        private readonly ImageLoader imageLoader = new ImageLoader();
+        private readonly ImageLoader uiLoader = new ImageLoader();
+        private readonly ImageLoader maskLoader = new ImageLoader();
+        private readonly BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
+        private readonly VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
+        private readonly VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
+        private readonly VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
 
-        private SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
+        private readonly SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
 
         public Resource Resource { get; set; } = new Resource();
 
