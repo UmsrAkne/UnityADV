@@ -11,6 +11,7 @@
         private readonly string widthAttribute = "width";
         private readonly string heightAttribute = "height";
         private readonly string numberAttribute = "number";
+        private readonly string volumeAttribute = "volume";
 
         public List<string> Log { get; private set; } = new List<string>();
 
@@ -37,6 +38,9 @@
             {
                 var bgmNumber = settingTag.Element(bgmElementName)?.Attribute(numberAttribute)?.Value;
                 setting.BGMNumber = bgmNumber != null ? int.Parse(bgmNumber) : setting.BGMNumber;
+
+                var bgmVolume = settingTag.Element(bgmElementName)?.Attribute(volumeAttribute)?.Value;
+                setting.BGMVolume = bgmVolume != null ? float.Parse(bgmVolume) : setting.BGMVolume;
             }
 
             return setting;

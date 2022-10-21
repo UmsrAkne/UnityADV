@@ -1,5 +1,6 @@
 ﻿namespace Scenes.Scripts.SceneParts
 {
+    using Loaders;
     using Scenes.Scripts.SceneContents;
     using UnityEngine;
 
@@ -11,11 +12,14 @@
 
         private bool Playing { get; set; }
 
+        private SceneSetting SceneSetting { get; set; }
+
         public void Execute()
         {
             if (!Playing)
             {
                 BGM.loop = true;
+                BGM.volume = SceneSetting.BGMVolume;
                 BGM.Play();
                 Playing = true;
             }
@@ -29,6 +33,7 @@
         public void SetResource(Resource resource)
         {
             BGM = resource.BGMAudioSource;
+            SceneSetting = resource.SceneSetting;
         }
 
         public void SetScenario(Scenario scenario)
