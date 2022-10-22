@@ -88,6 +88,12 @@ namespace Scenes.Scripts.MainLogics
                 TextWriter.SetScenarioIndex(ChapterManager.GetNextChapterIndex());
             }
 
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Application.Quit();
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
+
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 if (Input.GetKeyDown(KeyCode.R))

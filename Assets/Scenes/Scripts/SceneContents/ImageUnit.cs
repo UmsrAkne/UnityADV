@@ -36,6 +36,10 @@
             }
         }
 
+        public int Width { get; set; }
+
+        public int Height { get; set; }
+
         public void SetMaskSprite(Sprite sprite)
         {
             var spriteMask = GameObject.GetComponent<SpriteMask>();

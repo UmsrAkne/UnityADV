@@ -65,12 +65,12 @@
                 EffectGameObject.name = "EffectGameObject";
 
                 var loader = new ImageLoader();
-                var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png").Sprite;
+                var sp = loader.LoadImage(@"commonResource\uis\fillWhite.png");
                 imageSet.Alpha = 0;
 
                 EffectGameObject.transform.SetParent(GameObject.transform);
 
-                imageSet.Draw(new List<Sprite>() { sp });
+                imageSet.Draw(new List<SpriteWrapper>() { sp });
                 var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
                 sortingGroup.sortingOrder = 999;
 

@@ -28,10 +28,10 @@ namespace Scenes.Scripts.SceneParts
                 var targetContainer = ImageContainers[order.TargetLayerIndex];
                 var imageSet = new ImageSet();
 
-                var sprites = new List<Sprite>();
+                var spriteWrappers = new List<SpriteWrapper>();
                 order.Names.ForEach(name =>
                 {
-                    sprites.Add(!string.IsNullOrEmpty(name) ? resource.ImagesByName[name].Sprite : null);
+                    spriteWrappers.Add(!string.IsNullOrEmpty(name) ? resource.ImagesByName[name] : null);
                 });
 
                 imageSet.Alpha = 0;
@@ -42,7 +42,7 @@ namespace Scenes.Scripts.SceneParts
                 imageSet.SortingLayerIndex = order.TargetLayerIndex;
                 targetContainer.AddChild(imageSet);
 
-                imageSet.Draw(sprites);
+                imageSet.Draw(spriteWrappers);
 
                 if (!string.IsNullOrWhiteSpace(order.MaskImageName))
                 {
