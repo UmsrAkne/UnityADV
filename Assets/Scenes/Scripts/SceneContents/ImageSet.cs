@@ -80,23 +80,25 @@
 
         private List<ImageUnit> TemporaryImages { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
 
-        public void Draw(List<Sprite> sprites)
+        public void Draw(List<SpriteWrapper> spriteWrappers)
         {
             parentUnit.SortingGroup.sortingLayerName = $"Layer_{SortingLayerIndex}";
 
-            for (var i = 0; i < sprites.Count; i++)
+            for (var i = 0; i < spriteWrappers.Count; i++)
             {
-                var sp = sprites[i];
+                var spw = spriteWrappers[i];
 
-                if (sp == null)
+                if (spw == null)
                 {
                     continue;
                 }
 
                 var imageUnit = new ImageUnit();
+                imageUnit.Width = spw.Width;
+                imageUnit.Height = spw.Height;
                 ImageUnits[i] = imageUnit;
                 imageUnit.SetParent(GameObject);
-                imageUnit.SpriteRenderer.sprite = sp;
+                imageUnit.SpriteRenderer.sprite = spw.Sprite;
 
                 if (i == 0)
                 {
@@ -105,7 +107,7 @@
                 }
                 else
                 {
-                    imageUnit.SetMaskSprite(sp);
+                    imageUnit.SetMaskSprite(spw.Sprite);
                 }
             }
 

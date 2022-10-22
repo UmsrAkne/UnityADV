@@ -42,11 +42,11 @@ namespace Scenes.Scripts.MainLogics
             Text.text = Paths[cursorIndex];
 
             var topBarImage = new ImageSet { Y = 350 };
-            topBarImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\topBar.png").Sprite });
+            topBarImage.Draw(new List<SpriteWrapper>() { imageLoader.LoadImage($@"commonResource\uis\topBar.png")});
             topBarImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
 
             fillBlackImage = new ImageSet();
-            fillBlackImage.Draw(new List<Sprite>() { imageLoader.LoadImage($@"commonResource\uis\fillBlack.png").Sprite });
+            fillBlackImage.Draw(new List<SpriteWrapper>() { imageLoader.LoadImage($@"commonResource\uis\fillBlack.png")});
             fillBlackImage.GameObject.GetComponent<SortingGroup>().sortingOrder = 2;
             fillBlackImage.Alpha = 0;
 
