@@ -152,8 +152,10 @@ namespace Scenes.Scripts.MainLogics
         private void LoadNextSceneResource(Scene next, LoadSceneMode mode)
         {
             Loader loader = new Loader();
+            var scenarioScene = GameObject.Find("Logic").GetComponent<ScenarioScene>();
+            loader.LoadCompleted += (sender, e) => scenarioScene.StartBGM();
             loader.Load(Paths[cursorIndex]);
-            GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+            scenarioScene.Resource = loader.Resource;
             SceneManager.sceneLoaded -= LoadNextSceneResource;
         }
     }
