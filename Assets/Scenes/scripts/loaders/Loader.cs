@@ -1,12 +1,16 @@
 ﻿namespace Scenes.Scripts.Loaders
 {
+    using System;
     using System.IO;
     using System.Xml.Linq;
     using SceneContents;
+    using UnityEditorInternal;
     using UnityEngine;
 
     public class Loader
     {
+        public event EventHandler LoadCompleted;
+
         private readonly TextLoader textLoader = new TextLoader();
         private readonly ImageLoader imageLoader = new ImageLoader();
         private readonly ImageLoader uiLoader = new ImageLoader();
@@ -43,6 +47,7 @@
 
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
             bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
+            bgmLoader.LoadCompleted += (sender, e) =>  LoadCompleted?.Invoke(this, e);
 
             Resource.Scenarios = textLoader.Scenario;
             Resource.Log.AddRange(textLoader.Log);

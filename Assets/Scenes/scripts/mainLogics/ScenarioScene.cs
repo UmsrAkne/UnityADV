@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace Scenes.Scripts.MainLogics
 {
+    using System.Linq;
     using Animations;
 
     public class ScenarioScene : MonoBehaviour
@@ -104,6 +105,11 @@ namespace Scenes.Scripts.MainLogics
             }
         }
 
+        public void StartBGM()
+        {
+            ScenarioSceneParts.First(sp => sp is BGMPlayer).Execute();
+        }
+
         private void Forward()
         {
             TextWriter.Execute();
@@ -160,9 +166,11 @@ namespace Scenes.Scripts.MainLogics
 
         private void LoadSceneResource(Scene next, LoadSceneMode mode)
         {
+            var scenarioScene = GameObject.Find("Logic").GetComponent<ScenarioScene>();
             Loader loader = new Loader();
+            loader.LoadCompleted += (sender, e) => scenarioScene.StartBGM();
             loader.Load(Resource.SceneDirectoryPath);
-            GameObject.Find("Logic").GetComponent<ScenarioScene>().Resource = loader.Resource;
+            scenarioScene.Resource = loader.Resource;
             SceneManager.sceneLoaded -= LoadSceneResource;
         }
     }
