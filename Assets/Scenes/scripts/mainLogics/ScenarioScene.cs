@@ -91,8 +91,11 @@ namespace Scenes.Scripts.MainLogics
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                Application.Quit();
-                UnityEditor.EditorApplication.isPlaying = false;
+                #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+                #else
+                    Application.Quit();
+                #endif
             }
 
             if (Input.GetKey(KeyCode.LeftControl))

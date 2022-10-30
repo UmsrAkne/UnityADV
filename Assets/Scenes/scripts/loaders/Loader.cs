@@ -4,7 +4,6 @@
     using System.IO;
     using System.Xml.Linq;
     using SceneContents;
-    using UnityEditorInternal;
     using UnityEngine;
 
     public class Loader
