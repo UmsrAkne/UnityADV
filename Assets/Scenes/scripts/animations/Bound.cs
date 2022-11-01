@@ -22,10 +22,16 @@
 
         public int TargetLayerIndex { get; set; }
 
+        // リフレクション経由でアクセスするため警告を抑制
+        // ReSharper disable once MemberCanBePrivate.Global
         public int Duration { get; set; }
 
+        // リフレクション経由でアクセスするため警告を抑制
+        // ReSharper disable once MemberCanBePrivate.Global
         public int Degree { get; set; }
 
+        // リフレクション経由でアクセスするため警告を抑制
+        // ReSharper disable once MemberCanBePrivate.Global
         public int Strength { get; set; }
 
         public int RepeatCount { get; set; }
@@ -64,8 +70,6 @@
                     RepeatCount--;
                     Target.X -= (float)totalDx;
                     Target.Y -= (float)totalDy;
-
-                    return;
                 }
                 else
                 {

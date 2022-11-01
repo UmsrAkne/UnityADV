@@ -5,7 +5,6 @@
     public class AlphaChanger : IAnimation
     {
         private IDisplayObject target;
-        private int targetLayerIndex;
         private float amount = 0.1f;
         private bool canUpdateTarget;
 
@@ -32,14 +31,10 @@
 
         public ImageContainer TargetContainer
         {
-            set { _ = value; }
+            set => _ = value;
         }
 
-        public int TargetLayerIndex
-        {
-            get => targetLayerIndex;
-            set => targetLayerIndex = value;
-        }
+        public int TargetLayerIndex { get; set; }
 
         public string AnimationName => nameof(AlphaChanger);
 

@@ -73,9 +73,6 @@ namespace Scenes.Scripts.Animations
 
         private void ImageAddedEventHandler(object sender, ImageAddedEventArgs e)
         {
-            //// 画像が挿入される時、アルファの変化を使ってアニメーションを行う。
-            ImageContainer dispatcher = sender as ImageContainer;
-
             if (!scenario.Animations.Any(a => a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
             {
                 Animations.Add(new AlphaChanger());

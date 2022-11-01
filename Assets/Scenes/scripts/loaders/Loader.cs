@@ -41,8 +41,8 @@
             imageLoader.Load($@"{path}\{ResourcePath.SceneImageDirectoryName}");
             maskLoader.Load($@"{path}\{ResourcePath.SceneMaskImageDirectoryName}");
             voiceLoader.Load($@"{path}\{ResourcePath.SceneVoiceDirectoryName}");
-            bgvLoader.Load($@"{path}\{ResourcePath.SceneBGVDirectoryName}");
-            seLoader.Load($@"{ResourcePath.CommonSEDirectoryName}");
+            bgvLoader.Load($@"{path}\{ResourcePath.SceneBgvDirectoryName}");
+            seLoader.Load($@"{ResourcePath.CommonSeDirectoryName}");
 
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
             bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
