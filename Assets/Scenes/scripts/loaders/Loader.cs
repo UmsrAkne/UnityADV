@@ -40,9 +40,18 @@
 
             imageLoader.Load($@"{path}\{ResourcePath.SceneImageDirectoryName}");
             maskLoader.Load($@"{path}\{ResourcePath.SceneMaskImageDirectoryName}");
-            voiceLoader.Load($@"{path}\{ResourcePath.SceneVoiceDirectoryName}");
-            bgvLoader.Load($@"{path}\{ResourcePath.SceneBgvDirectoryName}");
-            seLoader.Load($@"{ResourcePath.CommonSeDirectoryName}");
+
+            voiceLoader.TargetAudioType = TargetAudioType.voice;
+            voiceLoader.Resource = Resource;
+            voiceLoader.Load(path);
+
+            bgvLoader.TargetAudioType = TargetAudioType.bgVoice;
+            bgvLoader.Resource = Resource;
+            bgvLoader.Load(path);
+
+            seLoader.TargetAudioType = TargetAudioType.se;
+            seLoader.Resource = Resource;
+            seLoader.Load(path);
 
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
             bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
@@ -61,17 +70,6 @@
 
             Resource.BGMAudioSource = bgmLoader.AudioSource;
             Resource.Log.AddRange(bgmLoader.Log);
-
-            Resource.Voices = voiceLoader.AudioSources;
-            Resource.VoicesByName = voiceLoader.AudioSourcesByName;
-            Resource.Log.AddRange(voiceLoader.Log);
-
-            Resource.BGVoices = bgvLoader.AudioSources;
-            Resource.BGVoicesByName = bgvLoader.AudioSourcesByName;
-            Resource.Log.AddRange(bgvLoader.Log);
-
-            Resource.Ses = seLoader.AudioSources;
-            Resource.Log.AddRange(seLoader.Log);
 
             Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
             Resource.SceneDirectoryPath = path;
