@@ -20,8 +20,23 @@ namespace Scenes.Scripts.Loaders
 
         public Dictionary<string, SpriteWrapper> SpriteDictionary { get; private set; } = new Dictionary<string, SpriteWrapper>();
 
+        public TargetImageType TargetImageType { get; set; }
+
         public void Load(string targetDirectoryPath)
         {
+            switch (TargetImageType)
+            {
+                case TargetImageType.eventCg:
+                    targetDirectoryPath += $@"\{ResourcePath.SceneImageDirectoryName}";
+                    break;
+                case TargetImageType.mask:
+                    targetDirectoryPath += $@"\{ResourcePath.SceneMaskImageDirectoryName}";
+                    break;
+                case TargetImageType.uiImage:
+                    targetDirectoryPath = ResourcePath.CommonUIDirectoryName;
+                    break;
+            }
+
             if (!Directory.Exists(targetDirectoryPath))
             {
                 Log.Add($"{targetDirectoryPath} が見つかりませんでした");
@@ -35,6 +50,23 @@ namespace Scenes.Scripts.Loaders
                 SpriteDictionary.Add(Path.GetFileName(path), spWrapper);
                 SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), spWrapper);
             });
+
+            // 上の LoadImage(path) が非同期的な処理だった場合、この時点ではロード完了していないかも
+            LoadCompleted?.Invoke(this, EventArgs.Empty);
+
+            switch (TargetImageType)
+            {
+                case TargetImageType.eventCg:
+                    Resource.Images = Sprites;
+                    Resource.ImagesByName = SpriteDictionary;
+                    break;
+                case TargetImageType.mask:
+                    Resource.MaskImages = Sprites;
+                    Resource.MaskImagesByName = SpriteDictionary;
+                    break;
+                case TargetImageType.uiImage:
+                    break;
+            }
         }
 
         public SpriteWrapper LoadImage(string targetFilePath)
@@ -70,5 +102,12 @@ namespace Scenes.Scripts.Loaders
             uint height = ((uint)buf[4] << 24) | ((uint)buf[5] << 16) | ((uint)buf[6] << 8) | (uint)buf[7];
             return new Vector2(width, height);
         }
+    }
+
+    public enum TargetImageType
+    {
+        eventCg,
+        uiImage,
+        mask,
     }
 }

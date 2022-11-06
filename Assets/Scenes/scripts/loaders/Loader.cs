@@ -38,8 +38,13 @@
 
             textLoader.Load($@"{path}\{ResourcePath.SceneTextDirectoryName}\scenario.xml");
 
-            imageLoader.Load($@"{path}\{ResourcePath.SceneImageDirectoryName}");
-            maskLoader.Load($@"{path}\{ResourcePath.SceneMaskImageDirectoryName}");
+            imageLoader.TargetImageType = TargetImageType.eventCg;
+            imageLoader.Resource = Resource;
+            imageLoader.Load(path);
+
+            maskLoader.TargetImageType = TargetImageType.mask;
+            maskLoader.Resource = Resource;
+            maskLoader.Load(path);
 
             voiceLoader.TargetAudioType = TargetAudioType.voice;
             voiceLoader.Resource = Resource;
@@ -53,6 +58,8 @@
             seLoader.Resource = Resource;
             seLoader.Load(path);
 
+            Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
+
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
             bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
             bgmLoader.LoadCompleted += (sender, e) =>  LoadCompleted?.Invoke(this, e);
@@ -60,18 +67,9 @@
             Resource.Scenarios = textLoader.Scenario;
             Resource.Log.AddRange(textLoader.Log);
 
-            Resource.Images = imageLoader.Sprites;
-            Resource.ImagesByName = imageLoader.SpriteDictionary;
-            Resource.Log.AddRange(imageLoader.Log);
-
-            Resource.MaskImages = maskLoader.Sprites;
-            Resource.MaskImagesByName = maskLoader.SpriteDictionary;
-            Resource.Log.AddRange(maskLoader.Log);
-
             Resource.BGMAudioSource = bgmLoader.AudioSource;
             Resource.Log.AddRange(bgmLoader.Log);
 
-            Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
             Resource.SceneDirectoryPath = path;
         }
     }
