@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -7,11 +8,15 @@ namespace Scenes.Scripts.Loaders
 {
     using SceneContents;
 
-    public class ImageLoader
+    public class ImageLoader : IContentsLoader
     {
+        public event EventHandler LoadCompleted;
+
         public List<SpriteWrapper> Sprites { get; private set; } = new List<SpriteWrapper>();
 
         public List<string> Log { get; set; } = new List<string>();
+
+        public Resource Resource { get; set; }
 
         public Dictionary<string, SpriteWrapper> SpriteDictionary { get; private set; } = new Dictionary<string, SpriteWrapper>();
 

@@ -1,4 +1,6 @@
-﻿namespace Scenes.Scripts.Loaders
+﻿using System;
+
+namespace Scenes.Scripts.Loaders
 {
     using System.Collections.Generic;
     using System.IO;
@@ -7,8 +9,10 @@
     using System.Xml.Linq;
     using SceneContents;
 
-    public class TextLoader
+    public class TextLoader : IContentsLoader
     {
+        public event EventHandler LoadCompleted;
+
         private string textAttribute = "text";
         private string stringAttribute = "string";
         private string strAttribute = "str";
@@ -17,6 +21,8 @@
         public List<Scenario> Scenario { get; set; }
 
         public List<string> Log { get; private set; } = new List<string>();
+
+        public Resource Resource { get; set; }
 
         private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
 

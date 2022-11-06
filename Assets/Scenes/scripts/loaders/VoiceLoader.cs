@@ -9,7 +9,7 @@
     using UnityEngine;
     using UnityEngine.Networking;
 
-    public class VoiceLoader : MonoBehaviour
+    public class VoiceLoader : MonoBehaviour, IContentsLoader
     {
         private int loadCompleteCounter;
 
@@ -22,6 +22,8 @@
         public Dictionary<string, ISound> AudioSourcesByName { get; private set; } = new Dictionary<string, ISound>();
 
         public List<string> Log { get; set; } = new List<string>();
+
+        public Resource Resource { get; set; }
 
         private List<AudioClip> AudioClips { get; set; }
 

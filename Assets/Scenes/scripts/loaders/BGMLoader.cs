@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Scenes.Scripts.SceneContents;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Scenes.Scripts.Loaders
 {
-    public class BGMLoader : MonoBehaviour
+    public class BGMLoader : MonoBehaviour, IContentsLoader
     {
         private AudioClip ac;
 
@@ -17,6 +18,8 @@ namespace Scenes.Scripts.Loaders
         public AudioSource AudioSource { get; private set; }
 
         public List<string> Log { get; set; } = new List<string>();
+
+        public Resource Resource { get; set; }
 
         public int BGMNumber { private get; set; }
 
