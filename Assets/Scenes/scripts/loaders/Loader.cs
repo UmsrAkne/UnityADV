@@ -36,7 +36,8 @@
                 Resource.Log.Add("setting.xml を読み込めませんでした");
             }
 
-            textLoader.Load($@"{path}\{ResourcePath.SceneTextDirectoryName}\scenario.xml");
+            textLoader.Resource = Resource;
+            textLoader.Load(path);
 
             imageLoader.TargetImageType = TargetImageType.eventCg;
             imageLoader.Resource = Resource;
@@ -63,9 +64,6 @@
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
             bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
             bgmLoader.LoadCompleted += (sender, e) =>  LoadCompleted?.Invoke(this, e);
-
-            Resource.Scenarios = textLoader.Scenario;
-            Resource.Log.AddRange(textLoader.Log);
 
             Resource.BGMAudioSource = bgmLoader.AudioSource;
             Resource.Log.AddRange(bgmLoader.Log);

@@ -28,6 +28,8 @@ namespace Scenes.Scripts.Loaders
 
         public void Load(string targetPath)
         {
+            targetPath += $@"\{ResourcePath.SceneTextDirectoryName}\scenario.xml";
+
             if (!File.Exists(targetPath))
             {
                 Log.Add($"{targetPath} が見つかりませんでした");
@@ -82,6 +84,8 @@ namespace Scenes.Scripts.Loaders
             }).ToList();
 
             Converters.ForEach(c => Log.AddRange(c.Log));
+
+            Resource.Scenarios = Scenario;
         }
     }
 }
