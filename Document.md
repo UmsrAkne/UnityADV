@@ -109,6 +109,8 @@ bgv を鳴らす
     - int channel
     - string name
 
+-------------------------------------------------------
+
 ## anime
 
 - 属性
@@ -116,7 +118,17 @@ bgv を鳴らす
 
 ### alphaChanger 
 ### shake
+
 ### slide 
+
+- 属性
+    - double Speed = 1.0;
+    - int Degree
+    - int Distance
+    - int Duration = int.MaxValue;
+    - int RepeatCount
+    - int Interval
+
 ### flash 
 ### bound
 
