@@ -62,11 +62,9 @@
             Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
 
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
+            bgmLoader.Resource = Resource;
+            bgmLoader.LoadCompleted += (sender, e) => LoadCompleted?.Invoke(this, e);
             bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
-            bgmLoader.LoadCompleted += (sender, e) =>  LoadCompleted?.Invoke(this, e);
-
-            Resource.BGMAudioSource = bgmLoader.AudioSource;
-            Resource.Log.AddRange(bgmLoader.Log);
 
             Resource.SceneDirectoryPath = path;
         }

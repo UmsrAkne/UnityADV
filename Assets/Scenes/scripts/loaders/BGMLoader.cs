@@ -25,15 +25,15 @@ namespace Scenes.Scripts.Loaders
 
         public void Load(string targetDirectoryPath)
         {
-            if (!Directory.Exists(targetDirectoryPath))
+            if (!Directory.Exists(ResourcePath.CommonBGMDirectoryName))
             {
-                Log.Add($"{targetDirectoryPath} が見つかりませんでした");
+                Log.Add($"{ResourcePath.CommonBGMDirectoryName} が見つかりませんでした");
                 AudioSource = new GameObject().AddComponent<AudioSource>();
                 return;
             }
 
             AudioSource = new GameObject().AddComponent<AudioSource>();
-            StartCoroutine(LoadAudio(GetSoundFilePath(targetDirectoryPath)));
+            StartCoroutine(LoadAudio(GetSoundFilePath(ResourcePath.CommonBGMDirectoryName)));
         }
 
         private string GetSoundFilePath(string targetDirectoryPath)
@@ -72,6 +72,7 @@ namespace Scenes.Scripts.Loaders
                 }
 
                 AudioSource.clip = ac;
+                Resource.BGMAudioSource = AudioSource;
                 LoadCompleted?.Invoke(this, EventArgs.Empty);
             }
         }
