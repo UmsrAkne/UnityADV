@@ -153,9 +153,14 @@ namespace Scenes.Scripts.MainLogics
         {
             Loader loader = new Loader();
             var scenarioScene = GameObject.Find("Logic").GetComponent<ScenarioScene>();
-            loader.LoadCompleted += (sender, e) => scenarioScene.StartBGM();
+            loader.LoadCompleted += (sender, e) =>
+            {
+                scenarioScene.Resource = loader.Resource;
+                scenarioScene.Init();
+                scenarioScene.StartBGM();
+            };
+
             loader.Load(Paths[cursorIndex]);
-            scenarioScene.Resource = loader.Resource;
             SceneManager.sceneLoaded -= LoadNextSceneResource;
         }
     }

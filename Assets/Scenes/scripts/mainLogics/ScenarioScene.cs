@@ -15,6 +15,7 @@ namespace Scenes.Scripts.MainLogics
     {
         private GameObject logWindowObject;
         private Scenario currentScenario;
+        private bool initialized;
 
         public Resource Resource { private get; set; } = new Resource();
 
@@ -25,9 +26,13 @@ namespace Scenes.Scripts.MainLogics
 
         private UI UI { get; } = new UI();
 
-        // Start is called before the first frame update
-        public void Start()
+        public void Init()
         {
+            if (initialized)
+            {
+                return;
+            }
+
             logWindowObject = GameObject.Find("LogTextField");
             Resource.Log.ForEach(t => logWindowObject.GetComponent<Text>().text += $"{t}\n");
             logWindowObject.GetComponent<Text>().text += "ロード完了";
@@ -66,6 +71,7 @@ namespace Scenes.Scripts.MainLogics
 
             TextWriter.SetResource(Resource);
             TextWriter.SetUI(UI);
+            initialized = true;
 
             InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
         }
@@ -73,6 +79,11 @@ namespace Scenes.Scripts.MainLogics
         // Update is called once per frame
         public void Update()
         {
+            if (!initialized)
+            {
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 Forward();
@@ -171,9 +182,14 @@ namespace Scenes.Scripts.MainLogics
         {
             var scenarioScene = GameObject.Find("Logic").GetComponent<ScenarioScene>();
             Loader loader = new Loader();
-            loader.LoadCompleted += (sender, e) => scenarioScene.StartBGM();
+            loader.LoadCompleted += (sender, e) =>
+            {
+                scenarioScene.Resource = loader.Resource;
+                scenarioScene.Init();
+                scenarioScene.StartBGM();
+            };
+
             loader.Load(Resource.SceneDirectoryPath);
-            scenarioScene.Resource = loader.Resource;
             SceneManager.sceneLoaded -= LoadSceneResource;
         }
     }
