@@ -1,4 +1,6 @@
-﻿namespace Scenes.Scripts.Loaders
+﻿using System;
+
+namespace Scenes.Scripts.Loaders
 {
     using System.Collections.Generic;
     using System.IO;
@@ -7,8 +9,10 @@
     using System.Xml.Linq;
     using SceneContents;
 
-    public class TextLoader
+    public class TextLoader : IContentsLoader
     {
+        public event EventHandler LoadCompleted;
+
         private string textAttribute = "text";
         private string stringAttribute = "string";
         private string strAttribute = "str";
@@ -18,10 +22,14 @@
 
         public List<string> Log { get; private set; } = new List<string>();
 
+        public Resource Resource { get; set; }
+
         private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
 
         public void Load(string targetPath)
         {
+            targetPath += $@"\{ResourcePath.SceneTextDirectoryName}\scenario.xml";
+
             if (!File.Exists(targetPath))
             {
                 Log.Add($"{targetPath} が見つかりませんでした");
@@ -76,6 +84,8 @@
             }).ToList();
 
             Converters.ForEach(c => Log.AddRange(c.Log));
+
+            Resource.Scenarios = Scenario;
         }
     }
 }

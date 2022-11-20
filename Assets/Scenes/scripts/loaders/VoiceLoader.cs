@@ -9,7 +9,7 @@
     using UnityEngine;
     using UnityEngine.Networking;
 
-    public class VoiceLoader : MonoBehaviour
+    public class VoiceLoader : MonoBehaviour, IContentsLoader
     {
         private int loadCompleteCounter;
 
@@ -23,14 +23,38 @@
 
         public List<string> Log { get; set; } = new List<string>();
 
+        public Resource Resource { get; set; }
+
         private List<AudioClip> AudioClips { get; set; }
+
+        public TargetAudioType TargetAudioType { get; set; }
 
         public void Load(string targetDirectoryPath)
         {
+            switch (TargetAudioType)
+            {
+                case TargetAudioType.voice:
+                    targetDirectoryPath += $@"\{ResourcePath.SceneVoiceDirectoryName}";
+                    break;
+                case TargetAudioType.bgVoice:
+                    targetDirectoryPath += $@"\{ResourcePath.SceneBgvDirectoryName}";
+                    break;
+                case TargetAudioType.se:
+                    targetDirectoryPath = ResourcePath.CommonSeDirectoryName;
+                    break;
+            }
+
             if (!Directory.Exists(targetDirectoryPath))
             {
                 Log.Add($"{targetDirectoryPath} が見つかりませんでした");
                 return;
+            }
+
+            var audioPaths = GetSoundFilePaths(targetDirectoryPath);
+
+            if (audioPaths.Count == 0)
+            {
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
             }
 
             PartLoadCompleted += (sender, e) =>
@@ -39,11 +63,24 @@
                 if (loadCompleteCounter >= AudioSources.Count)
                 {
                     AudioSources.Insert(0, null);
+
+                    switch (TargetAudioType)
+                    {
+                        case TargetAudioType.voice:
+                            Resource.Voices = AudioSources;
+                            break;
+                        case TargetAudioType.bgVoice:
+                            Resource.BGVoices = AudioSources;
+                            break;
+                        case TargetAudioType.se:
+                            Resource.Ses = AudioSources;
+                            break;
+                    }
+
                     LoadCompleted?.Invoke(this, EventArgs.Empty);
                 }
             };
 
-            var audioPaths = GetSoundFilePaths(targetDirectoryPath);
             for (var i = 0; i < audioPaths.Count; i++)
             {
                 /// これって GameObject がメモリから消滅しても大丈夫？
@@ -97,5 +134,12 @@
                 PartLoadCompleted?.Invoke(this, EventArgs.Empty);
             }
         }
+    }
+
+    public enum TargetAudioType
+    {
+        voice,
+        bgVoice,
+        se,
     }
 }
