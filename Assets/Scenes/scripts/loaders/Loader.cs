@@ -1,6 +1,7 @@
 ﻿namespace Scenes.Scripts.Loaders
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Xml.Linq;
     using SceneContents;
@@ -10,10 +11,10 @@
     {
         public event EventHandler LoadCompleted;
 
+        private int loadCompleteCount;
         private readonly TextLoader textLoader = new TextLoader();
-        private readonly ImageLoader imageLoader = new ImageLoader();
-        private readonly ImageLoader uiLoader = new ImageLoader();
-        private readonly ImageLoader maskLoader = new ImageLoader();
+        private readonly ImageLoader imageLoader = new ImageLoader{TargetImageType = TargetImageType.eventCg};
+        private readonly ImageLoader maskLoader = new ImageLoader{TargetImageType = TargetImageType.mask};
         private readonly BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
         private readonly VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
         private readonly VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
@@ -36,36 +37,38 @@
                 Resource.Log.Add("setting.xml を読み込めませんでした");
             }
 
-            textLoader.Resource = Resource;
-            textLoader.Load(path);
-
-            imageLoader.TargetImageType = TargetImageType.eventCg;
-            imageLoader.Resource = Resource;
-            imageLoader.Load(path);
-
-            maskLoader.TargetImageType = TargetImageType.mask;
-            maskLoader.Resource = Resource;
-            maskLoader.Load(path);
-
             voiceLoader.TargetAudioType = TargetAudioType.voice;
-            voiceLoader.Resource = Resource;
-            voiceLoader.Load(path);
-
             bgvLoader.TargetAudioType = TargetAudioType.bgVoice;
-            bgvLoader.Resource = Resource;
-            bgvLoader.Load(path);
-
             seLoader.TargetAudioType = TargetAudioType.se;
-            seLoader.Resource = Resource;
-            seLoader.Load(path);
-
-            Resource.MessageWindowImage = uiLoader.LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
-
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
-            bgmLoader.Resource = Resource;
-            bgmLoader.LoadCompleted += (sender, e) => LoadCompleted?.Invoke(this, e);
-            bgmLoader.Load($@"{ResourcePath.CommonBGMDirectoryName}");
 
+            var loaders = new List<IContentsLoader>()
+            {
+                textLoader,
+                imageLoader,
+                maskLoader,
+                voiceLoader,
+                bgvLoader,
+                seLoader,
+                bgmLoader,
+            };
+
+            loaders.ForEach(l =>
+            {
+                l.LoadCompleted += (sender, e) =>
+                {
+                    loadCompleteCount++;
+                    if (loadCompleteCount >= loaders.Count)
+                    {
+                        LoadCompleted?.Invoke(this,e);
+                    }
+                };
+
+                l.Resource = Resource;
+                l.Load(path);
+            });
+
+            Resource.MessageWindowImage = new ImageLoader().LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
             Resource.SceneDirectoryPath = path;
         }
     }

@@ -23,6 +23,10 @@ namespace Scenes.Scripts.Loaders
 
         public int BGMNumber { private get; set; }
 
+        /// <summary>
+        /// BGM をロードします。インターフェースの都合でパスを引数に取りますが、入力値に関わらず　ResourcePath.CommonBGMDirectoryName が参照されます。
+        /// </summary>
+        /// <param name="targetDirectoryPath"></param>
         public void Load(string targetDirectoryPath)
         {
             if (!Directory.Exists(ResourcePath.CommonBGMDirectoryName))
