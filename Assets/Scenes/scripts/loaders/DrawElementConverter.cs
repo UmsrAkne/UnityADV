@@ -7,7 +7,9 @@
 
     public class DrawElementConverter : IXMLElementConverter
     {
-        private List<string> abcdAttribute = new List<string>() { "a", "b", "c", "d" };
+        // ReSharper disable once IdentifierTypo
+        private readonly List<string> abcdAttribute = new List<string>() { "a", "b", "c", "d" };
+
         private string depthAttribute = "depth";
 
         public string TargetElementName => "draw";

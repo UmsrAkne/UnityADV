@@ -12,15 +12,15 @@ namespace Scenes.Scripts.Loaders
     {
         public event EventHandler LoadCompleted;
 
-        public List<SpriteWrapper> Sprites { get; private set; } = new List<SpriteWrapper>();
-
         public List<string> Log { get; set; } = new List<string>();
 
         public Resource Resource { get; set; }
 
-        public Dictionary<string, SpriteWrapper> SpriteDictionary { get; private set; } = new Dictionary<string, SpriteWrapper>();
-
         public TargetImageType TargetImageType { get; set; }
+
+        private List<SpriteWrapper> Sprites { get; set; } = new List<SpriteWrapper>();
+
+        private Dictionary<string, SpriteWrapper> SpriteDictionary { get; set; } = new Dictionary<string, SpriteWrapper>();
 
         public void Load(string targetDirectoryPath)
         {
@@ -96,10 +96,10 @@ namespace Scenes.Scripts.Loaders
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             fs.Seek(16, SeekOrigin.Begin);
             byte[] buf = new byte[8];
-            fs.Read(buf, 0, 8);
+            var _ =fs.Read(buf, 0, 8);
             fs.Dispose();
-            uint width = ((uint)buf[0] << 24) | ((uint)buf[1] << 16) | ((uint)buf[2] << 8) | (uint)buf[3];
-            uint height = ((uint)buf[4] << 24) | ((uint)buf[5] << 16) | ((uint)buf[6] << 8) | (uint)buf[7];
+            uint width = ((uint)buf[0] << 24) | ((uint)buf[1] << 16) | ((uint)buf[2] << 8) | buf[3];
+            uint height = ((uint)buf[4] << 24) | ((uint)buf[5] << 16) | ((uint)buf[6] << 8) | buf[7];
             return new Vector2(width, height);
         }
     }
