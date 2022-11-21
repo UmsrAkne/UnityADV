@@ -86,6 +86,7 @@ namespace Scenes.Scripts.Loaders
             Converters.ForEach(c => Log.AddRange(c.Log));
 
             Resource.Scenarios = Scenario;
+            LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }
