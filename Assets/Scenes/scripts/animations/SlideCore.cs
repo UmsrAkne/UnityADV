@@ -4,7 +4,7 @@
     using System.Numerics;
     using SceneContents;
 
-    public class SlideCore : IAnimation
+    public class SlideCore
     {
         private int executeCounter;
         private double totalDistance;
