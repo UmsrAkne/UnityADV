@@ -6,7 +6,6 @@
 
     public class SlideCore
     {
-        private int executeCounter;
         private double totalDistance;
 
         private Vector2 movingDistance = new Vector2(0, 0);
@@ -26,11 +25,7 @@
 
         public IDisplayObject Target { private get; set; }
 
-        public ImageContainer TargetContainer { private get; set; }
-
         public int TargetLayerIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public int RepeatCount { get; set; }
 
         public void Execute()
         {
@@ -39,7 +34,6 @@
                 return;
             }
 
-            executeCounter++;
             var resistance = 1.0;
 
             // 開始直後の抵抗値
