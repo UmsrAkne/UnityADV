@@ -1,16 +1,13 @@
 ﻿namespace Scenes.Scripts.Animations
 {
     using System;
-    using System.Numerics;
+    using UnityEngine;
     using SceneContents;
 
-    public class SlideCore : IAnimation
+    public class SlideCore
     {
-        private int executeCounter;
         private double totalDistance;
-
         private Vector2 movingDistance = new Vector2(0, 0);
-
         private double startSectionCount;
         private double finalSectionCount;
 
@@ -26,12 +23,6 @@
 
         public IDisplayObject Target { private get; set; }
 
-        public ImageContainer TargetContainer { private get; set; }
-
-        public int TargetLayerIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public int RepeatCount { get; set; }
-
         public void Execute()
         {
             if (!IsWorking)
@@ -39,7 +30,6 @@
                 return;
             }
 
-            executeCounter++;
             var resistance = 1.0;
 
             // 開始直後の抵抗値
@@ -62,13 +52,11 @@
                 }
             }
 
-            if (resistance <= 0.1)
-            {
-                resistance = 0.1;
-            }
+            resistance = Math.Max(resistance, 0.2);
+            resistance = Math.Min(resistance, 1.0);
 
-            var dx = movingDistance.X * Speed * resistance;
-            var dy = movingDistance.Y * Speed * resistance;
+            var dx = movingDistance.x * Speed * resistance;
+            var dy = movingDistance.y * Speed * resistance;
 
             Target.X += (float)dx;
             Target.Y += (float)dy;
@@ -88,15 +76,16 @@
                 IsWorking = true;
 
                 var radian = Degree * (Math.PI / 180);
-                movingDistance.Y = (float)Math.Sin(radian);
-                movingDistance.X = (float)Math.Cos(radian);
+                movingDistance.x = (float)Math.Sin(radian);
+                movingDistance.y = (float)Math.Cos(radian);
 
-                startSectionCount = Distance * 0.3;
+                const double maxAccelerationSectionLength = 100.0;
+                startSectionCount = Math.Min(Distance * 0.3, maxAccelerationSectionLength);
                 finalSectionCount = Distance * 0.8;
             }
         }
 
-        public void Stop()
+        private void Stop()
         {
             IsWorking = false;
             Speed = 0;
