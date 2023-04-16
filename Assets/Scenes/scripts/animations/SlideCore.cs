@@ -52,10 +52,8 @@
                 }
             }
 
-            if (resistance <= 0.1)
-            {
-                resistance = 0.1;
-            }
+            resistance = Math.Max(resistance, 0.2);
+            resistance = Math.Min(resistance, 1.0);
 
             var dx = movingDistance.x * Speed * resistance;
             var dy = movingDistance.y * Speed * resistance;
@@ -81,7 +79,8 @@
                 movingDistance.x = (float)Math.Sin(radian);
                 movingDistance.y = (float)Math.Cos(radian);
 
-                startSectionCount = Distance * 0.3;
+                const double maxAccelerationSectionLength = 100.0;
+                startSectionCount = Math.Min(Distance * 0.3, maxAccelerationSectionLength);
                 finalSectionCount = Distance * 0.8;
             }
         }
