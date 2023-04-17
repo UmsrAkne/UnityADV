@@ -49,6 +49,15 @@ namespace Tests.Animations
             Assert.Less(Math.Abs(displayObject.Y - 1000.0), 2.0);
         }
 
+        [Test]
+        public void GetSinXTest()
+        {
+            var core = new SlideCore();
+            Assert.AreEqual(core.GetCustomSinX(0), 0);
+            Assert.Less(Math.Abs(core.GetCustomSinX(30) - 1.0), 0.01);
+            Assert.Less(Math.Abs(core.GetCustomSinX(90) - 2.0), 0.01);
+        }
+
         private void LoopExecute(SlideCore core, int count)
         {
             for (int i = 0; i < count; i++)

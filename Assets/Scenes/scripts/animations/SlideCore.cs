@@ -85,6 +85,18 @@
             }
         }
 
+        /// <summary>
+        /// 度数をラジアンに変換して、Math.Sinに渡した結果を２倍した値を返す。
+        /// </summary>
+        /// <param name="deg">パラメーターは度数で入力</param>
+        /// <returns>deg=0 のとき 0 を返す。 deg=30 のとき 1.0 を返す。
+        /// deg=30 までにゼロから徐々に値を上げていく処理に利用する。
+        /// </returns>
+        public double GetCustomSinX(double deg)
+        {
+            return Math.Sin(deg * (Math.PI / 180)) * 2.0;
+        }
+
         private void Stop()
         {
             IsWorking = false;
