@@ -100,6 +100,14 @@ namespace Scenes.Scripts.MainLogics
                 TextWriter.SetScenarioIndex(ChapterManager.GetNextChapterIndex());
             }
 
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    TextWriter.SetScenarioIndex(ChapterManager.GetLastChapterIndex());
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 #if UNITY_EDITOR
