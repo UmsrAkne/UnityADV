@@ -44,8 +44,28 @@ namespace Scenes.Scripts.SceneParts
 
             if (nextChapterScenario != null)
             {
-                currentIndex = nextChapterScenario.Index - 1;
-                return nextChapterScenario.Index - 1;
+                currentIndex = scenarios.IndexOf(nextChapterScenario);
+                return scenarios.IndexOf(nextChapterScenario);
+            }
+            else
+            {
+                return currentIndex;
+            }
+        }
+
+        public int GetLastChapterIndex()
+        {
+            if (scenarios == null || scenarios.Count() <= currentIndex)
+            {
+                return currentIndex;
+            }
+
+            var lastChapterScenario = scenarios.Skip(currentIndex + 1).LastOrDefault(scenario => scenario.ChapterName != string.Empty);
+
+            if (lastChapterScenario != null)
+            {
+                currentIndex = scenarios.IndexOf(lastChapterScenario);
+                return currentIndex;
             }
             else
             {
