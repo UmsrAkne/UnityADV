@@ -44,8 +44,8 @@ namespace Scenes.Scripts.SceneParts
 
             if (nextChapterScenario != null)
             {
-                currentIndex = nextChapterScenario.Index - 1;
-                return nextChapterScenario.Index - 1;
+                currentIndex = scenarios.IndexOf(nextChapterScenario);
+                return scenarios.IndexOf(nextChapterScenario);
             }
             else
             {
