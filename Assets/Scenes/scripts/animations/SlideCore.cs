@@ -35,21 +35,21 @@
             // 開始直後の抵抗値
             if (totalDistance < startSectionCount)
             {
-                resistance = startSectionCount <= 0 ? 1.0 : (1.0 / startSectionCount) * totalDistance;
+                if (totalDistance == 0)
+                {
+                    resistance = 0.2;
+                }
+                else
+                {
+                    resistance = GetCustomSinX(totalDistance / startSectionCount * 30.0);
+                }
             }
 
             // 終了直前の抵抗値
             if (totalDistance > finalSectionCount)
             {
-                if (finalSectionCount == 0)
-                {
-                    resistance = 1.0;
-                }
-                else
-                {
-                    var distanceOfEnterdFinalSection = totalDistance - finalSectionCount;
-                    resistance = 1.0 - (0.01 * distanceOfEnterdFinalSection);
-                }
+                var d = totalDistance - finalSectionCount;
+                resistance = 1.0 - GetCustomSinX(d / (Distance - finalSectionCount) * 30);
             }
 
             resistance = Math.Max(resistance, 0.2);
@@ -80,8 +80,8 @@
                 movingDistance.y = (float)Math.Cos(radian);
 
                 const double maxAccelerationSectionLength = 100.0;
-                startSectionCount = Math.Min(Distance * 0.3, maxAccelerationSectionLength);
-                finalSectionCount = Distance * 0.8;
+                startSectionCount = Math.Min(Distance * 0.2, maxAccelerationSectionLength);
+                finalSectionCount = Math.Max(Distance * 0.8, Distance - maxAccelerationSectionLength);
             }
         }
 
