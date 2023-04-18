@@ -1,16 +1,16 @@
-namespace Tests
-{
-    using NUnit.Framework;
-    using System.Collections.Generic;
-    using Scenes.Scripts.SceneContents;
-    using Scenes.Scripts.SceneParts;
+using NUnit.Framework;
+using System.Collections.Generic;
+using Scenes.Scripts.SceneContents;
+using Scenes.Scripts.SceneParts;
 
+namespace Tests.SceneParts
+{
     public class TestChapterManager
     {
         [Test]
         public void 生成テスト()
         {
-            var chapterManager = new ChapterManager();
+            var _ = new ChapterManager();
         }
 
         [Test]
@@ -59,6 +59,31 @@ namespace Tests
 
             chapterManager.SetScenario(scenarios[0]);
             Assert.AreEqual(1, chapterManager.GetNextChapterIndex());
+        }
+
+        [Test]
+        public void GetLastChapterIndexTest()
+        {
+            var chapterManager = new ChapterManager();
+            var scenarios = new List<Scenario>()
+            {
+                new Scenario() { Index = 1, },
+                new Scenario() { Index = 2, },
+                new Scenario() { Index = 3, ChapterName = "testChapter" },
+                new Scenario() { Index = 4, },
+                new Scenario() { Index = 5, ChapterName = "testChapter2" },
+                new Scenario() { Index = 6, },
+            };
+
+            chapterManager.SetResource(new Resource() { Scenarios = scenarios });
+
+            chapterManager.SetScenario(scenarios[0]);
+            var lastIndex = chapterManager.GetLastChapterIndex();
+            Assert.AreEqual(4, lastIndex, "最後のチャプターのインデックスは 4");
+            Assert.AreEqual("testChapter2", scenarios[lastIndex].ChapterName);
+
+            chapterManager.SetScenario(scenarios[lastIndex]);
+            Assert.AreEqual(5, chapterManager.GetLastChapterIndex(), "次のチャプターは存在しないため、 lastIndex(4) + 1 が取得できる");
         }
     }
 }

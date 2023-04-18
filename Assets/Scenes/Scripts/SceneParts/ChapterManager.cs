@@ -52,5 +52,25 @@ namespace Scenes.Scripts.SceneParts
                 return currentIndex;
             }
         }
+
+        public int GetLastChapterIndex()
+        {
+            if (scenarios == null || scenarios.Count() <= currentIndex)
+            {
+                return currentIndex;
+            }
+
+            var lastChapterScenario = scenarios.Skip(currentIndex + 1).LastOrDefault(scenario => scenario.ChapterName != string.Empty);
+
+            if (lastChapterScenario != null)
+            {
+                currentIndex = scenarios.IndexOf(lastChapterScenario);
+                return currentIndex;
+            }
+            else
+            {
+                return currentIndex;
+            }
+        }
     }
 }
