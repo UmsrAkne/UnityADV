@@ -6,6 +6,8 @@ namespace Scenes.Scripts.Animations
 {
     public class Draw : IAnimation
     {
+        private bool drawed;
+
         public string AnimationName { get; } = "draw";
 
         public bool IsWorking { get; private set; } = true;
@@ -32,6 +34,8 @@ namespace Scenes.Scripts.Animations
 
         public string D { get; set; } = string.Empty;
 
+        public int Wait { get; set; }
+
         public static ImageDrawer ImageDrawer { private get; set; }
 
         public void Execute()
@@ -41,18 +45,31 @@ namespace Scenes.Scripts.Animations
                 return;
             }
 
-            var imageOrder = new ImageOrder()
+            if (Wait > 0 && drawed)
             {
-                X = X,
-                Y = Y,
-                Names = { A, B, C, D },
-                Scale = Scale,
-            };
+                Wait--;
+                return;
+            }
 
-            var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder } };
-            ImageDrawer.SetScenario(scenario);
-            ImageDrawer.Execute();
-            Stop();
+            if (!drawed)
+            {
+                drawed = true;
+                var imageOrder = new ImageOrder()
+                {
+                    X = X,
+                    Y = Y,
+                    Names = { A, B, C, D },
+                    Scale = Scale,
+                };
+
+                var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder } };
+                ImageDrawer.SetScenario(scenario);
+                ImageDrawer.Execute();
+            }
+            else
+            {
+                Stop();
+            }
         }
 
         public void Start()
