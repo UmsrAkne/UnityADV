@@ -96,6 +96,8 @@
                 case "slide": return new Slide();
                 case "flash": return new Flash();
                 case "bound": return new Bound();
+                case "chain": return new AnimationChain();
+                case "animationChain" : return new AnimationChain();
             }
 
             Log.Add($"アニメーションの生成に失敗。 name={animationName}");
