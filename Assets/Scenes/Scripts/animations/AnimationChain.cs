@@ -95,7 +95,6 @@ namespace Scenes.Scripts.Animations
 
         public void Start()
         {
-            throw new System.NotImplementedException();
         }
 
         public void Stop()
