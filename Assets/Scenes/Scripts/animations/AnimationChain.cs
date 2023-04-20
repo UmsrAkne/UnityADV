@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using Scenes.Scripts.SceneContents;
 
 namespace Scenes.Scripts.Animations
@@ -10,6 +11,7 @@ namespace Scenes.Scripts.Animations
         private List<IAnimation> animations = new List<IAnimation>();
         private IAnimation playingAnimation;
         private IDisplayObject target;
+        private List<XElement> animeTags = new List<XElement>();
 
         public string AnimationName { get; }
 
@@ -48,6 +50,11 @@ namespace Scenes.Scripts.Animations
             {
                 anime.Target = Target;
             }
+        }
+
+        public void AddAnimationTag(XElement tag)
+        {
+            animeTags.Add(tag);
         }
 
         public void Execute()
