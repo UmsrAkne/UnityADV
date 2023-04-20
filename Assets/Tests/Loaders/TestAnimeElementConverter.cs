@@ -27,5 +27,29 @@ namespace Tests.Loaders
             Assert.IsInstanceOf<Shake>(container.Animations.First());
             Assert.AreEqual(1, container.Animations.Count);
         }
+
+        [Test]
+        public void アニメーションチェーン生成テスト()
+        {
+            var converter = new AnimeElementConverter();
+            var container = new Scenario();
+            var xmlText = "<scenario>" +
+                            "<anime name=\"animationChain\" repeatCount=\"10\">" +
+                              "<anime name=\"shake\" />" +
+                              "<anime name=\"slide\" />" +
+                            "</anime>" +
+                          "</scenario>";
+
+            var xDocument = XDocument.Parse(xmlText);
+            converter.Convert(xDocument.Element("scenario"), container);
+
+            Assert.IsInstanceOf<AnimationChain>(container.Animations.First());
+            Assert.AreEqual(1, container.Animations.Count);
+
+            var chain = container.Animations.First() as AnimationChain;
+            Assert.AreEqual(chain.AnimeTags[0].ToString(), "<anime name=\"shake\" />");
+            Assert.AreEqual(chain.AnimeTags[1].ToString(), "<anime name=\"slide\" />");
+            Assert.AreEqual(chain.RepeatCount, 10);
+        }
     }
 }

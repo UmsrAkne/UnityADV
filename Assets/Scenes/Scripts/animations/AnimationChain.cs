@@ -11,9 +11,10 @@ namespace Scenes.Scripts.Animations
         private List<IAnimation> animations = new List<IAnimation>();
         private IAnimation playingAnimation;
         private IDisplayObject target;
-        private List<XElement> animeTags = new List<XElement>();
 
         public string AnimationName { get; }
+
+        public List<XElement> AnimeTags { get; private set; } = new List<XElement>();
 
         public bool IsWorking { get; private set; } = true;
 
@@ -54,7 +55,7 @@ namespace Scenes.Scripts.Animations
 
         public void AddAnimationTag(XElement tag)
         {
-            animeTags.Add(tag);
+            AnimeTags.Add(tag);
         }
 
         public void Execute()
