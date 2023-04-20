@@ -132,6 +132,27 @@ bgv を鳴らす
 ### flash 
 ### bound
 
+### animationChain
+
+- 属性
+    - int RepeatCount = 0;
+  
+特殊なアニメーションタグです。内部に anime 要素を入力して使用します。
+
+```
+  <anime name="animationChain">
+    <!-- shake, slide の順でアニメーションが実行される -->
+    <anime name="shake" />
+    <anime name="slide" />
+  </anime>
+```
+
+この要素の子のアニメーションは、記述された順番で順次実行され、この要素自体が単体のアニメーションとして扱われます。
+
+## chain
+
+`animationChain` の別名です。nameにこれを指定した場合は、`animationChain` が生成されます。
+
 # setting.xml の仕様
 
 各シーンの `texts` ディレクトリ以下に `setting.xml` と命名して配置する。  
