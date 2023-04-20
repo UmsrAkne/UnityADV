@@ -40,6 +40,19 @@ namespace Scenes.Scripts.Animations
             {
                 return;
             }
+
+            var imageOrder = new ImageOrder()
+            {
+                X = X,
+                Y = Y,
+                Names = { A, B, C, D },
+                Scale = Scale,
+            };
+
+            var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder } };
+            ImageDrawer.SetScenario(scenario);
+            ImageDrawer.Execute();
+            Stop();
         }
 
         public void Start()
