@@ -7,9 +7,16 @@
     {
         private ImageContainer targetContainer;
         private int frameCounter;
-        private ImageSet effectImageSet;
+        private IDisplayObject effectImageSet;
+        private int intervalCounter;
 
         public string AnimationName => "flash";
+
+        public IDisplayObject EffectImageSet
+        {
+            get => effectImageSet;
+            set => effectImageSet = value;
+        }
 
         public bool IsWorking { get; private set; } = true;
 
@@ -17,13 +24,15 @@
 
         public int TargetLayerIndex { get; set; }
 
-        public int Cycle { get; set; } = 40;
-
         public int Duration { get; set; } = 40;
 
         public int RepeatCount { get; set; } = 1;
 
         public double Alpha { get; set; } = 1.0f;
+
+        public int Delay { get; set; } = 0;
+
+        public int Interval { get; set; }
 
         public ImageContainer TargetContainer
         {
@@ -44,12 +53,33 @@
                 return;
             }
 
-            effectImageSet.Alpha = GetAlpha();
-            frameCounter++;
-
-            if (frameCounter > Duration * RepeatCount)
+            if (Delay > 0)
             {
-                Stop();
+                Delay--;
+                return;
+            }
+
+            if (intervalCounter > 0)
+            {
+                intervalCounter--;
+                return;
+            }
+
+            frameCounter++;
+            effectImageSet.Alpha = GetAlpha();
+
+            if (frameCounter >= Duration)
+            {
+                RepeatCount--;
+                if (RepeatCount > 0)
+                {
+                    frameCounter = 0;
+                    intervalCounter = Interval;
+                }
+                else
+                {
+                    Stop();
+                }
             }
         }
 

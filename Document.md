@@ -130,6 +130,15 @@ bgv を鳴らす
     - int Interval
 
 ### flash 
+
+画面を白発光させます。Duration に指定したフレーム数の間に１回発光します。
+
+- 属性
+    - int Duration  = 40;
+    - int RepeatCount  = 1; 
+    - int Delay  = 0;
+    - int Interval = 0;
+
 ### bound
 
 ### animationChain
@@ -149,9 +158,13 @@ bgv を鳴らす
 
 この要素の子のアニメーションは、記述された順番で順次実行され、この要素自体が単体のアニメーションとして扱われます。
 
-## chain
+Image 要素が入力された場合、他のアニメーション同様、このアニメーションはストップします。
+
+### chain
 
 `animationChain` の別名です。nameにこれを指定した場合は、`animationChain` が生成されます。
+
+### draw
 
 # setting.xml の仕様
 
