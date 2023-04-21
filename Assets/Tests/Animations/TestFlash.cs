@@ -84,18 +84,21 @@ namespace Tests.Animations
             for (int i = 0; i < 5; i++)
             {
                 flash.Execute();
+                System.Diagnostics.Debug.WriteLine($"TestFlash (99) : {dummy.Alpha}");
             }
 
             Assert.Less(Math.Abs(dummy.Alpha) - 1.0, 0.01);
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
                 flash.Execute();
+                System.Diagnostics.Debug.WriteLine($"TestFlash (99) : {dummy.Alpha}");
             }
 
             for (int i = 0; i < 10; i++)
             {
                 flash.Execute();
+                System.Diagnostics.Debug.WriteLine($"TestFlash (99) : {dummy.Alpha}");
                 Assert.Less(Math.Abs(dummy.Alpha), 0.01);
             }
 
