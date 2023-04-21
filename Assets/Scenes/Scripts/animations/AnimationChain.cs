@@ -14,6 +14,7 @@ namespace Scenes.Scripts.Animations
         private List<IAnimation> animations = new List<IAnimation>();
         private IAnimation playingAnimation;
         private IDisplayObject target;
+        private bool canChangeTarget = true;
 
         public string AnimationName => "AnimationChain";
 
@@ -26,6 +27,14 @@ namespace Scenes.Scripts.Animations
             private get => target;
             set
             {
+                if (!canChangeTarget)
+                {
+                    // セット不可のタイミングでターゲットの変更が行われた場合、
+                    // 外部から画像描画の命令が出ているということであるため、このアニメーションを停止する。
+                    Stop();
+                    return;
+                }
+
                 foreach (var a in animations)
                 {
                     a.Target = value;
@@ -90,17 +99,29 @@ namespace Scenes.Scripts.Animations
                 return;
             }
 
+            if (playingAnimation is Draw)
+            {
+                // 実行アニメーションが Draw の場合は、ターゲット画像の変更が発生する可能性があるため、セッターを許可する。
+                canChangeTarget = true;
+            }
+
             playingAnimation.Execute();
+
+            // セッターを許可するのは、Execute() 実行中のみ
+            canChangeTarget = false;
         }
 
         public void Start()
         {
-            throw new System.NotImplementedException();
         }
 
         public void Stop()
         {
             IsWorking = false;
+            foreach (var a in animations.Where(a => a.IsWorking))
+            {
+                a.Stop();
+            }
         }
     }
 }

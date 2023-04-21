@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Linq;
 using Scenes.Scripts.SceneContents;
 using Scenes.Scripts.SceneParts;
@@ -19,7 +19,7 @@ namespace Scenes.Scripts.Animations
 
         public ImageContainer TargetImageContainer { get; }
 
-        private List<IAnimation> Animations { get; set; } = new List<IAnimation>();
+        private ConcurrentBag<IAnimation> Animations { get; set; } = new ConcurrentBag<IAnimation>();
 
         public void Execute()
         {
@@ -29,19 +29,19 @@ namespace Scenes.Scripts.Animations
         {
             bool deleteFlag = false;
 
-            Animations.ForEach(anime =>
+            foreach (var a in Animations)
             {
-                anime.Execute();
+                a.Execute();
 
-                if (!anime.IsWorking)
+                if (!a.IsWorking)
                 {
                     deleteFlag = true;
                 }
-            });
+            }
 
             if (deleteFlag)
             {
-                Animations.RemoveAll(anime => !anime.IsWorking);
+                Animations = new ConcurrentBag<IAnimation>(Animations.Where(anime => anime.IsWorking));
             }
         }
 
@@ -78,10 +78,10 @@ namespace Scenes.Scripts.Animations
                 Animations.Add(new AlphaChanger());
             }
 
-            Animations.ForEach(a =>
+            foreach (var a in Animations)
             {
                 a.Target = TargetImageContainer.FrontChild;
-            });
+            }
         }
 
         /// <summary>
@@ -90,13 +90,13 @@ namespace Scenes.Scripts.Animations
         /// </summary>
         private void AddAnimation(IAnimation anime)
         {
-            Animations.ForEach(a =>
+            foreach (var a in Animations)
             {
                 if (a.AnimationName == anime.AnimationName)
                 {
                     a.Stop();
                 }
-            });
+            }
 
             anime.TargetContainer = TargetImageContainer;
             anime.Target = TargetImageContainer.FrontChild;

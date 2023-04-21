@@ -40,6 +40,7 @@ namespace Scenes.Scripts.MainLogics
             InjectUI(UI);
 
             ScenarioSceneParts.Add(new ImageDrawer());
+            Draw.ImageDrawer = ScenarioSceneParts.First(s => s is ImageDrawer) as ImageDrawer;
 
             ScenarioSceneParts.Add(new AnimationsManager(UI.ImageContainers[0]));
             ScenarioSceneParts.Add(new AnimationsManager(UI.ImageContainers[1]));
