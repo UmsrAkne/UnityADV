@@ -24,7 +24,7 @@ namespace Scenes.Scripts.Animations
 
         public int Y { get; set; }
 
-        public double Scale { get; set; }
+        public double Scale { get; set; } = 1.0;
 
         public string A { get; set; } = string.Empty;
 
