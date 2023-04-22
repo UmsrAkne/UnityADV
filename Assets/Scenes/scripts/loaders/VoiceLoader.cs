@@ -68,12 +68,15 @@
                     {
                         case TargetAudioType.voice:
                             Resource.Voices = AudioSources;
+                            Resource.VoicesByName = AudioSourcesByName;
                             break;
                         case TargetAudioType.bgVoice:
                             Resource.BGVoices = AudioSources;
+                            Resource.BGVoicesByName = AudioSourcesByName;
                             break;
                         case TargetAudioType.se:
                             Resource.Ses = AudioSources;
+                            Resource.SesByName = AudioSourcesByName;
                             break;
                     }
 
