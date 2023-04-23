@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using Scenes.Scripts.Animations;
+using UnityEngine;
 
 namespace Tests.Animations
 {
@@ -45,7 +46,12 @@ namespace Tests.Animations
             LoopExecute(slideCore, 30);
             Assert.Greater(displayObject.Y, 20.0);
 
-            LoopExecute(slideCore, 200);
+            for (int i = 0; i < 120; i++)
+            {
+                slideCore.Execute();
+                System.Diagnostics.Debug.WriteLine($"TestSlideCore (54) : {displayObject.Y}");
+            }
+            
             Assert.Less(Math.Abs(displayObject.Y - 1000.0), 2.0);
         }
 
@@ -62,7 +68,12 @@ namespace Tests.Animations
 
             slideCore.Start();
 
-            LoopExecute(slideCore, 850);
+            for (int i = 0; i < 850; i++)
+            {
+                slideCore.Execute();
+                System.Diagnostics.Debug.WriteLine($"TestSlideCore (75) : {displayObject.Y}");
+            }
+
             Assert.Less(Math.Abs(displayObject.Y - 500.0), 1.0);
         }
 

@@ -10,6 +10,7 @@
         private Vector2 movingDistance = new Vector2(0, 0);
         private double startSectionCount;
         private double finalSectionCount;
+        private double runningUpDistance;
 
         public string AnimationName => "slideCore";
 
@@ -45,10 +46,16 @@
                 }
             }
 
-            // 終了直前の抵抗値
-            if (totalDistance > finalSectionCount)
+            // 助走に要した距離（最大速度に達するまでの距離）を記録しておく
+            if (Math.Abs(resistance - 1.0) < 0.01 && runningUpDistance == 0)
             {
-                var d = totalDistance - finalSectionCount;
+                runningUpDistance = totalDistance;
+            }
+
+            // 終了直前の抵抗値
+            if (totalDistance > Distance - runningUpDistance)
+            {
+                var d = totalDistance - (Distance - runningUpDistance);
                 resistance = 1.0 - GetCustomSinX(d / (Distance - finalSectionCount) * 30);
             }
 
