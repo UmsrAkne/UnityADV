@@ -1,4 +1,6 @@
-﻿namespace Scenes.Scripts.SceneContents
+﻿using UnityEngine.Rendering;
+
+namespace Scenes.Scripts.SceneContents
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -69,6 +71,8 @@
         }
 
         public int SortingLayerIndex { get; set; }
+
+        public SortingGroup SortingGroup => parentUnit.SortingGroup;
 
         public GameObject GameObject => parentUnit.GameObject;
 

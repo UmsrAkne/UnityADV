@@ -39,6 +39,8 @@
 
         private List<ImageSet> Children { get; } = new List<ImageSet>();
 
+        private int AddedChildCount { get; set; }
+
         public void AddChild(ImageSet childObject)
         {
             // childObject.GameObject.name = "children";
@@ -54,6 +56,8 @@
                 Children.LastOrDefault().Dispose();
                 Children.RemoveAt(Children.Count - 1);
             }
+
+            childObject.SortingGroup.sortingOrder = AddedChildCount++;
         }
 
         public void AddEffectLayer()
@@ -72,7 +76,7 @@
 
                 imageSet.Draw(new List<SpriteWrapper>() { sp });
                 var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
-                sortingGroup.sortingOrder = 999;
+                sortingGroup.sortingOrder = 10000;
 
                 EffectImageSet = imageSet;
             }
