@@ -28,9 +28,16 @@
 
         public int Interval { get; set; }
 
+        public int Delay { get; set; }
+
         public void Execute()
         {
             if (Target == null)
+            {
+                return;
+            }
+
+            if (Delay-- > 0)
             {
                 return;
             }
