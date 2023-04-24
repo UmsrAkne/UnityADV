@@ -119,6 +119,14 @@ bgv を鳴らす
 ### alphaChanger 
 ### shake
 
+- 属性
+    - int StrengthX 
+    - int StrengthY 
+    - int Duration  = 60;
+    - int RepeatCount 
+    - int Interval 
+    - int Delay
+
 ### slide 
 
 - 属性

@@ -18,7 +18,9 @@
 
         public int TargetLayerIndex { get; set; }
 
-        public int Strength { get; set; }
+        public int StrengthX { get; set; }
+
+        public int StrengthY { get; set; }
 
         public int Duration { get; set; } = 60;
 
@@ -36,17 +38,20 @@
             double angle = frameCounter * (90.0 / Duration);
             var cos = Math.Cos(angle * (Math.PI / 180));
 
-            int strength = (int)(Strength * cos);
+            int dx = (int)(StrengthX * cos);
+            int dy = (int)(StrengthY * cos);
 
             if (frameCounter != 0)
             {
-                strength *= (frameCounter % 2 == 0) ? 2 : -2;
+                // frameCounter < 1 のとき、前回とは逆方向に 2倍 移動するため 2, -2 をかける。
+                dx *= (frameCounter % 2 == 0) ? 2 : -2;
+                dy *= (frameCounter % 2 == 0) ? 2 : -2;
             }
 
-            Target.X += strength;
-            Target.Y += strength;
+            Target.X += dx;
+            Target.Y += dy;
 
-            TotalMovementDistance = new Point(TotalMovementDistance.X + strength, TotalMovementDistance.Y + strength);
+            TotalMovementDistance = new Point(TotalMovementDistance.X + dx, TotalMovementDistance.Y + dy);
 
             frameCounter++;
 
