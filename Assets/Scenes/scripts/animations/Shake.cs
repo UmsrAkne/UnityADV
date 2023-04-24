@@ -18,7 +18,9 @@
 
         public int TargetLayerIndex { get; set; }
 
-        public int Strength { get; set; }
+        public int StrengthX { get; set; }
+
+        public int StrengthY { get; set; }
 
         public int Duration { get; set; } = 60;
 
@@ -39,7 +41,8 @@
                 shakeCore = new ShakeCore()
                 {
                     Target = Target,
-                    Strength = Strength,
+                    StrengthX = StrengthX,
+                    StrengthY = StrengthY,
                     Duration = Duration,
                 };
             }

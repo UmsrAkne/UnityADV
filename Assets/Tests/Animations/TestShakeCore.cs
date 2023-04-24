@@ -19,7 +19,8 @@ namespace Tests.Animations
             {
                 Target = dummy,
                 Duration = 8,
-                Strength = 20
+                StrengthX = 20,
+                StrengthY = 20,
             };
 
             core.Execute();
@@ -71,8 +72,38 @@ namespace Tests.Animations
             {
                 Target = dummy,
                 Duration = 6,
-                Strength = 20
+                StrengthY = 20,
             };
+
+            core.Execute();
+            Assert.Greater(dummy.Y, 10);
+            Assert.AreEqual(dummy.X, 0);
+            System.Diagnostics.Debug.WriteLine($"TestShakeCore (41) : x={dummy.X},y={dummy.Y}");
+
+            core.Execute();
+            Assert.Less(dummy.Y, -10);
+            Assert.AreEqual(dummy.X, 0);
+            System.Diagnostics.Debug.WriteLine($"TestShakeCore (41) : x={dummy.X},y={dummy.Y}");
+
+            core.Execute();
+            Assert.Greater(dummy.Y, 10);
+            Assert.AreEqual(dummy.X, 0);
+            System.Diagnostics.Debug.WriteLine($"TestShakeCore (41) : x={dummy.X},y={dummy.Y}");
+
+            core.Execute();
+            Assert.Less(dummy.Y, -10);
+            Assert.AreEqual(dummy.X, 0);
+            System.Diagnostics.Debug.WriteLine($"TestShakeCore (41) : x={dummy.X},y={dummy.Y}");
+
+            core.Execute();
+            Assert.Greater(dummy.Y, 3);
+            Assert.AreEqual(dummy.X, 0);
+            System.Diagnostics.Debug.WriteLine($"TestShakeCore (41) : x={dummy.X},y={dummy.Y}");
+
+            core.Execute();
+            Assert.AreEqual(dummy.Y, 0);
+            Assert.AreEqual(dummy.X, 0);
+            System.Diagnostics.Debug.WriteLine($"TestShakeCore (41) : x={dummy.X},y={dummy.Y}");
         }
     }
 }
