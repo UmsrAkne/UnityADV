@@ -76,7 +76,7 @@
 
                 imageSet.Draw(new List<SpriteWrapper>() { sp });
                 var sortingGroup = EffectGameObject.GetComponent<SortingGroup>();
-                sortingGroup.sortingOrder = 999;
+                sortingGroup.sortingOrder = 10000;
 
                 EffectImageSet = imageSet;
             }
