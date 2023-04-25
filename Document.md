@@ -109,6 +109,13 @@ bgv を鳴らす
     - int channel
     - string name
 
+主要なアニメーションの停止機能を実装済。以下のように記述して使用する。
+
+記述例
+  
+    <stop target="anime" name="shake" />
+    <stop target="anime" name="animationChain" />
+
 -------------------------------------------------------
 
 ## anime
