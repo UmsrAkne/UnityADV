@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using Scenes.Scripts.SceneContents;
 using Scenes.Scripts.SceneParts;
@@ -53,9 +54,20 @@ namespace Scenes.Scripts.Animations
         {
             this.scenario = scenario;
 
-            if (scenario.Animations.Count == 0)
+            if (scenario.Animations.Count == 0 && scenario.StopOrders.All(s => !s.IsAnimationStopOrder()))
             {
                 return;
+            }
+
+            foreach (var s in scenario.StopOrders.Where(so => so.IsAnimationStopOrder()))
+            {
+                foreach (var a in Animations)
+                {
+                    if (a.AnimationName.Equals(s.Name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        a.Stop();
+                    }
+                }
             }
 
             foreach (var anime in scenario.Animations)

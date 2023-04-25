@@ -1,4 +1,7 @@
-﻿namespace Scenes.Scripts.SceneContents
+﻿using System;
+using Scenes.Scripts.Animations;
+
+namespace Scenes.Scripts.SceneContents
 {
     public class StopOrder
     {
@@ -9,5 +12,22 @@
         public int Channel { get; set; }
 
         public int LayerIndex { get; set; }
+
+        public bool IsAnimationStopOrder()
+        {
+            if (string.IsNullOrWhiteSpace(Name) || Target != StoppableSceneParts.anime)
+            {
+                return false;
+            }
+
+            return Name.Equals(nameof(AlphaChanger), StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(Shake), StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(Slide), StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(Flash), StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(Bound), StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(AnimationChain), StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals("chain", StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(Draw), StringComparison.OrdinalIgnoreCase);
+        }
     }
 }
