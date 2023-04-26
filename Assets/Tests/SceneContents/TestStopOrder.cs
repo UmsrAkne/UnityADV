@@ -45,6 +45,9 @@ namespace Tests.SceneContents
             Assert.IsTrue(new StopOrder() { Name = "chain", Target = StoppableSceneParts.anime }
                 .IsAnimationStopOrder());
 
+            Assert.IsTrue(new StopOrder() { Name = "scaleChange", Target = StoppableSceneParts.anime }
+                .IsAnimationStopOrder());
+
             Assert.IsTrue(new StopOrder() { Name = "draw", Target = StoppableSceneParts.anime }.IsAnimationStopOrder());
 
             //　判定は大文字小文字を無視して行われるため、一部の文字が大文字に変わったりしても結果は変化しない
@@ -67,6 +70,9 @@ namespace Tests.SceneContents
                 .IsAnimationStopOrder());
 
             Assert.IsTrue(new StopOrder() { Name = "Chain", Target = StoppableSceneParts.anime }
+                .IsAnimationStopOrder());
+
+            Assert.IsTrue(new StopOrder() { Name = "ScaleChange", Target = StoppableSceneParts.anime }
                 .IsAnimationStopOrder());
 
             Assert.IsTrue(new StopOrder() { Name = "Draw", Target = StoppableSceneParts.anime }.IsAnimationStopOrder());
