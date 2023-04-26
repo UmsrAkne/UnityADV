@@ -7,11 +7,22 @@ namespace Scenes.Scripts.Animations
     {
         private int frameCounter;
         private double changeAmountPerFrame;
+        private IDisplayObject target;
         public string AnimationName { get; } = "scaleChange";
 
         public bool IsWorking { get; private set; } = true;
 
-        public IDisplayObject Target { get; set; }
+        public IDisplayObject Target
+        {
+            get => target;
+            set
+            {
+                if (target == null && frameCounter == 0)
+                {
+                    target = value;
+                }
+            }
+        }
 
         public ImageContainer TargetContainer { get; set; }
 
@@ -22,8 +33,6 @@ namespace Scenes.Scripts.Animations
         public int Duration { get; set; }
 
         public int RepeatCount { get; set; }
-
-        public int Interval { get; set; }
 
         public int Delay { get; set; }
 
@@ -46,13 +55,13 @@ namespace Scenes.Scripts.Animations
         {
             if (frameCounter == 0)
             {
-                changeAmountPerFrame = (Target.Scale - To) / Duration;
+                changeAmountPerFrame = (To - Target.Scale) / Duration;
             }
 
             Target.Scale += changeAmountPerFrame;
             frameCounter++;
 
-            if (Math.Abs(Target.Scale - To) <= 0.01)
+            if (Math.Abs(To - Target.Scale) <= 0.01)
             {
                 Stop();
             }
