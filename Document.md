@@ -190,6 +190,24 @@ Image 要素が入力された場合、他のアニメーション同様、こ�
   - double Scale = 1.0;
   - int Wait = 0;
 
+### scaleChange
+
+画像を拡大、縮小します。現在の拡大率から `To` で指定した倍率まで、`Duration` に指定した時間をかけて変化します。
+
+  - double To 
+  - int Duration 
+  - int RepeatCount // 未実装
+  - int Delay 
+
+記述例
+
+以下のように記述します。
+
+アニメーション開始時点での拡大率が 1.0 であった場合、
+100フレームをかけて 1.0 -> 1.5 まで拡大率が変化します。
+
+    <anime name="scaleChange" to="1.5" duration="100" />
+
 # setting.xml の仕様
 
 各シーンの `texts` ディレクトリ以下に `setting.xml` と命名して配置する。  
