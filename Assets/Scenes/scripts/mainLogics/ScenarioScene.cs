@@ -56,9 +56,9 @@ namespace Scenes.Scripts.MainLogics
             ScenarioSceneParts.Add(vp2);
             ScenarioSceneParts.Add(vp3);
 
-            ScenarioSceneParts.Add(new BGVoicePlayer(vp1));
-            ScenarioSceneParts.Add(new BGVoicePlayer(vp2));
-            ScenarioSceneParts.Add(new BGVoicePlayer(vp3));
+            ScenarioSceneParts.Add(new BgvPlayer(vp1));
+            ScenarioSceneParts.Add(new BgvPlayer(vp2));
+            ScenarioSceneParts.Add(new BgvPlayer(vp3));
 
             ScenarioSceneParts.Add(new SEPlayer());
 
