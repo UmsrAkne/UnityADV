@@ -13,6 +13,8 @@
 
         public event EventHandler SoundComplete;
 
+        public event EventHandler SoundStart;
+
         public bool NeedExecuteEveryFrame => false;
 
         public List<ISound> Voices { get; set; }
@@ -43,6 +45,7 @@
             }
 
             currentVoice.Play();
+            SoundStart?.Invoke(this, EventArgs.Empty);
             nextOrder = null;
             playRequire = false;
         }
