@@ -64,7 +64,7 @@ namespace Scenes.Scripts.SceneParts
                 }
                 else
                 {
-                    Play(voices[currentIndex]);
+                    Play(voices[currentIndex + 1]);
                 }
             }
 
@@ -73,7 +73,7 @@ namespace Scenes.Scripts.SceneParts
                 return;
             }
 
-            Volume += 0.02;
+            Volume += 0.03;
         }
 
         public void SetScenario(Scenario scenario)
@@ -83,6 +83,7 @@ namespace Scenes.Scripts.SceneParts
             {
                 playingVoice?.Stop();
                 voices = bgvOrder.FileNames.Select(n => bgVoicesByName[n]).OrderBy(_ => Guid.NewGuid()).ToList();
+                Volume = 0;
                 Play(voices.FirstOrDefault());
             }
 
@@ -121,6 +122,7 @@ namespace Scenes.Scripts.SceneParts
         {
             playingVoice = v;
             v.Play();
+            v.Volume = Volume;
         }
 
         public void SetUI(UI ui)
