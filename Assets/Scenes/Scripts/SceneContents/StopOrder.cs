@@ -27,6 +27,7 @@ namespace Scenes.Scripts.SceneContents
                    Name.Equals(nameof(Bound), StringComparison.OrdinalIgnoreCase) ||
                    Name.Equals(nameof(AnimationChain), StringComparison.OrdinalIgnoreCase) ||
                    Name.Equals("chain", StringComparison.OrdinalIgnoreCase) ||
+                   Name.Equals(nameof(ScaleChange), StringComparison.OrdinalIgnoreCase) ||
                    Name.Equals(nameof(Draw), StringComparison.OrdinalIgnoreCase);
         }
     }

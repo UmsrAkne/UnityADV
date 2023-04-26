@@ -99,6 +99,7 @@
                 case "chain": return new AnimationChain();
                 case "animationChain" : return new AnimationChain();
                 case "draw" : return new Draw();
+                case "scaleChange" : return new ScaleChange();
             }
 
             Log.Add($"アニメーションの生成に失敗。 name={animationName}");
