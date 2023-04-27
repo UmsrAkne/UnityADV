@@ -15,6 +15,7 @@ namespace Scenes.Scripts.Animations
         private IAnimation playingAnimation;
         private IDisplayObject target;
         private bool canChangeTarget = true;
+        private bool initialGenerate;
 
         public string AnimationName => "AnimationChain";
 
@@ -50,7 +51,6 @@ namespace Scenes.Scripts.Animations
 
         public int RepeatCount { get; set; }
 
-        // Todo
         public int Delay { get; set; }
 
         public int Interval { get; set; }
@@ -94,7 +94,13 @@ namespace Scenes.Scripts.Animations
                     AddAnimation(converter.GenerateAnimation(tag));
                 }
 
+                if (!initialGenerate)
+                {
+                    Delay = Interval;
+                }
+
                 RepeatCount--;
+                initialGenerate = false;
             }
 
             if (playingAnimation == null || !playingAnimation.IsWorking)
