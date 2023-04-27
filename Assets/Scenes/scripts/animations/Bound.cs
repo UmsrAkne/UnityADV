@@ -36,7 +36,6 @@
 
         public int RepeatCount { get; set; }
 
-        // Todo
         public int Delay { get; set; }
 
         public int Interval { get; set; }
@@ -44,6 +43,11 @@
         public void Execute()
         {
             if (Target == null || !IsWorking)
+            {
+                return;
+            }
+
+            if (Delay-- > 0)
             {
                 return;
             }
@@ -75,6 +79,7 @@
                     RepeatCount--;
                     Target.X -= (float)totalDx;
                     Target.Y -= (float)totalDy;
+                    Delay = Interval;
                 }
                 else
                 {
