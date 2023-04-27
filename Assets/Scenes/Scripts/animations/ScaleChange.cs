@@ -17,7 +17,7 @@ namespace Scenes.Scripts.Animations
             get => target;
             set
             {
-                if (target == null && frameCounter == 0)
+                if (frameCounter == 0)
                 {
                     target = value;
                 }
