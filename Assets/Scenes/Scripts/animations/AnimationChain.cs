@@ -82,6 +82,11 @@ namespace Scenes.Scripts.Animations
                 return;
             }
 
+            if (Delay-- > 0)
+            {
+                return;
+            }
+
             if (animations.Count(a => a.IsWorking) == 0 && RepeatCount >= 0)
             {
                 foreach (var tag in AnimeTags)
