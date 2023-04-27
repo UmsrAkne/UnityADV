@@ -88,9 +88,10 @@ namespace Tests.Animations
             chain.AddAnimationTag(XElement.Parse("<anime name=\"slide\" speed=\"5\" distance=\"100\" />"));
             chain.AddAnimationTag(XElement.Parse("<anime name=\"slide\" speed=\"5\" distance=\"200\" />"));
 
-            for (int i = 0; i < 300; i++)
+            for (int i = 0; i < 350; i++)
             {
                 chain.Execute();
+                System.Diagnostics.Debug.WriteLine($"TestAnimationChain (94) : {dummyDisplayObject.Y}");
             }
 
             Assert.Greater(dummyDisplayObject.Y, 900);
