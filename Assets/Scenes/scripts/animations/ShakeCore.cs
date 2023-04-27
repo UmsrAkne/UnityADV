@@ -26,6 +26,11 @@
 
         public int RepeatCount { get; set; }
 
+        // Todo
+        public int Delay { get; set; }
+
+        public int Interval { get; set; }
+
         private Point TotalMovementDistance { get; set; } = new Point(0, 0);
 
         public void Execute()

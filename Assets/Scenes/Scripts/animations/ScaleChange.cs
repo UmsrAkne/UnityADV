@@ -34,7 +34,10 @@ namespace Scenes.Scripts.Animations
 
         public int RepeatCount { get; set; }
 
+        // Todo
         public int Delay { get; set; }
+
+        public int Interval { get; set; }
 
         public void Execute()
         {
