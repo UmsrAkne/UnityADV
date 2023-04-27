@@ -20,7 +20,6 @@ namespace Scenes.Scripts.Animations
 
         public int RepeatCount { get; set; }
 
-        // Todo
         public int Delay { get; set; }
 
         public int Interval { get; set; }
@@ -46,6 +45,11 @@ namespace Scenes.Scripts.Animations
         public void Execute()
         {
             if (ImageDrawer == null || !IsWorking)
+            {
+                return;
+            }
+
+            if (Delay-- > 0)
             {
                 return;
             }
