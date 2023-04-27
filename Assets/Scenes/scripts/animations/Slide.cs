@@ -9,7 +9,6 @@
         private bool isInitialExecute = true;
         private IDisplayObject target;
         private SlideCore core;
-        private int stopTimeCount;
 
         public string AnimationName => "slide";
 
@@ -89,17 +88,9 @@
 
             if (!core.IsWorking)
             {
-                stopTimeCount++;
-
-                if (Interval > stopTimeCount)
-                {
-                    return;
-                }
-
-                stopTimeCount = 0;
-
                 if (RepeatCount > 0)
                 {
+                    Delay = Interval;
                     RepeatCount--;
                     Degree += 180;
                     Initialize();
