@@ -5,9 +5,14 @@ namespace Scenes.Scripts.Animations
 {
     public class ScaleChange : IAnimation
     {
-        private int frameCounter;
         private double changeAmountPerFrame;
+        private int frameCounter;
         private IDisplayObject target;
+
+        public double To { get; set; }
+
+        public int Duration { get; set; }
+
         public string AnimationName { get; } = "scaleChange";
 
         public bool IsWorking { get; private set; } = true;
@@ -17,7 +22,7 @@ namespace Scenes.Scripts.Animations
             get => target;
             set
             {
-                if (target == null && frameCounter == 0)
+                if (frameCounter == 0)
                 {
                     target = value;
                 }
@@ -27,10 +32,6 @@ namespace Scenes.Scripts.Animations
         public ImageContainer TargetContainer { get; set; }
 
         public int TargetLayerIndex { get; set; }
-
-        public double To { get; set; }
-
-        public int Duration { get; set; }
 
         public int RepeatCount { get; set; }
 
@@ -53,6 +54,18 @@ namespace Scenes.Scripts.Animations
             CoreProcess();
         }
 
+        public void Start()
+        {
+        }
+
+        public void Stop()
+        {
+            IsWorking = false;
+            changeAmountPerFrame = 0;
+            Target.Scale = To;
+            frameCounter = Duration + 1;
+        }
+
         private void CoreProcess()
         {
             if (frameCounter == 0)
@@ -67,18 +80,6 @@ namespace Scenes.Scripts.Animations
             {
                 Stop();
             }
-        }
-
-        public void Start()
-        {
-        }
-
-        public void Stop()
-        {
-            IsWorking = false;
-            changeAmountPerFrame = 0;
-            Target.Scale = To;
-            frameCounter = Duration + 1;
         }
     }
 }
