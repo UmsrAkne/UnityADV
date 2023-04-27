@@ -73,6 +73,11 @@
                 return;
             }
 
+            if (Delay-- > 0)
+            {
+                return;
+            }
+
             if (isInitialExecute)
             {
                 isInitialExecute = false;
