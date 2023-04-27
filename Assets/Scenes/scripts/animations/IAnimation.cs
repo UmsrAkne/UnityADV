@@ -16,6 +16,10 @@
 
         int RepeatCount { get; set; }
 
+        int Delay { get; set; }
+
+        int Interval { get; set; }
+
         void Execute();
 
         void Start();
