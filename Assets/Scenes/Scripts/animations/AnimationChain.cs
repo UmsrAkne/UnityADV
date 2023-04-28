@@ -9,13 +9,21 @@ namespace Scenes.Scripts.Animations
 {
     public class AnimationChain : IAnimation
     {
-        private readonly AnimeElementConverter converter = new AnimeElementConverter();
-
+        private readonly IAnimeElementConverter converter = new AnimeElementConverter();
         private List<IAnimation> animations = new List<IAnimation>();
         private IAnimation playingAnimation;
         private IDisplayObject target;
         private bool canChangeTarget = true;
         private bool initialGenerate;
+
+        public AnimationChain()
+        {
+        }
+
+        public AnimationChain(IAnimeElementConverter aec)
+        {
+            converter = aec;
+        }
 
         public string AnimationName => "AnimationChain";
 
