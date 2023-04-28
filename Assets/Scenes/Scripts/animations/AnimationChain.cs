@@ -11,7 +11,7 @@ namespace Scenes.Scripts.Animations
     {
         private readonly IAnimeElementConverter converter = new AnimeElementConverter();
         private List<IAnimation> animations = new List<IAnimation>();
-        private IAnimation playingAnimation;
+        private List<IAnimation> playingAnimations = new List<IAnimation>();
         private IDisplayObject target;
         private bool canChangeTarget = true;
         private bool initialGenerate;
@@ -113,25 +113,37 @@ namespace Scenes.Scripts.Animations
                 initialGenerate = false;
             }
 
-            if (playingAnimation == null || !playingAnimation.IsWorking)
+            // .All は空のリストの場合は true を返す。よってリストが空ならブロックに突入する。
+            if (playingAnimations.All(p => !p.IsWorking))
             {
-                playingAnimation = animations.FirstOrDefault(a => a.IsWorking);
-                animations = animations.Where(a => a.IsWorking).ToList();
+                var first = animations.FirstOrDefault(a => a.IsWorking);
+                if (first != null)
+                {
+                    playingAnimations = !string.IsNullOrWhiteSpace(first.GroupName)
+                        ? animations.Where(a => a.GroupName == first.GroupName && a.IsWorking).ToList()
+                        : new List<IAnimation>() { first };
+
+                    animations = animations.Where(a => a.IsWorking).ToList();
+                }
+                else
+                {
+                    playingAnimations = new List<IAnimation>();
+                }
             }
 
-            if (playingAnimation == null)
+            if (playingAnimations.Count == 0)
             {
                 Stop();
                 return;
             }
 
-            if (playingAnimation is Draw)
+            if (playingAnimations.Any(a => a is Draw))
             {
                 // 実行アニメーションが Draw の場合は、ターゲット画像の変更が発生する可能性があるため、セッターを許可する。
                 canChangeTarget = true;
             }
 
-            playingAnimation.Execute();
+            playingAnimations.ForEach(p => p.Execute());
 
             // セッターを許可するのは、Execute() 実行中のみ
             canChangeTarget = false;

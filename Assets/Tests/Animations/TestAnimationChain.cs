@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using NUnit.Framework;
 using Scenes.Scripts.Animations;
+using Tests.Loaders;
 
 namespace Tests.Animations
 {
@@ -197,5 +199,160 @@ namespace Tests.Animations
             Assert.IsFalse(chain.IsWorking);
         }
 
+        [Test]
+        public void ダミー実行のテスト()
+        {
+            var generator = new DummyAnimationGenerator();
+
+            var aa = new DummyAnimation() { Duration = 2, };
+            var ab = new DummyAnimation() { Duration = 2, };
+            var dummy = new DummyDisplayObject();
+
+            generator.Animations.Add(aa);
+            generator.Animations.Add(ab);
+
+            var animationChain = new AnimationChain(generator)
+            {
+                Target = dummy
+            };
+
+            // DummyAnimationGenerator を DI したことにより、ここで入力した値に関わらず、 aa, ab, が使用される
+            // アニメーション名が shake なのは、無効なアニメーションを入力できないため
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+
+            Assert.IsTrue(animationChain.IsWorking);
+            Assert.IsTrue(aa.IsWorking);
+            Assert.IsTrue(ab.IsWorking);
+
+            animationChain.Execute();
+            Assert.AreEqual(1, aa.ProcessCounter);
+
+            animationChain.Execute();
+            Assert.AreEqual(2, aa.ProcessCounter);
+            Assert.IsFalse(aa.IsWorking);
+
+            animationChain.Execute();
+            Assert.AreEqual(1, ab.ProcessCounter);
+
+            animationChain.Execute();
+            Assert.AreEqual(2, ab.ProcessCounter);
+            Assert.IsFalse(ab.IsWorking);
+        }
+
+        [Test]
+        public void 同時実行のテスト()
+        {
+            var generator = new DummyAnimationGenerator();
+
+            var aa = new DummyAnimation() { Duration = 2, GroupName = "a"};
+            var ab = new DummyAnimation() { Duration = 2, GroupName = "a"};
+            var ac = new DummyAnimation() { Duration = 2, };
+            var dummy = new DummyDisplayObject();
+
+            generator.Animations.Add(aa);
+            generator.Animations.Add(ab);
+            generator.Animations.Add(ac);
+
+            var animationChain = new AnimationChain(generator)
+            {
+                Target = dummy
+            };
+
+            // DummyAnimationGenerator を DI したことにより、ここで入力した値に関わらず、 aa, ab, ac が使用される
+            // アニメーション名が shake なのは、無効なアニメーションを入力できないため
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+
+            Assert.IsTrue(animationChain.IsWorking);
+            Assert.IsTrue(aa.IsWorking);
+            Assert.IsTrue(ab.IsWorking);
+
+            // aa, ab は同じグループ名が指定されているので、同時に実行される。
+            animationChain.Execute();
+            Assert.AreEqual(1, aa.ProcessCounter);
+            Assert.AreEqual(1, ab.ProcessCounter);
+
+            animationChain.Execute();
+            Assert.AreEqual(2, aa.ProcessCounter);
+            Assert.AreEqual(2, ab.ProcessCounter);
+
+            Assert.IsFalse(aa.IsWorking);
+            Assert.IsFalse(ab.IsWorking);
+
+            animationChain.Execute();
+            Assert.AreEqual(1, ac.ProcessCounter);
+
+            animationChain.Execute();
+            Assert.AreEqual(2, ac.ProcessCounter);
+            Assert.IsFalse(ac.IsWorking);
+
+            animationChain.Execute();
+            Assert.IsFalse(animationChain.IsWorking);
+        }
+
+        [Test]
+        public void 同時実行ループのテスト()
+        {
+            var generator = new DummyAnimationGenerator();
+
+            var aa = new DummyAnimation() { Duration = 2, GroupName = "a"};
+            var ab = new DummyAnimation() { Duration = 2, GroupName = "a"};
+            var ac = new DummyAnimation() { Duration = 2, };
+
+            var ad = new DummyAnimation() { Duration = 2, GroupName = "a"};
+            var ae = new DummyAnimation() { Duration = 2, GroupName = "a"};
+            var af = new DummyAnimation() { Duration = 2, };
+
+            var dummy = new DummyDisplayObject();
+
+            generator.Animations.Add(aa);
+            generator.Animations.Add(ab);
+            generator.Animations.Add(ac);
+
+            generator.Animations.Add(ad);
+            generator.Animations.Add(ae);
+            generator.Animations.Add(af);
+
+            var animationChain = new AnimationChain(generator)
+            {
+                Target = dummy,
+                RepeatCount = 1,
+            };
+
+            // DummyAnimationGenerator を DI したことにより、ここで入力した値に関わらず、 aa - af が使用される
+            // アニメーション名が shake なのは、無効なアニメーションを入力できないため
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+            animationChain.AddAnimationTag(XElement.Parse("<anime name=\"shake\" />"));
+
+            // 実行一周目
+            // グループになっているアニメーションが２つあるでの、一周分の Duration は 4
+            animationChain.Execute();
+            animationChain.Execute();
+            animationChain.Execute();
+            animationChain.Execute();
+
+            CollectionAssert.AreEqual(
+                new List<bool>() { aa.IsWorking, ab.IsWorking, ac.IsWorking, ad.IsWorking, ae.IsWorking, af.IsWorking, },
+                new List<bool>() { false, false, false, true, true, true }
+            );
+
+            // 実行２周目
+            animationChain.Execute();
+            animationChain.Execute();
+            animationChain.Execute();
+            animationChain.Execute();
+
+            CollectionAssert.AreEqual(
+                new List<bool>() { aa.IsWorking, ab.IsWorking, ac.IsWorking, ad.IsWorking, ae.IsWorking, af.IsWorking, },
+                new List<bool>() { false, false, false, false, false, false },
+                "8回分実行した時点で6個分のアニメーションは全て終了しているはず"
+            );
+
+            animationChain.Execute();
+            Assert.IsFalse(animationChain.IsWorking);
+        }
     }
 }
