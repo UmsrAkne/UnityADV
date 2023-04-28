@@ -40,6 +40,8 @@
 
         public int Interval { get; set; }
 
+        public string GroupName { get; set; } = string.Empty;
+
         public void Execute()
         {
             if (Target == null || !IsWorking)

@@ -39,6 +39,8 @@ namespace Scenes.Scripts.Animations
 
         public int Interval { get; set; }
 
+        public string GroupName { get; set; } = string.Empty;
+
         public void Execute()
         {
             if (!IsWorking || Target == null)

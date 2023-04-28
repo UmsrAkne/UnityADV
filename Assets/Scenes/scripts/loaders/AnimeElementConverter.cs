@@ -7,7 +7,7 @@
     using SceneContents;
     using Scenes.Scripts.Animations;
 
-    public class AnimeElementConverter : IXMLElementConverter
+    public class AnimeElementConverter : IAnimeElementConverter
     {
         public string TargetElementName => "anime";
 

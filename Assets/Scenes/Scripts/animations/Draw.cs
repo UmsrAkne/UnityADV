@@ -24,6 +24,8 @@ namespace Scenes.Scripts.Animations
 
         public int Interval { get; set; }
 
+        public string GroupName { get; set; } = string.Empty;
+
         public int X { get; set; }
 
         public int Y { get; set; }
