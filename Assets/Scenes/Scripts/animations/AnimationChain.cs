@@ -63,6 +63,8 @@ namespace Scenes.Scripts.Animations
 
         public int Interval { get; set; }
 
+        public string GroupName { get; set; } = string.Empty;
+
         public void AddAnimation(IAnimation anime)
         {
             if (anime is AnimationChain)

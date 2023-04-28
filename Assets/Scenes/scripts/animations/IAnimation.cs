@@ -20,6 +20,8 @@
 
         int Interval { get; set; }
 
+        string GroupName { get; set; }
+
         void Execute();
 
         void Start();

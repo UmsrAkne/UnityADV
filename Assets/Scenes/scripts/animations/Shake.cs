@@ -28,6 +28,8 @@
 
         public int Interval { get; set; }
 
+        public string GroupName { get; set; } = string.Empty;
+
         public int Delay { get; set; }
 
         public void Execute()

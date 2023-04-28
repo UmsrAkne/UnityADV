@@ -39,6 +39,8 @@ namespace Tests.Animations
 
         public int Interval { get; set; }
 
+        public string GroupName { get; set; } = string.Empty;
+
         public void Execute()
         {
             ExecuteCounter++;
