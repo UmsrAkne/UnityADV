@@ -22,6 +22,8 @@ namespace Scenes.Scripts.Loaders
 
         public List<string> Log { get; private set; } = new List<string>();
 
+        public HashSet<string> UsingFileNames { get; } = new HashSet<string>();
+
         public Resource Resource { get; set; }
 
         private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
@@ -82,6 +84,33 @@ namespace Scenes.Scripts.Loaders
                 Converters.ForEach(c => c.Convert(x, scenario));
                 return scenario;
             }).ToList();
+
+            // 使用しているファイル名を抽出する
+            var targetElements = xml.Root.Descendants()
+                .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
+
+            foreach (var x in targetElements)
+            {
+                if (x.Attribute("a") != null)
+                {
+                    UsingFileNames.Add(x.Attribute("a")?.Value);
+                }
+
+                if (x.Attribute("b") != null)
+                {
+                    UsingFileNames.Add(x.Attribute("b")?.Value);
+                }
+
+                if (x.Attribute("c") != null)
+                {
+                    UsingFileNames.Add(x.Attribute("c")?.Value);
+                }
+
+                if (x.Attribute("d") != null)
+                {
+                    UsingFileNames.Add(x.Attribute("d")?.Value);
+                }
+            }
 
             Converters.ForEach(c => Log.AddRange(c.Log));
 

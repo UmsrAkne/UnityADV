@@ -18,6 +18,8 @@ namespace Scenes.Scripts.Loaders
 
         public TargetImageType TargetImageType { get; set; }
 
+        public HashSet<string> UsingFileNames { get; set; } = new HashSet<string>();
+
         private List<SpriteWrapper> Sprites { get; set; } = new List<SpriteWrapper>();
 
         private Dictionary<string, SpriteWrapper> SpriteDictionary { get; set; } = new Dictionary<string, SpriteWrapper>();
@@ -45,10 +47,16 @@ namespace Scenes.Scripts.Loaders
 
             GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
             {
-                var spWrapper = LoadImage(path);
-                Sprites.Add(spWrapper);
-                SpriteDictionary.Add(Path.GetFileName(path), spWrapper);
-                SpriteDictionary.Add(Path.GetFileNameWithoutExtension(path), spWrapper);
+                var fileName = Path.GetFileName(path);
+                var fileNameWe = Path.GetFileNameWithoutExtension(path);
+                var pathIsUsingFile = UsingFileNames.Contains(fileName) || UsingFileNames.Contains(fileNameWe);
+
+                if (pathIsUsingFile || TargetImageType != TargetImageType.eventCg) {
+                    var spWrapper = LoadImage(path);
+                    Sprites.Add(spWrapper);
+                    SpriteDictionary.Add(fileName, spWrapper);
+                    SpriteDictionary.Add(fileNameWe, spWrapper);
+                }
             });
 
             // 上の LoadImage(path) が非同期的な処理だった場合、この時点ではロード完了していないかも
