@@ -27,7 +27,8 @@
                     {
                         abcdAttribute.ForEach(s =>
                         {
-                            order.Names.Add(imageTag.Attribute(s) != null ? imageTag.Attribute(s).Value : string.Empty);
+                            string name = imageTag.Attribute(s) != null ? imageTag.Attribute(s).Value : string.Empty;
+                            order.Names.Add(name);
                         });
                     }
                     else

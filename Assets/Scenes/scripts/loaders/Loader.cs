@@ -42,9 +42,13 @@
             seLoader.TargetAudioType = TargetAudioType.se;
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
 
+            textLoader.Resource = Resource;
+            textLoader.Load(path);
+
+            imageLoader.UsingFileNames = textLoader.UsingFileNames;
+
             var loaders = new List<IContentsLoader>()
             {
-                textLoader,
                 imageLoader,
                 maskLoader,
                 voiceLoader,
