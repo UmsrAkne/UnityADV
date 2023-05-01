@@ -43,6 +43,13 @@ namespace Tests.Animations
             Assert.Less(Math.Abs(dummy.Scale) - 1.5,  0.01);
 
             Assert.IsFalse(scaleChanger.IsWorking);
+
+            // 停止後に実行しても動作しないことを確認する
+            scaleChanger.Execute();
+            scaleChanger.Execute();
+            scaleChanger.Execute();
+            Assert.Less(Math.Abs(dummy.Scale) - 1.5,  0.01);
+            Assert.IsFalse(scaleChanger.IsWorking);
         }
 
         [Test]
@@ -76,6 +83,12 @@ namespace Tests.Animations
 
             Assert.IsFalse(scaleChanger.IsWorking);
 
+            // 停止後に実行しても動作しないことを確認する
+            scaleChanger.Execute();
+            scaleChanger.Execute();
+            scaleChanger.Execute();
+            Assert.Less(Math.Abs(dummy.Scale) - 1.3,  0.01);
+            Assert.IsFalse(scaleChanger.IsWorking);
         }
     }
 }
