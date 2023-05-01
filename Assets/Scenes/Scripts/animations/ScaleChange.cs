@@ -78,7 +78,7 @@ namespace Scenes.Scripts.Animations
             Target.Scale += changeAmountPerFrame;
             frameCounter++;
 
-            if (Math.Abs(To - Target.Scale) <= 0.01)
+            if (frameCounter >= Duration)
             {
                 Stop();
             }
