@@ -133,6 +133,7 @@ bgv を鳴らす
     - int RepeatCount 
     - int Interval 
     - int Delay
+    - string GroupName
 
 ### slide 
 
@@ -143,6 +144,7 @@ bgv を鳴らす
     - int Duration = int.MaxValue;
     - int RepeatCount
     - int Interval
+    - string GroupName
 
 ### flash 
 
@@ -153,6 +155,7 @@ bgv を鳴らす
     - int RepeatCount  = 1; 
     - int Delay  = 0;
     - int Interval = 0;
+    - string GroupName
 
 ### bound
 
@@ -172,6 +175,18 @@ bgv を鳴らす
 ```
 
 この要素の子のアニメーションは、記述された順番で順次実行され、この要素自体が単体のアニメーションとして扱われます。
+
+ただし、同じ `groupName` 属性のアニメーションが複数ある場合は、属性付きのアニメーションは同時実行されます。
+
+```
+  <anime name="animationChain">
+    <!-- shake, slide に同じグループ名を指定すると同時に動作する -->
+    <anime name="shake" groupName="sampleGroup" />
+    <anime name="slide" groupName="sampleGroup" />
+  </anime>
+```
+
+`groupName` 属性で同時にアニメーションを動かした場合、両方のアニメーションが停止するまで次のアニメーションは再生されません。
 
 Image 要素が入力された場合、他のアニメーション同様、このアニメーションはストップします。
 
@@ -198,6 +213,7 @@ Image 要素が入力された場合、他のアニメーション同様、こ�
   - int Duration 
   - int RepeatCount // 未実装
   - int Delay 
+  - string GroupName
 
 記述例
 
