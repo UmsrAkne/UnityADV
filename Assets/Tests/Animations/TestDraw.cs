@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using NUnit.Framework;
 using Scenes.Scripts.Animations;
 
