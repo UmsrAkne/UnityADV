@@ -13,7 +13,7 @@ namespace Tests.Loaders
         [Test]
         public void 通常生成テスト()
         {
-            var converter = new AnimeElementConverter();
+            var _ = new AnimeElementConverter();
         }
 
         [Test]

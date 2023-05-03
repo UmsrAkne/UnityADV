@@ -9,12 +9,14 @@ namespace Tests.Loaders
 {
     public class DummyAnimationGenerator : IAnimeElementConverter
     {
-        public int generateCounter = 0;
+        public int GenerateCounter;
 
         public List<DummyAnimation> Animations { get; }= new List<DummyAnimation>();
 
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
         public string TargetElementName { get; }
 
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
         public List<string> Log { get; }
 
         public void Convert(XElement xmlElement, Scenario scenario)
@@ -23,7 +25,7 @@ namespace Tests.Loaders
 
         public IAnimation GenerateAnimation(XElement element)
         {
-            return Animations[generateCounter++];
+            return Animations[GenerateCounter++];
         }
     }
 }

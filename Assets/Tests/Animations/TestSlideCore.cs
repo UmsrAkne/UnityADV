@@ -1,7 +1,6 @@
 using System;
 using NUnit.Framework;
 using Scenes.Scripts.Animations;
-using UnityEngine;
 
 namespace Tests.Animations
 {
