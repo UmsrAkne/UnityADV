@@ -95,6 +95,8 @@
                 IsWorking = true;
 
                 var radian = Degree * (Math.PI / 180);
+
+                // これって sin と cos 逆じゃないですか……? ((('_';)))
                 movingDistance.x = (float)Math.Sin(radian);
                 movingDistance.y = (float)Math.Cos(radian);
 
