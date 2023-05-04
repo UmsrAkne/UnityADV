@@ -8,7 +8,7 @@
         private int executeCounter;
         private bool isInitialExecute = true;
         private IDisplayObject target;
-        private SlideCore core;
+        private IAnimation core;
 
         public string AnimationName => "slide";
 
@@ -40,7 +40,7 @@
 
         public int Distance { get; set; }
 
-        public int Duration { get; set; } = int.MaxValue;
+        public int Duration { get; set; }
 
         public int RepeatCount { get; set; }
 
@@ -116,13 +116,21 @@
 
         private void Initialize()
         {
-            core = new SlideCore()
-            {
-                Target = Target,
-                Distance = Distance,
-                Degree = Degree,
-                Speed = Speed
-            };
+            core = Duration == 0
+                ? (IAnimation)new SlideCore()
+                {
+                    Target = Target,
+                    Distance = Distance,
+                    Degree = Degree,
+                    Speed = Speed
+                }
+                : new SlideCoreB()
+                {
+                    Target = Target,
+                    Distance = Distance,
+                    Degree = Degree,
+                    Duration = Duration,
+                };
 
             core.Start();
         }
