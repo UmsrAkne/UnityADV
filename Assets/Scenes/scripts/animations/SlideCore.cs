@@ -4,15 +4,13 @@
     using UnityEngine;
     using SceneContents;
 
-    public class SlideCore
+    public class SlideCore : IAnimation
     {
-        private double totalDistance;
-        private Vector2 movingDistance = new Vector2(0, 0);
-        private double startSectionCount;
         private double finalSectionCount;
+        private Vector2 movingDistance = new Vector2(0, 0);
         private double runningUpDistance;
-
-        public string AnimationName => "slideCore";
+        private double startSectionCount;
+        private double totalDistance;
 
         public int Distance { get; set; }
 
@@ -20,9 +18,23 @@
 
         public int Degree { get; set; }
 
+        public string AnimationName => "slideCore";
+
         public bool IsWorking { get; private set; }
 
         public IDisplayObject Target { private get; set; }
+
+        public ImageContainer TargetContainer { get; set; }
+
+        public int TargetLayerIndex { get; set; }
+
+        public int RepeatCount { get; set; }
+
+        public int Delay { get; set; }
+
+        public int Interval { get; set; }
+
+        public string GroupName { get; set; }
 
         public void Execute()
         {
@@ -90,6 +102,11 @@
                 startSectionCount = Math.Min(Distance * 0.2, maxAccelerationSectionLength);
                 finalSectionCount = Math.Max(Distance * 0.8, Distance - maxAccelerationSectionLength);
             }
+        }
+
+        void IAnimation.Stop()
+        {
+            Stop();
         }
 
         /// <summary>

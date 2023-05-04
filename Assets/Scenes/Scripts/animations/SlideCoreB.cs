@@ -3,7 +3,7 @@ using Scenes.Scripts.SceneContents;
 
 namespace Scenes.Scripts.Animations
 {
-    public class SlideCoreB
+    public class SlideCoreB : IAnimation
     {
         private double beforeDistance;
         private double endPos = 0;
@@ -12,10 +12,6 @@ namespace Scenes.Scripts.Animations
         private double totalLength = 0;
         private double x;
         private double y;
-
-        public bool IsWorking { get; private set; } = true;
-
-        public IDisplayObject Target { get; set; }
 
         public int Duration { get; set; }
 
@@ -31,6 +27,24 @@ namespace Scenes.Scripts.Animations
         /// 値は 0 - 10 の間での使用を想定。デフォルトは 5
         /// </summary>
         public int SideCutting { get => sideCutting; set => sideCutting = value; }
+
+        public string AnimationName => "slideCoreB";
+
+        public bool IsWorking { get; private set; } = true;
+
+        public IDisplayObject Target { get; set; }
+
+        public ImageContainer TargetContainer { get; set; }
+
+        public int TargetLayerIndex { get; set; }
+
+        public int RepeatCount { get; set; }
+
+        public int Delay { get; set; }
+
+        public int Interval { get; set; }
+
+        public string GroupName { get; set; }
 
         public void Execute()
         {
