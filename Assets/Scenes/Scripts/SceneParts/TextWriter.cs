@@ -105,12 +105,20 @@
 
         public void SetScenarioIndex(int index)
         {
-            initialExecute = false;
+            if (Scenario != null)
+            {
+                counter = Scenario.Text.Length;
+                WriteText(string.Empty);
+            }
+
+            if (initialExecute)
+            {
+                initialExecute = false;
+                Scenario = Scenarios[index];
+            }
+
             ScenarioIndex = index;
-            counter = 0;
-            WriteText(string.Empty);
             Writing = false;
-            Execute();
         }
 
         private void AppendText(char character)
