@@ -99,6 +99,7 @@ namespace Scenes.Scripts.MainLogics
             if (Input.GetKeyDown(KeyCode.N))
             {
                 TextWriter.SetScenarioIndex(ChapterManager.GetNextChapterIndex());
+                Forward();
             }
 
             if (Input.GetKey(KeyCode.LeftShift))
@@ -106,6 +107,7 @@ namespace Scenes.Scripts.MainLogics
                 if (Input.GetKeyDown(KeyCode.N))
                 {
                     TextWriter.SetScenarioIndex(ChapterManager.GetLastChapterIndex());
+                    Forward();
                 }
             }
 
