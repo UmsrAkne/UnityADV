@@ -63,11 +63,17 @@ namespace Scenes.Scripts.Loaders
 
             var scenarioIndex = 0;
 
-            Scenario =
+            var scenarioList =
             xml.Root.Descendants()
                 .Where(x => x.Name.LocalName == "scn" || x.Name.LocalName == "scenario")
-                .Where(x => x.Element(ignoreElement) == null)
-                .Select(x =>
+                .Where(x => x.Element(ignoreElement) == null).ToList();
+
+            if (scenarioList.FirstOrDefault(x => x.Element("start") != null) != null)
+            {
+                scenarioList = scenarioList.SkipWhile(x => x.Element("start") == null).ToList();
+            }
+
+            Scenario = scenarioList.Select(x =>
             {
                 var scenario = new Scenario() { Index = ++scenarioIndex };
 
@@ -86,7 +92,7 @@ namespace Scenes.Scripts.Loaders
             }).ToList();
 
             // 使用しているファイル名を抽出する
-            var targetElements = xml.Root.Descendants()
+            var targetElements = scenarioList.Descendants()
                 .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
 
             foreach (var x in targetElements)
