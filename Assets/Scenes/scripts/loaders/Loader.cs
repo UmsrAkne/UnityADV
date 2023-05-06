@@ -41,6 +41,7 @@
             bgvLoader.TargetAudioType = TargetAudioType.bgVoice;
             seLoader.TargetAudioType = TargetAudioType.se;
             bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
+            bgmLoader.BGMFileName = Resource.SceneSetting.BGMFileName;
 
             textLoader.Resource = Resource;
             textLoader.Load(path);

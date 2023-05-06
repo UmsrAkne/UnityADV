@@ -23,6 +23,8 @@ namespace Scenes.Scripts.Loaders
 
         public int BGMNumber { private get; set; }
 
+        public string BGMFileName { get; set; } = string.Empty;
+
         /// <summary>
         /// BGM をロードします。インターフェースの都合でパスを引数に取りますが、入力値に関わらず　ResourcePath.CommonBGMDirectoryName が参照されます。
         /// </summary>
@@ -43,6 +45,15 @@ namespace Scenes.Scripts.Loaders
         private string GetSoundFilePath(string targetDirectoryPath)
         {
             var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
+
+            // ファイル名で指定が入っている場合は、番号による指定よりも優先する
+            if (!string.IsNullOrWhiteSpace(BGMFileName))
+            {
+                var path = allFilePaths.FirstOrDefault(
+                    f => Path.GetFileName(f) == BGMFileName || Path.GetFileNameWithoutExtension(f) == BGMFileName);
+
+                return path != null ? Path.GetFullPath(path) : string.Empty;
+            }
 
             if (allFilePaths.Count(p => Path.GetExtension(p) == ".ogg") >= BGMNumber)
             {
