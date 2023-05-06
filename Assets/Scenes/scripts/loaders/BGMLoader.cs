@@ -44,7 +44,10 @@ namespace Scenes.Scripts.Loaders
 
         private string GetSoundFilePath(string targetDirectoryPath)
         {
-            var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
+            var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath))
+                .Where(p => Path.GetExtension(p) == ".ogg")
+                .Select(Path.GetFullPath)
+                .ToList();
 
             // ファイル名で指定が入っている場合は、番号による指定よりも優先する
             if (!string.IsNullOrWhiteSpace(BGMFileName))
@@ -52,15 +55,15 @@ namespace Scenes.Scripts.Loaders
                 var path = allFilePaths.FirstOrDefault(
                     f => Path.GetFileName(f) == BGMFileName || Path.GetFileNameWithoutExtension(f) == BGMFileName);
 
-                return path != null ? Path.GetFullPath(path) : string.Empty;
+                return path ?? string.Empty;
             }
 
-            if (allFilePaths.Count(p => Path.GetExtension(p) == ".ogg") >= BGMNumber)
+            if (allFilePaths.Count >= BGMNumber)
             {
-                return Path.GetFullPath(allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").ToList()[BGMNumber]);
+                return allFilePaths[BGMNumber];
             }
 
-            return Path.GetFullPath(allFilePaths.FirstOrDefault(f => Path.GetExtension(f) == ".ogg") ?? string.Empty);
+            return allFilePaths.FirstOrDefault() ?? string.Empty;
         }
 
         private IEnumerator LoadAudio(string path)
