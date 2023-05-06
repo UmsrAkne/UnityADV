@@ -35,17 +35,16 @@
                 setting.DefaultImageHeight = h != null ? int.Parse(h) : setting.DefaultImageHeight;
             }
 
-            if (settingTag.Element(bgmElementName) != null)
+            var bgmElement = settingTag.Element(bgmElementName);
+            if (bgmElement != null)
             {
-                var bgmNumber = settingTag.Element(bgmElementName)?.Attribute(numberAttribute)?.Value;
+                var bgmNumber = bgmElement.Attribute(numberAttribute)?.Value;
                 setting.BGMNumber = bgmNumber != null ? int.Parse(bgmNumber) : setting.BGMNumber;
 
-                if (settingTag.Element(bgmElementName)?.Attribute(fileNameAttribute) != null)
-                {
-                    setting.BGMFileName = settingTag.Element(bgmElementName)?.Attribute(fileNameAttribute)?.Value;
-                }
+                var bgmName = bgmElement.Attribute(fileNameAttribute);
+                setting.BGMFileName = bgmName != null ? bgmName.Value : string.Empty;
 
-                var bgmVolume = settingTag.Element(bgmElementName)?.Attribute(volumeAttribute)?.Value;
+                var bgmVolume = bgmElement.Attribute(volumeAttribute)?.Value;
                 setting.BGMVolume = bgmVolume != null ? float.Parse(bgmVolume) : setting.BGMVolume;
             }
 
