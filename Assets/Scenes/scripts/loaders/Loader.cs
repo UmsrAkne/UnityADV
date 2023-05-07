@@ -46,7 +46,12 @@
             textLoader.Resource = Resource;
             textLoader.Load(path);
 
-            imageLoader.UsingFileNames = textLoader.UsingFileNames;
+            imageLoader.UsingFileNames = textLoader.UsingImageFileNames;
+
+            voiceLoader.UsingVoiceFileNames = textLoader.UsingVoiceFileNames;
+            voiceLoader.UsingVoiceNumbers = textLoader.UsingVoiceNumbers;
+
+            bgvLoader.UsingBgvFileNames = textLoader.UsingBgvFileNames;
 
             var loaders = new List<IContentsLoader>()
             {

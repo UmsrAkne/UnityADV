@@ -22,7 +22,13 @@ namespace Scenes.Scripts.Loaders
 
         public List<string> Log { get; private set; } = new List<string>();
 
-        public HashSet<string> UsingFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingImageFileNames { get; } = new HashSet<string>();
+
+        public HashSet<string> UsingVoiceFileNames { get; } = new HashSet<string>();
+
+        public HashSet<int> UsingVoiceNumbers { get; } = new HashSet<int>();
+
+        public HashSet<string> UsingBgvFileNames { get; } = new HashSet<string>();
 
         public Resource Resource { get; set; }
 
@@ -91,7 +97,7 @@ namespace Scenes.Scripts.Loaders
                 return scenario;
             }).ToList();
 
-            // 使用しているファイル名を抽出する
+            // 使用している画像のファイル名を抽出する
             var targetElements = scenarioList.Descendants()
                 .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
 
@@ -99,22 +105,56 @@ namespace Scenes.Scripts.Loaders
             {
                 if (x.Attribute("a") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("a")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("a")?.Value);
                 }
 
                 if (x.Attribute("b") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("b")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("b")?.Value);
                 }
 
                 if (x.Attribute("c") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("c")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("c")?.Value);
                 }
 
                 if (x.Attribute("d") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("d")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("d")?.Value);
+                }
+            }
+
+            // 使用している音声ファイル名と番号を抽出する
+            var voiceElements = scenarioList.Descendants()
+                .Where(x => x.Name.LocalName == "voice");
+
+            foreach (var v in voiceElements)
+            {
+                var fileNameAtt = v.Attribute("fileName");
+                if (fileNameAtt != null && !string.IsNullOrWhiteSpace(fileNameAtt.Value))
+                {
+                    UsingVoiceFileNames.Add(fileNameAtt.Value);
+                    continue;
+                }
+
+                var numberAtt = v.Attribute("number");
+                if (numberAtt == null || int.Parse(numberAtt.Value) == 0)
+                {
+                    return;
+                }
+
+                UsingVoiceNumbers.Add(int.Parse(numberAtt.Value));
+            }
+
+            foreach (var bgv in scenarioList.Descendants().Where(x => x.Name.LocalName == "backgroundVoice"))
+            {
+                var fileNamesAtt = bgv.Attribute("names");
+                if (fileNamesAtt != null && !string.IsNullOrWhiteSpace(fileNamesAtt.Value))
+                {
+                    foreach (var s in fileNamesAtt.Value.Replace(" ", string.Empty).Split(','))
+                    {
+                        UsingBgvFileNames.Add(s);
+                    }
                 }
             }
 
