@@ -1,9 +1,9 @@
-﻿namespace Tests
-{
-    using System;
-    using Scenes.Scripts.SceneContents;
-    using UnityEngine;
+﻿using System;
+using Scenes.Scripts.SceneContents;
+using UnityEngine;
 
+namespace Tests.SceneContents
+{
     /// <summary>
     /// サウンドを再生するクラスをテストするためのダミークラス
     /// </summary>

@@ -1,12 +1,12 @@
-﻿namespace Tests
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using NUnit.Framework;
-    using Scenes.Scripts.SceneContents;
-    using Scenes.Scripts.SceneParts;
-    using UnityEngine.TestTools;
+﻿using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
+using Scenes.Scripts.SceneContents;
+using Scenes.Scripts.SceneParts;
+using UnityEngine.TestTools;
 
+namespace Tests.SceneParts
+{
     public class TestTextWriter
     {
         // A Test behaves as an ordinary method

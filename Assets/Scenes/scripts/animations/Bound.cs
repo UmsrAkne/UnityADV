@@ -5,12 +5,24 @@
 
     public class Bound : IAnimation
     {
-        private int frameCounter;
         private double dx;
         private double dy;
+        private int frameCounter;
 
         private double totalDx;
         private double totalDy;
+
+        // リフレクション経由でアクセスするため警告を抑制
+        // ReSharper disable once MemberCanBePrivate.Global
+        public int Duration { get; set; }
+
+        // リフレクション経由でアクセスするため警告を抑制
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public int Degree { get; set; }
+
+        // リフレクション経由でアクセスするため警告を抑制
+        // ReSharper disable once MemberCanBePrivate.Global
+        public int Strength { get; set; }
 
         public string AnimationName => "bound";
 
@@ -18,21 +30,10 @@
 
         public IDisplayObject Target { get; set; }
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public ImageContainer TargetContainer { get; set; }
 
         public int TargetLayerIndex { get; set; }
-
-        // リフレクション経由でアクセスするため警告を抑制
-        // ReSharper disable once MemberCanBePrivate.Global
-        public int Duration { get; set; }
-
-        // リフレクション経由でアクセスするため警告を抑制
-        // ReSharper disable once MemberCanBePrivate.Global
-        public int Degree { get; set; }
-
-        // リフレクション経由でアクセスするため警告を抑制
-        // ReSharper disable once MemberCanBePrivate.Global
-        public int Strength { get; set; }
 
         public int RepeatCount { get; set; }
 
