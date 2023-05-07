@@ -22,7 +22,7 @@ namespace Scenes.Scripts.Loaders
 
         public List<string> Log { get; private set; } = new List<string>();
 
-        public HashSet<string> UsingFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingImageFileNames { get; } = new HashSet<string>();
 
         public Resource Resource { get; set; }
 
@@ -99,22 +99,22 @@ namespace Scenes.Scripts.Loaders
             {
                 if (x.Attribute("a") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("a")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("a")?.Value);
                 }
 
                 if (x.Attribute("b") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("b")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("b")?.Value);
                 }
 
                 if (x.Attribute("c") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("c")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("c")?.Value);
                 }
 
                 if (x.Attribute("d") != null)
                 {
-                    UsingFileNames.Add(x.Attribute("d")?.Value);
+                    UsingImageFileNames.Add(x.Attribute("d")?.Value);
                 }
             }
 

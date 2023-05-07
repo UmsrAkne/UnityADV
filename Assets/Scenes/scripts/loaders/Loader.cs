@@ -46,7 +46,7 @@
             textLoader.Resource = Resource;
             textLoader.Load(path);
 
-            imageLoader.UsingFileNames = textLoader.UsingFileNames;
+            imageLoader.UsingFileNames = textLoader.UsingImageFileNames;
 
             var loaders = new List<IContentsLoader>()
             {
