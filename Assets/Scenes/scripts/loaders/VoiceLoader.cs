@@ -27,6 +27,12 @@
 
         private List<AudioClip> AudioClips { get; set; }
 
+        public HashSet<string> UsingVoiceFileNames { get; set; } = new HashSet<string>();
+
+        public HashSet<int> UsingVoiceNumbers { get; set;} = new HashSet<int>();
+
+        public HashSet<string> UsingSeFileName { get; set;} = new HashSet<string>();
+
         public TargetAudioType TargetAudioType { get; set; }
 
         public void Load(string targetDirectoryPath)
@@ -97,7 +103,21 @@
 
             for (var i = 0; i < audioPaths.Count; i++)
             {
-                StartCoroutine(LoadAudio(audioPaths[i], i));
+                var path = audioPaths[i];
+                if (TargetAudioType == TargetAudioType.voice)
+                {
+                    var isUsingNumber = UsingVoiceNumbers.Contains(i);
+                    var isUsingFileName = UsingVoiceFileNames.Contains(Path.GetFileName(path))
+                                          || UsingVoiceFileNames.Contains(Path.GetFileNameWithoutExtension(path));
+
+                    if (!isUsingNumber && !isUsingFileName)
+                    {
+                        loadCompleteCounter++;
+                        continue;
+                    }
+                }
+
+                StartCoroutine(LoadAudio(path, i));
             }
         }
 

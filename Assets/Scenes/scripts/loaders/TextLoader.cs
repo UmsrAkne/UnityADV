@@ -24,6 +24,12 @@ namespace Scenes.Scripts.Loaders
 
         public HashSet<string> UsingImageFileNames { get; } = new HashSet<string>();
 
+        public HashSet<string> UsingVoiceFileNames { get; } = new HashSet<string>();
+
+        public HashSet<int> UsingVoiceNumbers { get; } = new HashSet<int>();
+
+        public HashSet<string> UsingSeFileName { get; } = new HashSet<string>();
+
         public Resource Resource { get; set; }
 
         private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
@@ -91,7 +97,7 @@ namespace Scenes.Scripts.Loaders
                 return scenario;
             }).ToList();
 
-            // 使用しているファイル名を抽出する
+            // 使用している画像のファイル名を抽出する
             var targetElements = scenarioList.Descendants()
                 .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
 
@@ -116,6 +122,28 @@ namespace Scenes.Scripts.Loaders
                 {
                     UsingImageFileNames.Add(x.Attribute("d")?.Value);
                 }
+            }
+
+            // 使用している音声ファイル名と番号を抽出する
+            var voiceElements = scenarioList.Descendants()
+                .Where(x => x.Name.LocalName == "voice");
+
+            foreach (var v in voiceElements)
+            {
+                var fileNameAtt = v.Attribute("fileName");
+                if (fileNameAtt != null && !string.IsNullOrWhiteSpace(fileNameAtt.Value))
+                {
+                    UsingVoiceFileNames.Add(fileNameAtt.Value);
+                    continue;
+                }
+
+                var numberAtt = v.Attribute("number");
+                if (numberAtt == null || int.Parse(numberAtt.Value) == 0)
+                {
+                    return;
+                }
+
+                UsingVoiceNumbers.Add(int.Parse(numberAtt.Value));
             }
 
             Converters.ForEach(c => Log.AddRange(c.Log));

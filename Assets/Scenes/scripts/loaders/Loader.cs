@@ -47,6 +47,8 @@
             textLoader.Load(path);
 
             imageLoader.UsingFileNames = textLoader.UsingImageFileNames;
+            voiceLoader.UsingVoiceFileNames = textLoader.UsingVoiceFileNames;
+            voiceLoader.UsingVoiceNumbers = textLoader.UsingVoiceNumbers;
 
             var loaders = new List<IContentsLoader>()
             {
