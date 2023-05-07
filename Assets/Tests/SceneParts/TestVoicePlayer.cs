@@ -1,10 +1,11 @@
-﻿namespace Tests
-{
-    using System.Collections.Generic;
-    using NUnit.Framework;
-    using Scenes.Scripts.SceneContents;
-    using Scenes.Scripts.SceneParts;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
+using Scenes.Scripts.SceneContents;
+using Scenes.Scripts.SceneParts;
+using Tests.SceneContents;
 
+namespace Tests.SceneParts
+{
     public class TestVoicePlayer
     {
         [Test]

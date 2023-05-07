@@ -1,14 +1,12 @@
-﻿namespace Tests
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using NUnit.Framework;
-    using Scenes.Scripts.Loaders;
-    using Scenes.Scripts.SceneContents;
-    using UnityEngine.TestTools;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using NUnit.Framework;
+using Scenes.Scripts.Loaders;
+using Scenes.Scripts.SceneContents;
 
+namespace Tests.Loaders
+{
     public class TestImageElementConverter
     {
         [Test]
