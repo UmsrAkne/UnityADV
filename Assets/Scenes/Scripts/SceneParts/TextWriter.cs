@@ -103,6 +103,11 @@
             }
         }
 
+        /// <summary>
+        /// シナリオのインデックスを指定の番号にセットし、文字列の描画処理を停止します。
+        /// このメソッド単体では、次のテキストが表示されないので、直後に Execute() を呼び出してください。
+        /// </summary>
+        /// <param name="index"></param>
         public void SetScenarioIndex(int index)
         {
             if (Scenario != null)
