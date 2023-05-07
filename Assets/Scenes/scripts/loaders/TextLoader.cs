@@ -28,7 +28,7 @@ namespace Scenes.Scripts.Loaders
 
         public HashSet<int> UsingVoiceNumbers { get; } = new HashSet<int>();
 
-        public HashSet<string> UsingSeFileName { get; } = new HashSet<string>();
+        public HashSet<string> UsingBgvFileNames { get; } = new HashSet<string>();
 
         public Resource Resource { get; set; }
 
@@ -144,6 +144,18 @@ namespace Scenes.Scripts.Loaders
                 }
 
                 UsingVoiceNumbers.Add(int.Parse(numberAtt.Value));
+            }
+
+            foreach (var bgv in scenarioList.Descendants().Where(x => x.Name.LocalName == "backgroundVoice"))
+            {
+                var fileNamesAtt = bgv.Attribute("names");
+                if (fileNamesAtt != null && !string.IsNullOrWhiteSpace(fileNamesAtt.Value))
+                {
+                    foreach (var s in fileNamesAtt.Value.Replace(" ", string.Empty).Split(','))
+                    {
+                        UsingBgvFileNames.Add(s);
+                    }
+                }
             }
 
             Converters.ForEach(c => Log.AddRange(c.Log));

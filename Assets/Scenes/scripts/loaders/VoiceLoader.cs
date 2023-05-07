@@ -31,7 +31,7 @@
 
         public HashSet<int> UsingVoiceNumbers { get; set;} = new HashSet<int>();
 
-        public HashSet<string> UsingSeFileName { get; set;} = new HashSet<string>();
+        public HashSet<string> UsingBgvFileNames { get; set; } = new HashSet<string>();
 
         public TargetAudioType TargetAudioType { get; set; }
 
@@ -111,6 +111,18 @@
                                           || UsingVoiceFileNames.Contains(Path.GetFileNameWithoutExtension(path));
 
                     if (!isUsingNumber && !isUsingFileName)
+                    {
+                        loadCompleteCounter++;
+                        continue;
+                    }
+                }
+
+                if (TargetAudioType == TargetAudioType.bgVoice)
+                {
+                    var isUsingFileName = UsingBgvFileNames.Contains(Path.GetFileName(path))
+                                          || UsingBgvFileNames.Contains(Path.GetFileNameWithoutExtension(path));
+
+                    if (!isUsingFileName)
                     {
                         loadCompleteCounter++;
                         continue;
