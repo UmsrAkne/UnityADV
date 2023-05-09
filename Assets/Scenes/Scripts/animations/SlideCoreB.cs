@@ -12,6 +12,7 @@ namespace Scenes.Scripts.Animations
         private double totalLength = 0;
         private double x;
         private double y;
+        private double radian;
 
         public int Duration { get; set; }
 
@@ -58,6 +59,7 @@ namespace Scenes.Scripts.Animations
                 startPos = GetPositionRatio(SideCutting);
                 endPos = GetPositionRatio(90.0 - SideCutting);
                 totalLength = endPos - startPos;
+                radian = Degree * (Math.PI / 180);
             }
 
             ExecuteCounter++;
@@ -67,8 +69,8 @@ namespace Scenes.Scripts.Animations
             var beforeX = x;
             var beforeY = y;
 
-            x = Math.Cos(Degree * Math.PI / 180) * d;
-            y = Math.Sin(Degree * Math.PI / 180) * d;
+            x = Math.Cos(radian) * d;
+            y = Math.Sin(radian) * d;
 
             Target.X += (float)(x - beforeX);
             Target.Y += (float)(y - beforeY);
