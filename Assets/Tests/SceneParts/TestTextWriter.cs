@@ -30,7 +30,7 @@ namespace Tests.SceneParts
             var writer = new TextWriter();
             writer.SetResource(res);
 
-            /// ここからテスト
+            // ここからテスト
 
             writer.Execute();
             Assert.AreEqual(writer.CurrentText, string.Empty);
@@ -103,7 +103,7 @@ namespace Tests.SceneParts
             var writer = new TextWriter();
             writer.SetResource(res);
 
-            /// ここからテスト
+            // ここからテスト
 
             writer.SetScenarioIndex(2);
             Assert.AreEqual(writer.CurrentText, string.Empty);

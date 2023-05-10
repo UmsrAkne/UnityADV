@@ -1,4 +1,3 @@
-using System;
 using Scenes.Scripts.SceneContents;
 
 namespace Scenes.Scripts.Animations
