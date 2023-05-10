@@ -1,5 +1,3 @@
-using Scenes.Scripts.SceneContents;
-
 namespace Scenes.Scripts.Animations
 {
     public class AnimationCounter

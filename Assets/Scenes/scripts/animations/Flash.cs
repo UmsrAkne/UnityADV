@@ -30,7 +30,7 @@
 
         public double Alpha { get; set; } = 1.0f;
 
-        public int Delay { get; set; } = 0;
+        public int Delay { get; set; }
 
         public int Interval { get; set; }
 
@@ -98,7 +98,7 @@
 
         private float GetAlpha()
         {
-            var rad = frameCounter * (180 / Duration) * (Math.PI / 180);
+            var rad = frameCounter * (180.0 / Duration) * (Math.PI / 180);
             return (float)Math.Abs(Math.Sin(rad)) * (float)Alpha;
         }
     }

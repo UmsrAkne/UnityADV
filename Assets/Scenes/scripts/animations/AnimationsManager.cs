@@ -8,7 +8,7 @@ namespace Scenes.Scripts.Animations
 {
     public class AnimationsManager : IScenarioSceneParts
     {
-        private Scenario scenario;
+        private Scenario scn;
 
         public AnimationsManager(ImageContainer imageContainer)
         {
@@ -52,7 +52,7 @@ namespace Scenes.Scripts.Animations
 
         public void SetScenario(Scenario scenario)
         {
-            this.scenario = scenario;
+            scn = scenario;
 
             if (scenario.Animations.Count == 0 && scenario.StopOrders.All(s => !s.IsAnimationStopOrder()))
             {
@@ -85,7 +85,7 @@ namespace Scenes.Scripts.Animations
 
         private void ImageAddedEventHandler(object sender, ImageAddedEventArgs e)
         {
-            if (!scenario.Animations.Any(a => a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
+            if (!scn.Animations.Any(a => a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
             {
                 Animations.Add(new AlphaChanger());
             }
