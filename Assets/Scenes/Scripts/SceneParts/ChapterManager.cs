@@ -60,12 +60,12 @@ namespace Scenes.Scripts.SceneParts
                 return currentIndex;
             }
 
-            var lastChapterScenario = scenarios.Skip(currentIndex + 1).LastOrDefault(scenario => scenario.ChapterName != string.Empty);
+            var lastChapterScenario = scenarios.LastOrDefault(scenario => scenario.ChapterName != string.Empty);
 
             if (lastChapterScenario != null)
             {
                 currentIndex = scenarios.IndexOf(lastChapterScenario);
-                return currentIndex;
+                return scenarios.IndexOf(lastChapterScenario);
             }
             else
             {
