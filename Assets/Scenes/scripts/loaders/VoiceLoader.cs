@@ -58,7 +58,7 @@
 
             var audioPaths = GetSoundFilePaths(targetDirectoryPath);
 
-            if (audioPaths.Count == 0)
+            if (audioPaths.Count == 0 || !NeedLoad())
             {
                 LoadCompleted?.Invoke(this, EventArgs.Empty);
             }
@@ -167,6 +167,19 @@
 
                 AudioSources[index].AudioSource.clip = AudioClips[index];
                 PartLoadCompleted?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private bool NeedLoad()
+        {
+            switch (TargetAudioType)
+            {
+                case TargetAudioType.bgVoice:
+                    return UsingBgvFileNames.Count != 0;
+                case TargetAudioType.voice:
+                    return UsingVoiceFileNames.Count != 0 || UsingVoiceNumbers.Count != 0;
+                default:
+                    return true;
             }
         }
     }
