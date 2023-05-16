@@ -22,7 +22,7 @@ namespace Scenes.Scripts.Loaders
 
         public List<string> Log { get; private set; } = new List<string>();
 
-        public HashSet<string> UsingImageFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingImageFileNames { get; private set; } = new HashSet<string>();
 
         public HashSet<string> UsingVoiceFileNames { get; } = new HashSet<string>();
 
@@ -101,28 +101,7 @@ namespace Scenes.Scripts.Loaders
             var targetElements = scenarioList.Descendants()
                 .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
 
-            foreach (var x in targetElements)
-            {
-                if (x.Attribute("a") != null)
-                {
-                    UsingImageFileNames.Add(x.Attribute("a")?.Value);
-                }
-
-                if (x.Attribute("b") != null)
-                {
-                    UsingImageFileNames.Add(x.Attribute("b")?.Value);
-                }
-
-                if (x.Attribute("c") != null)
-                {
-                    UsingImageFileNames.Add(x.Attribute("c")?.Value);
-                }
-
-                if (x.Attribute("d") != null)
-                {
-                    UsingImageFileNames.Add(x.Attribute("d")?.Value);
-                }
-            }
+            UsingImageFileNames = GetUsingImageFileNames(targetElements.ToList());
 
             // 使用している音声ファイル名と番号を抽出する
             var voiceElements = scenarioList.Descendants()
@@ -162,6 +141,44 @@ namespace Scenes.Scripts.Loaders
 
             Resource.Scenarios = Scenarios;
             LoadCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        public HashSet<string> GetUsingImageFileNames(List<XElement> xElements)
+        {
+            var targetElements = xElements.Descendants()
+                .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
+
+            var usingImgFileNames = new HashSet<string>();
+
+            foreach (var x in targetElements)
+            {
+                var a = x.Attribute("a");
+                var b = x.Attribute("b");
+                var c = x.Attribute("c");
+                var d = x.Attribute("d");
+
+                if (a?.Value != null)
+                {
+                    usingImgFileNames.Add(a.Value);
+                }
+
+                if (b?.Value != null)
+                {
+                    usingImgFileNames.Add(b.Value);
+                }
+
+                if (c?.Value != null)
+                {
+                    usingImgFileNames.Add(c.Value);
+                }
+
+                if (d?.Value != null)
+                {
+                    usingImgFileNames.Add(d.Value);
+                }
+            }
+
+            return usingImgFileNames;
         }
     }
 }
