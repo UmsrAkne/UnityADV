@@ -32,5 +32,24 @@ namespace Tests.Loaders
 
             Assert.AreEqual(6, names.Count);
         }
+
+        [Test]
+        public void GetUsingVoiceFileNames()
+        {
+            var loader = new TextLoader();
+
+            var elements = new List<XElement>()
+            {
+                XElement.Parse(@"<scenario></scenario>"),
+                XElement.Parse(@"<scenario><voice fileName=""vc1"" /></scenario>"),
+                XElement.Parse(@"<scenario><voice fileName=""vc2"" /></scenario>"),
+                XElement.Parse(@"<scenario><voice number=""00000"" /></scenario>"),
+            };
+
+            var names = loader.GetUsingVoiceFileNames(elements);
+            Assert.IsTrue(names.Contains("vc1"));
+            Assert.IsTrue(names.Contains("vc2"));
+            Assert.AreEqual(2, names.Count);
+        }
     }
 }

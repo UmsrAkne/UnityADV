@@ -180,5 +180,20 @@ namespace Scenes.Scripts.Loaders
 
             return usingImgFileNames;
         }
+
+        public HashSet<string> GetUsingVoiceFileNames(List<XElement> xElements)
+        {
+            var targetElements = xElements.Descendants("voice");
+
+            var usingVcFileNames = new HashSet<string>();
+            foreach (var fileNameAtt in targetElements
+                         .Select(v => v.Attribute("fileName"))
+                         .Where(fileNameAtt => fileNameAtt != null && !string.IsNullOrWhiteSpace(fileNameAtt.Value)))
+            {
+                usingVcFileNames.Add(fileNameAtt.Value);
+            }
+
+            return usingVcFileNames;
+        }
     }
 }
