@@ -51,5 +51,26 @@ namespace Tests.Loaders
             Assert.IsTrue(names.Contains("vc2"));
             Assert.AreEqual(2, names.Count);
         }
+
+        [Test]
+        public void GetUsingVoiceNumbers()
+        {
+            var loader = new TextLoader();
+
+            var elements = new List<XElement>()
+            {
+                XElement.Parse(@"<scenario></scenario>"),
+                XElement.Parse(@"<scenario><voice fileName=""vc1"" /></scenario>"),
+                XElement.Parse(@"<scenario><voice number=""00000"" /></scenario>"),
+                XElement.Parse(@"<scenario><voice number=""1"" /></scenario>"),
+                XElement.Parse(@"<scenario><voice number=""002"" /></scenario>"),
+            };
+
+            var numbers = loader.GetUsingVoiceNumbers(elements);
+            Assert.IsFalse(numbers.Contains(0), "０番は例外的に除外する仕様とするので、リストに含まれないのが正しい");
+            Assert.IsTrue(numbers.Contains(1));
+            Assert.IsTrue(numbers.Contains(2));
+            Assert.AreEqual(2, numbers.Count);
+        }
     }
 }

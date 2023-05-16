@@ -195,5 +195,20 @@ namespace Scenes.Scripts.Loaders
 
             return usingVcFileNames;
         }
+
+        public HashSet<int> GetUsingVoiceNumbers(List<XElement> xElements)
+        {
+            var targetElements = xElements.Descendants("voice");
+
+            var usingNumbers = new HashSet<int>();
+            foreach (var numberAtt in targetElements
+                         .Select(v => v.Attribute("number"))
+                         .Where(n => n != null && int.Parse(n.Value) != 0))
+            {
+                usingNumbers.Add(int.Parse(numberAtt.Value));
+            }
+
+            return usingNumbers;
+        }
     }
 }
