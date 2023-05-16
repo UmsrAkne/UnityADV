@@ -18,7 +18,7 @@ namespace Scenes.Scripts.Loaders
         private string strAttribute = "str";
         private string ignoreElement = "ignore";
 
-        public List<Scenario> Scenario { get; set; }
+        public List<Scenario> Scenarios { get; set; }
 
         public List<string> Log { get; private set; } = new List<string>();
 
@@ -41,7 +41,7 @@ namespace Scenes.Scripts.Loaders
             if (!File.Exists(targetPath))
             {
                 Log.Add($"{targetPath} が見つかりませんでした");
-                Scenario = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
+                Scenarios = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace Scenes.Scripts.Loaders
             }
             catch (XmlException e)
             {
-                Scenario = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
+                Scenarios = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
                 Log.Add($"scenario.xmlのパースに失敗しました。詳細 : {e.Message}");
                 return;
             }
@@ -79,7 +79,7 @@ namespace Scenes.Scripts.Loaders
                 scenarioList = scenarioList.SkipWhile(x => x.Element("start") == null).ToList();
             }
 
-            Scenario = scenarioList.Select(x =>
+            Scenarios = scenarioList.Select(x =>
             {
                 var scenario = new Scenario() { Index = ++scenarioIndex };
 
@@ -160,7 +160,7 @@ namespace Scenes.Scripts.Loaders
 
             Converters.ForEach(c => Log.AddRange(c.Log));
 
-            Resource.Scenarios = Scenario;
+            Resource.Scenarios = Scenarios;
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
