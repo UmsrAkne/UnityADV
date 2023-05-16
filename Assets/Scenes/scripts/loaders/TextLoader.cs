@@ -140,7 +140,7 @@ namespace Scenes.Scripts.Loaders
                 var numberAtt = v.Attribute("number");
                 if (numberAtt == null || int.Parse(numberAtt.Value) == 0)
                 {
-                    return;
+                    continue;
                 }
 
                 UsingVoiceNumbers.Add(int.Parse(numberAtt.Value));
