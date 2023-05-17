@@ -18,17 +18,17 @@ namespace Scenes.Scripts.Loaders
         private string strAttribute = "str";
         private string ignoreElement = "ignore";
 
-        public List<Scenario> Scenario { get; set; }
+        public List<Scenario> Scenarios { get; set; }
 
         public List<string> Log { get; private set; } = new List<string>();
 
-        public HashSet<string> UsingImageFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingImageFileNames { get; private set; } = new HashSet<string>();
 
-        public HashSet<string> UsingVoiceFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingVoiceFileNames { get; private set; } = new HashSet<string>();
 
-        public HashSet<int> UsingVoiceNumbers { get; } = new HashSet<int>();
+        public HashSet<int> UsingVoiceNumbers { get; private set; } = new HashSet<int>();
 
-        public HashSet<string> UsingBgvFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingBgvFileNames { get; private set; } = new HashSet<string>();
 
         public Resource Resource { get; set; }
 
@@ -41,7 +41,7 @@ namespace Scenes.Scripts.Loaders
             if (!File.Exists(targetPath))
             {
                 Log.Add($"{targetPath} が見つかりませんでした");
-                Scenario = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
+                Scenarios = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace Scenes.Scripts.Loaders
             }
             catch (XmlException e)
             {
-                Scenario = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
+                Scenarios = new List<Scenario>() { new Scenario() { Text = "シナリオの読み込みに失敗しました。" } };
                 Log.Add($"scenario.xmlのパースに失敗しました。詳細 : {e.Message}");
                 return;
             }
@@ -79,7 +79,7 @@ namespace Scenes.Scripts.Loaders
                 scenarioList = scenarioList.SkipWhile(x => x.Element("start") == null).ToList();
             }
 
-            Scenario = scenarioList.Select(x =>
+            Scenarios = scenarioList.Select(x =>
             {
                 var scenario = new Scenario() { Index = ++scenarioIndex };
 
@@ -98,70 +98,132 @@ namespace Scenes.Scripts.Loaders
             }).ToList();
 
             // 使用している画像のファイル名を抽出する
-            var targetElements = scenarioList.Descendants()
+            UsingImageFileNames = GetUsingImageFileNames(scenarioList);
+
+            // 使用している音声ファイル名と番号を抽出する
+            UsingVoiceFileNames = GetUsingVoiceFileNames(scenarioList);
+            UsingVoiceNumbers = GetUsingVoiceNumbers(scenarioList);
+            UsingBgvFileNames = GetUsingBgvFileNames(scenarioList);
+
+            Converters.ForEach(c => Log.AddRange(c.Log));
+
+            Resource.Scenarios = Scenarios;
+            LoadCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// 入力された scenario 要素の中で使用されている全ての画像ファイル名のリストを取得します
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>scenario 要素の中で指定されている重複のない画像ファイル名一覧</returns>
+        public HashSet<string> GetUsingImageFileNames(List<XElement> xElements)
+        {
+            var targetElements = xElements.Descendants()
                 .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
+
+            var usingImgFileNames = new HashSet<string>();
 
             foreach (var x in targetElements)
             {
-                if (x.Attribute("a") != null)
+                var a = x.Attribute("a");
+                var b = x.Attribute("b");
+                var c = x.Attribute("c");
+                var d = x.Attribute("d");
+
+                if (a?.Value != null)
                 {
-                    UsingImageFileNames.Add(x.Attribute("a")?.Value);
+                    usingImgFileNames.Add(a.Value);
                 }
 
-                if (x.Attribute("b") != null)
+                if (b?.Value != null)
                 {
-                    UsingImageFileNames.Add(x.Attribute("b")?.Value);
+                    usingImgFileNames.Add(b.Value);
                 }
 
-                if (x.Attribute("c") != null)
+                if (c?.Value != null)
                 {
-                    UsingImageFileNames.Add(x.Attribute("c")?.Value);
+                    usingImgFileNames.Add(c.Value);
                 }
 
-                if (x.Attribute("d") != null)
+                if (d?.Value != null)
                 {
-                    UsingImageFileNames.Add(x.Attribute("d")?.Value);
+                    usingImgFileNames.Add(d.Value);
                 }
             }
 
-            // 使用している音声ファイル名と番号を抽出する
-            var voiceElements = scenarioList.Descendants()
-                .Where(x => x.Name.LocalName == "voice");
+            return usingImgFileNames;
+        }
 
-            foreach (var v in voiceElements)
+        /// <summary>
+        /// 入力された scenario 要素の中の voice 要素で指定されているファイル名の一覧を取得します。
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>voice 要素の中で指定されている重複のないファイル名一覧</returns>
+        public HashSet<string> GetUsingVoiceFileNames(List<XElement> xElements)
+        {
+            var targetElements = xElements.Descendants("voice");
+
+            var usingVcFileNames = new HashSet<string>();
+            foreach (var fileNameAtt in targetElements
+                         .Select(v => v.Attribute("fileName"))
+                         .Where(fileNameAtt => fileNameAtt != null && !string.IsNullOrWhiteSpace(fileNameAtt.Value)))
             {
-                var fileNameAtt = v.Attribute("fileName");
-                if (fileNameAtt != null && !string.IsNullOrWhiteSpace(fileNameAtt.Value))
-                {
-                    UsingVoiceFileNames.Add(fileNameAtt.Value);
-                    continue;
-                }
-
-                var numberAtt = v.Attribute("number");
-                if (numberAtt == null || int.Parse(numberAtt.Value) == 0)
-                {
-                    continue;
-                }
-
-                UsingVoiceNumbers.Add(int.Parse(numberAtt.Value));
+                usingVcFileNames.Add(fileNameAtt.Value);
             }
 
-            foreach (var bgv in scenarioList.Descendants().Where(x => x.Name.LocalName == "backgroundVoice"))
+            return usingVcFileNames;
+        }
+
+        /// <summary>
+        /// 入力された scenario 要素の中の voice 要素で指定されているインデックスの一覧を取得します。
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>voice 要素の中で指定されている重複のないインデックスのリスト</returns>
+        public HashSet<int> GetUsingVoiceNumbers(List<XElement> xElements)
+        {
+            var targetElements = xElements.Descendants("voice");
+
+            var usingNumbers = new HashSet<int>();
+            foreach (var numberAtt in targetElements
+                         .Select(v => v.Attribute("number"))
+                         .Where(n => n != null && int.Parse(n.Value) != 0))
             {
-                var fileNamesAtt = bgv.Attribute("names");
-                if (fileNamesAtt != null && !string.IsNullOrWhiteSpace(fileNamesAtt.Value))
+                usingNumbers.Add(int.Parse(numberAtt.Value));
+            }
+
+            return usingNumbers;
+        }
+
+        /// <summary>
+        /// 入力された scenario 要素の中の bgv 要素で指定されているファイル名の一覧を取得します。
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>bgv 要素の中で指定されている重複のないファイル名一覧</returns>
+        public HashSet<string> GetUsingBgvFileNames(List<XElement> xElements)
+        {
+            var targetElements = xElements
+                .Elements()
+                .Where(x => x.Name == "backgroundVoice" || x.Name == "bgv");
+
+            var usingFileNames = new HashSet<string>();
+            foreach (var element in targetElements)
+            {
+                var namesAtt = element.Attribute("names");
+                if (namesAtt == null)
                 {
-                    foreach (var s in fileNamesAtt.Value.Replace(" ", string.Empty).Split(','))
+                    continue;
+                }
+
+                foreach (var s in namesAtt.Value.Replace(" ", "").Split(','))
+                {
+                    if (!string.IsNullOrWhiteSpace(s))
                     {
-                        UsingBgvFileNames.Add(s);
+                        usingFileNames.Add(s);
                     }
                 }
             }
 
-            Converters.ForEach(c => Log.AddRange(c.Log));
-
-            Resource.Scenarios = Scenario;
-            LoadCompleted?.Invoke(this, EventArgs.Empty);
+            return usingFileNames;
         }
     }
 }
