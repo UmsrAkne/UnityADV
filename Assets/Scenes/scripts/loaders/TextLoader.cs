@@ -98,10 +98,7 @@ namespace Scenes.Scripts.Loaders
             }).ToList();
 
             // 使用している画像のファイル名を抽出する
-            var targetElements = scenarioList.Descendants()
-                .Where(x => x.Name.LocalName == "image" || x.Name.LocalName == "draw" || x.Name.LocalName == "anime");
-
-            UsingImageFileNames = GetUsingImageFileNames(targetElements.ToList());
+            UsingImageFileNames = GetUsingImageFileNames(scenarioList);
 
             // 使用している音声ファイル名と番号を抽出する
             var voiceElements = scenarioList.Descendants()
