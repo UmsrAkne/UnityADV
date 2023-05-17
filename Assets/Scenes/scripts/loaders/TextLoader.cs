@@ -207,5 +207,32 @@ namespace Scenes.Scripts.Loaders
 
             return usingNumbers;
         }
+
+        public HashSet<string> GetUsingBgvFileNames(List<XElement> xElements)
+        {
+            var targetElements = xElements
+                .Elements()
+                .Where(x => x.Name == "backgroundVoice" || x.Name == "bgv");
+
+            var usingFileNames = new HashSet<string>();
+            foreach (var element in targetElements)
+            {
+                var namesAtt = element.Attribute("names");
+                if (namesAtt == null)
+                {
+                    continue;
+                }
+
+                foreach (var s in namesAtt.Value.Replace(" ", "").Split(','))
+                {
+                    if (!string.IsNullOrWhiteSpace(s))
+                    {
+                        usingFileNames.Add(s);
+                    }
+                }
+            }
+
+            return usingFileNames;
+        }
     }
 }

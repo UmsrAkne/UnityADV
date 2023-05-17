@@ -72,5 +72,31 @@ namespace Tests.Loaders
             Assert.IsTrue(numbers.Contains(2));
             Assert.AreEqual(2, numbers.Count);
         }
+
+        [Test]
+        public void GetUsingBgvFileNames()
+        {
+            var loader = new TextLoader();
+
+            var elements = new List<XElement>()
+            {
+                XElement.Parse(@"<scenario></scenario>"),
+                XElement.Parse(@"<scenario><backgroundVoice names=""aa, bb,  cc, dd""/></scenario>"),
+                XElement.Parse(@"<scenario><bgv names=""ee, ff,  gg, hh""/></scenario>"),
+            };
+
+            var names = loader.GetUsingBgvFileNames(elements);
+            Assert.IsTrue(names.Contains("aa"));
+            Assert.IsTrue(names.Contains("bb"));
+            Assert.IsTrue(names.Contains("cc"));
+            Assert.IsTrue(names.Contains("dd"));
+
+            Assert.IsTrue(names.Contains("ee"));
+            Assert.IsTrue(names.Contains("ff"));
+            Assert.IsTrue(names.Contains("gg"));
+            Assert.IsTrue(names.Contains("hh"));
+
+            Assert.AreEqual(8, names.Count);
+        }
     }
 }
