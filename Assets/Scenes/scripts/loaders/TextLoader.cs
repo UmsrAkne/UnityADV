@@ -111,6 +111,11 @@ namespace Scenes.Scripts.Loaders
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// 入力された scenario 要素の中で使用されている全ての画像ファイル名のリストを取得します
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>scenario 要素の中で指定されている重複のない画像ファイル名一覧</returns>
         public HashSet<string> GetUsingImageFileNames(List<XElement> xElements)
         {
             var targetElements = xElements.Descendants()
@@ -149,6 +154,11 @@ namespace Scenes.Scripts.Loaders
             return usingImgFileNames;
         }
 
+        /// <summary>
+        /// 入力された scenario 要素の中の voice 要素で指定されているファイル名の一覧を取得します。
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>voice 要素の中で指定されている重複のないファイル名一覧</returns>
         public HashSet<string> GetUsingVoiceFileNames(List<XElement> xElements)
         {
             var targetElements = xElements.Descendants("voice");
@@ -164,6 +174,11 @@ namespace Scenes.Scripts.Loaders
             return usingVcFileNames;
         }
 
+        /// <summary>
+        /// 入力された scenario 要素の中の voice 要素で指定されているインデックスの一覧を取得します。
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>voice 要素の中で指定されている重複のないインデックスのリスト</returns>
         public HashSet<int> GetUsingVoiceNumbers(List<XElement> xElements)
         {
             var targetElements = xElements.Descendants("voice");
@@ -179,6 +194,11 @@ namespace Scenes.Scripts.Loaders
             return usingNumbers;
         }
 
+        /// <summary>
+        /// 入力された scenario 要素の中の bgv 要素で指定されているファイル名の一覧を取得します。
+        /// </summary>
+        /// <param name="xElements">scenario をルート要素とする xElements の List</param>
+        /// <returns>bgv 要素の中で指定されている重複のないファイル名一覧</returns>
         public HashSet<string> GetUsingBgvFileNames(List<XElement> xElements)
         {
             var targetElements = xElements
