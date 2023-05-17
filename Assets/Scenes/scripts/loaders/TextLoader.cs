@@ -24,11 +24,11 @@ namespace Scenes.Scripts.Loaders
 
         public HashSet<string> UsingImageFileNames { get; private set; } = new HashSet<string>();
 
-        public HashSet<string> UsingVoiceFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingVoiceFileNames { get; private set; } = new HashSet<string>();
 
-        public HashSet<int> UsingVoiceNumbers { get; } = new HashSet<int>();
+        public HashSet<int> UsingVoiceNumbers { get; private set; } = new HashSet<int>();
 
-        public HashSet<string> UsingBgvFileNames { get; } = new HashSet<string>();
+        public HashSet<string> UsingBgvFileNames { get; private set; } = new HashSet<string>();
 
         public Resource Resource { get; set; }
 
@@ -101,38 +101,9 @@ namespace Scenes.Scripts.Loaders
             UsingImageFileNames = GetUsingImageFileNames(scenarioList);
 
             // 使用している音声ファイル名と番号を抽出する
-            var voiceElements = scenarioList.Descendants()
-                .Where(x => x.Name.LocalName == "voice");
-
-            foreach (var v in voiceElements)
-            {
-                var fileNameAtt = v.Attribute("fileName");
-                if (fileNameAtt != null && !string.IsNullOrWhiteSpace(fileNameAtt.Value))
-                {
-                    UsingVoiceFileNames.Add(fileNameAtt.Value);
-                    continue;
-                }
-
-                var numberAtt = v.Attribute("number");
-                if (numberAtt == null || int.Parse(numberAtt.Value) == 0)
-                {
-                    continue;
-                }
-
-                UsingVoiceNumbers.Add(int.Parse(numberAtt.Value));
-            }
-
-            foreach (var bgv in scenarioList.Descendants().Where(x => x.Name.LocalName == "backgroundVoice"))
-            {
-                var fileNamesAtt = bgv.Attribute("names");
-                if (fileNamesAtt != null && !string.IsNullOrWhiteSpace(fileNamesAtt.Value))
-                {
-                    foreach (var s in fileNamesAtt.Value.Replace(" ", string.Empty).Split(','))
-                    {
-                        UsingBgvFileNames.Add(s);
-                    }
-                }
-            }
+            UsingVoiceFileNames = GetUsingVoiceFileNames(scenarioList);
+            UsingVoiceNumbers = GetUsingVoiceNumbers(scenarioList);
+            UsingBgvFileNames = GetUsingBgvFileNames(scenarioList);
 
             Converters.ForEach(c => Log.AddRange(c.Log));
 
