@@ -12,6 +12,8 @@
 
         private List<ISound> Ses { get; set; }
 
+        private Dictionary<string, ISound> SeByName { get; set; }
+
         private SEOrder CurrentOrder { get; set; }
 
         private ISound PlayingSound { get; set; }
@@ -34,15 +36,24 @@
             if (Ses.Count > CurrentOrder.Index && CurrentOrder.Index != 0)
             {
                 PlayingSound = Ses[CurrentOrder.Index];
-
-                if (CurrentOrder.RepeatCount > 0)
-                {
-                    PlayingSound.AudioSource.loop = true;
-                }
-
-                PlayingSound.Play();
             }
 
+            if (!string.IsNullOrWhiteSpace(CurrentOrder.FileName))
+            {
+                PlayingSound = SeByName[CurrentOrder.FileName];
+            }
+
+            if (PlayingSound == null)
+            {
+                return;
+            }
+
+            if (CurrentOrder.RepeatCount > 0)
+            {
+                PlayingSound.AudioSource.loop = true;
+            }
+
+            PlayingSound.Play();
             CurrentOrder = null;
         }
 
@@ -53,6 +64,7 @@
         public void SetResource(Resource resource)
         {
             Ses = resource.Ses;
+            SeByName = resource.SesByName;
         }
 
         public void SetScenario(Scenario scenario)
