@@ -21,5 +21,7 @@
         public double Depth { get; set; } = 0.1;
 
         public string MaskImageName { get; set; } = string.Empty;
+
+        public bool InheritStatus { get; set; }
     }
 }

@@ -51,6 +51,20 @@ namespace Scenes.Scripts.SceneContents
             }
         }
 
+        /// <summary>
+        /// 現在の X座標(ワールド座標) を取得します。
+        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
+        /// </summary>
+        public float Wx
+            => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).x;
+
+        /// <summary>
+        /// 現在の Y座標(ワールド座標) を取得します。
+        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
+        /// </summary>
+        public float Wy
+            => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).y;
+
         public float Y
         {
             get => GameObject.transform.localPosition.y;

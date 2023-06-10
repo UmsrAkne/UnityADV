@@ -64,6 +64,11 @@
                         order.MaskImageName = imageTag.Attribute("mask").Value;
                     }
 
+                    if (imageTag.Attribute("inheritStatus") != null)
+                    {
+                        order.InheritStatus = bool.Parse(imageTag.Attribute("inheritStatus").Value);
+                    }
+
                     scenario.ImageOrders.Add(order);
                 }
             }
