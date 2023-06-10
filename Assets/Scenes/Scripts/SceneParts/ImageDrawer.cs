@@ -34,6 +34,19 @@ namespace Scenes.Scripts.SceneParts
                     spriteWrappers.Add(!string.IsNullOrEmpty(name) ? resource.ImagesByName[name] : null);
                 });
 
+                // InheritStatus が指定されている場合は、最前面の画像の状態をコピーする
+                if (order.InheritStatus)
+                {
+                    var f = targetContainer.FrontChild;
+                    if (f != null)
+                    {
+                        order.Scale = f.Scale;
+                        order.X = (int)f.Wx;
+                        order.Y = (int)f.Wy;
+                        order.Angle = order.Angle;
+                    }
+                }
+
                 imageSet.Alpha = 0;
                 imageSet.Scale = order.Scale;
                 imageSet.X = order.X;
